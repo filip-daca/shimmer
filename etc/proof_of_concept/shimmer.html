@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+  <title>Shimmer test</title>
+
+  <script type="text/javascript" src="visjs/vis.js"></script>
+  <script type="text/javascript" src="heatmap/heatmap.js"></script>
+  
+  <link href="visjs/vis.css" rel="stylesheet" type="text/css" />
+
+  <style type="text/css">
+    #mynetwork, #heatmap {
+      width: 400px;
+      height: 400px;
+      border: 1px solid lightgray;
+	  background: black;
+    }
+	
+	.heatmap-canvas {
+		top: 400px !important;
+	}
+  </style>
+</head>
+
+<body>
+
+<div>
+	<div id="heatmap"></div>
+</div>
+
+<div id="mynetwork"></div>
+
+
+
+<div id="div_input">+</div>
+
+<script type="text/javascript">
+	// Ustawienia symulacji
+	var Shimmer = {
+		width: 400,
+		height: 400,
+		nodesCount: 5,
+		heatmapUpdateInterval: 100,
+		
+	}
+
+	// create an array with nodes
+	var nodes = [
+		{id: 1, label: 'Node 1'},
+		{id: 2, label: 'Node 2'},
+		{id: 3, label: 'Node 3'},
+		{id: 4, label: 'Node 4'},
+		{id: 5, label: 'Node 5'}
+	];
+
+	// create an array with edges
+	var edges = [
+		{from: 1, to: 2},
+		{from: 1, to: 3},
+		{from: 2, to: 4},
+		{from: 2, to: 5}
+	];
+
+	// create a network
+	var container = document.getElementById('mynetwork');
+	var data = {
+		nodes: nodes,
+		edges: edges
+	};
+  
+	var options = {
+		nodes: {
+			shape: 'dot',
+			fontColor: 'black',
+			color: {background: 'lightgrey', border: 'transparent'},
+		},
+		edges: {
+			width: 0,
+		}
+	};
+	var network = new vis.Network(container, data, options);
+  
+	var heatmap = h337.create({
+		container: document.getElementById('heatmap'),
+		gradient: { .1: 'rgba(0,0,0,0)', 0.25: "rgba(0,0,90, .6)", .6: "blue", .9: "cyan", .95: 'rgba(255,255,255,.4)'},
+		maxOpacity: .6,
+		radius: 10,
+		blur: .90
+	});
+
+	var heatmapTimeout;
+	var counter = 0;
+  
+	function updateHeatmap(properties) {
+		var element = document.getElementById('div_input');
+		var nodesCount = Shimmer.nodesCount;
+		var nodeX, nodeY;
+		var diagText = "";
+
+		heatmap.setData({min: 0, max:nodesCount, data: []});
+		for (i = 1; i <= nodesCount; i++) {
+			nodeX = Math.floor(network.getScale() * -network.getCenterCoordinates().x + 200 + network.getScale() * network.nodes[i].x);
+			nodeY = Math.floor(network.getScale() * -network.getCenterCoordinates().y + 200 + network.getScale() * network.nodes[i].y);
+			heatmap.addData({x: nodeX, y: nodeY, value:i*2, radius: network.getScale() * 100});
+			
+			diagText += 
+			"Node " + i + ": " + nodeX + " : " + nodeY + "\n";
+		}
+
+		counter++;
+		element.innerText = diagText + " CTR: " + counter;
+	};
+	
+	function startUpdatingHeatmap() {
+		heatmapTimeout = setInterval(function(){updateHeatmap()}, Shimmer.heatmapUpdateInterval);
+	}
+	
+	function stopUpdatingHeatmap() {
+		clearInterval(heatmapTimeout);
+	}
+	
+	updateHeatmap();
+  
+	network.on('viewChanged', updateHeatmap);
+	network.on('startStabilization', startUpdatingHeatmap);
+	network.on('stabilized', stopUpdatingHeatmap);
+</script>
+
+</body>
+</html>
