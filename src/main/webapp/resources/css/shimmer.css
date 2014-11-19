@@ -1,0 +1,230 @@
+/* Ogólne klasy ------------------------------------------------------------ */
+
+body.basic-template {
+	padding-top: 50px;
+	background-color: #aa9;
+}
+
+.basic-template .container.container-main {
+	padding: 40px 15px;
+}
+
+.hidden {
+	display: none;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.width-half {
+	width: 50%;
+}
+
+.width-half-more {
+	width: 70%;
+}
+
+.width-full {
+	width: 100%;
+}
+
+.margin-right {
+	margin-right: 10px;
+}
+
+.margin-left {
+	margin-left: 10px;
+}
+
+.margin-bottom {
+	margin-bottom: 10px;
+}
+
+.margin-top {
+	margin-top: 10px;
+}
+
+.spacer-top {
+	margin-top: 15px;
+	border-top: #ddd dashed 1px;
+	padding-top: 10px;
+}
+
+.inline {
+	display: inline;
+}
+
+.left-half-panel {
+	width: 560px;
+}
+
+.right-half-panel {
+	width: 560px;
+	float: right;
+}
+
+/* --------------------------------------------------------------------------
+ * Callouts
+ *
+ * Not quite alerts, but custom and helpful notes for folks reading the docs.
+ * Requires a base and modifier class.
+ */
+
+/* Common styles for all types */
+.bs-callout {
+	margin: 20px 0;
+	padding: 20px;
+	border-left: 3px solid #eee;
+}
+.bs-callout h4 {
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+	margin-bottom: 0;
+}
+.bs-callout code {
+	background-color: #fff;
+	border-radius: 3px;
+}
+
+/* Variations */
+.bs-callout-danger {
+	background-color: #fdf7f7;
+	border-color: #d9534f;
+}
+
+.bs-callout-danger h4 {
+	color: #d9534f;
+}
+
+.bs-callout-warning {
+	background-color: #fcf8f2;
+	border-color: #f0ad4e;
+}
+
+.bs-callout-warning h4 {
+	color: #f0ad4e;
+}
+
+.bs-callout-info {
+	background-color: #f4f8fa;
+	border-color: #5bc0de;
+}
+
+.bs-callout-info h4 {
+	color: #5bc0de;
+}
+
+/* --------------------------------------------------------------------------
+ * Prime Faces
+ */
+
+.basic-template .ui-messages-info-icon,
+.basic-template .ui-messages-fatal-icon,
+.basic-template .ui-messages-warn-icon,
+.basic-template .ui-messages-error-icon {
+	display: none;
+}
+
+.basic-template .ui-messages-info-summary, 
+.basic-template .ui-messages-warn-summary, 
+.basic-template .ui-messages-error-summary, 
+.basic-template .ui-messages-fatal-summary, 
+.basic-template .ui-message-info-summary, 
+.basic-template .ui-message-warn-summary, 
+.basic-template .ui-message-error-summary, 
+.basic-template .ui-message-fatal-summary {
+	margin-left: 0px;
+	font-weight: bold;
+}
+
+.basic-template .ui-outputlabel-rfi {
+	color: red;
+}
+
+.ui-widget-content a .glyphicon {
+	color: #fff;
+}
+
+.ui-widget-content a.btn-default .glyphicon {
+	color: #000;
+}
+
+.basic-template .ui-chkbox .ui-chkbox-box {
+	width: 18px;
+	height: 18px;
+}
+
+.basic-template .ui-selectmanycheckbox label {
+	font-weight: normal;
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+
+.basic-template div.ui-chkbox {
+	margin-top: 4px;
+}
+
+.basic-template .ui-selectmanycheckbox {
+	margin-left: 40px;
+}
+
+.basic-template .ui-messages ul {
+	margin: 0px;
+}
+
+.basic-template .ui-messages-info, 
+.basic-template .ui-messages-warn, 
+.basic-template .ui-messages-error, 
+.basic-template .ui-messages-fatal {
+	padding: 15px;
+}
+
+.basic-template .ui-message-info, 
+.basic-template .ui-message-warn, 
+.basic-template .ui-message-error, 
+.basic-template .ui-message-fatal {
+	margin: 5px;
+}
+
+.basic-template .ui-selectonemenu .ui-selectonemenu-trigger {
+	width: auto;
+}
+
+.basic-template .badge-primary {
+	background-color: #428bca;
+}
+
+.basic-template .badge-score-0 { background-color: #E00E00; }
+.basic-template .badge-score-1 { background-color: #E01E00; }
+.basic-template .badge-score-2 { background-color: #E74900; }
+.basic-template .badge-score-3 { background-color: #EF7500; }
+.basic-template .badge-score-4 { background-color: #F7A000; }
+.basic-template .badge-score-5 { background-color: #FFCC00; }
+.basic-template .badge-score-6 { background-color: #CCC403; }
+.basic-template .badge-score-7 { background-color: #99BC07; }
+.basic-template .badge-score-8 { background-color: #66B50B; }
+.basic-template .badge-score-9 { background-color: #33AD0F; }
+.basic-template .badge-score-10 { background-color: #00A613; }
+
+.basic-template .color-red { color: #E00E00; }
+.basic-template .color-green { color: #00A613; }
+.basic-template .color-gray { color: #999; }
+
+.basic-template .ui-overlaypanel .ui-datepicker thead th, 
+.basic-template .ui-overlaypanel .ui-datepicker tbody td, 
+.basic-template .ui-overlaypanel .ui-datepicker tfoot td {
+	padding: inherit;
+	text-align: inherit;
+	border: inherit;
+}
