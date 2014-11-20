@@ -38,7 +38,7 @@
 		<primefaces.version>4.0</primefaces.version>
 		<primefaces-bootstrap-theme.version>1.0.10</primefaces-bootstrap-theme.version>
 		<!-- JSF -->
-		<jsf.api.version>2.2.2</jsf.api.version>
+		<jsf.api.version>2.0</jsf.api.version>
 		<jsf.impl.version>2.2.2</jsf.impl.version>
 		<javax.servlet.version>1.2</javax.servlet.version>
 		<!-- Log4j -->
@@ -179,6 +179,13 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>${javax.servlet.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>${jsf.api.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Primefaces -->

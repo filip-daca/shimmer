@@ -1,5 +1,7 @@
 package shimmer.web.controller;
 
+import java.io.Serializable;
+
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
@@ -11,7 +13,9 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("view")
-public class HomePageController {
+public class HomePageController implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
 	public String getHelloWorld() {
 		return "Hello world from Shimmer!";
