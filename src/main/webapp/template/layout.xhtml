@@ -17,6 +17,15 @@
     <!--[if lt IE 9]>
       <script src="resources/js/html5shiv.js"></script>
     <![endif]-->
+    <h:outputScript library="js" name="jquery-1.11.1.js"/>
+    <h:outputScript library="js" name="heatmap/heatmap.js"/>
+	<h:outputScript library="js" name="visjs/vis.js"/>
+	<h:outputScript library="js" name="bootstrap.min.js"/>
+	<h:outputScript library="js" name="shimmer.js"/>
+	<h:outputStylesheet library="css" name="shimmer.css"/>
+	<h:outputStylesheet library="css" name="vis.css"/>
+	<h:outputStylesheet library="css" name="bootstrap.min.css"/>
+	<h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
 </h:head>
 
 <body class="basic-template">
@@ -34,16 +43,9 @@
 		<!-- /CONTENT -->
 	</div>
 
-<h:outputScript library="js" name="jquery-1.11.1.js"/>
-<h:outputScript library="js" name="bootstrap.min.js"/>
-<h:outputScript library="js" name="shimmer.js"/>
-<h:outputStylesheet library="css" name="shimmer.css"/>
-<h:outputStylesheet library="css" name="bootstrap.min.css"/>
-<h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
-
 <script type="text/javascript">
     $(function () {
-        Shimmer.setActivePage('#{nav}');
+        ShimmerWeb.setActivePage('#{nav}');
     });
 </script>
 

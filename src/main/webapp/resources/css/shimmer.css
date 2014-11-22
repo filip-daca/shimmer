@@ -1,4 +1,51 @@
-/* Ogólne klasy ------------------------------------------------------------ */
+/* Simulation -------------------------------------------------------------- */
+
+#shimmerContainer {
+	margin: 10px;
+	position: relative;
+	width: 800px;
+	height: 650px;
+}
+		
+#shimmerPanel {
+	width: 270px;
+	margin-left: 810px;
+	height: 650px;
+}
+	
+#shimmerNetwork, #shimmerHeatmap {
+	width: 800px;
+	height: 650px;
+	border: 1px solid lightgray;
+	position: absolute !important;
+	top: 0px;
+}
+
+#shimmerNetwork {
+	background: transparent;
+}
+
+#shimmerHeatmap {
+	background: #000000;
+}
+
+#shimmerProject {
+	width: 490px;
+	margin-left: 10px;
+	height: 310px;
+}
+
+.physicsConfiguration {
+	position: absolute;
+	margin-top: 660px;
+	margin-left: 500px;
+}
+
+.shimmerVisualisation {
+	height: 1100px;
+}
+
+/* Basic classes ----------------------------------------------------------- */
 
 body.basic-template {
 	padding-top: 50px;
@@ -128,6 +175,28 @@ body.basic-template {
 /* --------------------------------------------------------------------------
  * Prime Faces
  */
+
+.basic-template .panel-warning>.panel-heading {
+	color: #8a6d3b;
+	background-color: #FFE144;
+	border-color: #FFE144;
+	background-image: none;
+}
+
+.basic-template .panel-warning {
+	border-color: #FFE144;
+}
+
+.basic-template .panel-success>.panel-heading {
+	color: #3c763d;
+	background-color: #5FC335;
+	border-color: #5FC335;
+	background-image: none;
+}
+
+.basic-template .panel-success {
+	border-color: #5FC335;
+}
 
 .basic-template .ui-messages-info-icon,
 .basic-template .ui-messages-fatal-icon,

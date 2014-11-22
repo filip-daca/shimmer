@@ -7,7 +7,7 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 /**
- * Podstawowy kontroler strony głównej
+ * Basic controller for home page
  * 
  * @author filip.daca@javatech.com.pl
  */

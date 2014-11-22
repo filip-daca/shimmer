@@ -1,7 +1,7 @@
 /**
  * Funkcje główne portalu
  */
-var Shimmer = {
+var ShimmerWeb = {
 		
 	/**
 	 * Ustawia aktywną stronę w nawigacji.

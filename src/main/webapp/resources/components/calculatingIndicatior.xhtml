@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:pretty="http://ocpsoft.com/prettyfaces"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<!-- Component indicates graph recalculation -->
+<composite:interface />
+<composite:implementation>
+	<!-- CALCULATING INDICATOR implementation -->
+	
+	<div id="calculatingStatus" class="badge" style="display:none;">
+		<p:graphicImage value="/resources/interface/small_calculator.gif" />
+		Calculating...
+	</div>
+	
+	<!-- /CALCULATING INDICATOR -->
+</composite:implementation>
+</html>

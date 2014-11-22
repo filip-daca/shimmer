@@ -7,7 +7,7 @@ import javax.servlet.*;
 import java.io.IOException;
 
 /**
- * Filtr znaków wymusza odpowiednie kodowanie
+ * Encoding filter forces utf-8 characters.
  * 
  * @author filip.daca@javatech.com.pl
  */

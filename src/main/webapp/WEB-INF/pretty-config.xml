@@ -3,7 +3,7 @@
   xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
                       http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
 
-	<!-- GŁÓWNA NAWIGACJA PORTALU ========================================= -->
+	<!-- MAIN PORTAL NAVIGATION =========================================== -->
 
 	<url-mapping id="home">
 		<pattern value="/home" />

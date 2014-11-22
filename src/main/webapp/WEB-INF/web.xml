@@ -6,7 +6,7 @@
 		 id="WebApp_ID"
 		 version="2.5">
 		 
-	<!-- Parametry ============================================================================ -->
+	<!-- Parameters =========================================================================== -->
 	
 	<display-name>Shimmer</display-name>   
 	
@@ -33,19 +33,19 @@
 	    <param-value>bootstrap</param-value>  
 	</context-param>
 	
-	<!-- Pomijanie komentarzy -->
+	<!-- Skipping comments -->
 	<context-param>
 		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
 		<param-value>true</param-value>
 	</context-param>
 	
-	<!-- Stan JSF zapisywany na serwerze -->
+	<!-- JSF state stored on server -->
 	<context-param>
 	    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
 	    <param-value>server</param-value>
 	</context-param>
 	
-	<!-- Nasłuchiwanie ======================================================================== -->
+	<!-- Listening ============================================================================ -->
 	
 	<!-- The Bootstrap listener to start up and shut down Spring's root WebApplicationContext.
 		It is registered to Servlet Container -->
@@ -60,7 +60,7 @@
 		</listener-class>
 	</listener>
 
-	<!-- Serwlety ============================================================================= -->
+	<!-- Servlets ============================================================================= -->
 
 	<!-- JSF Servlet -->
 	<servlet>
@@ -75,9 +75,9 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
-	<!-- Filtry =============================================================================== -->
+	<!-- Filters ============================================================================== -->
 	
-	<!-- Kodowanie -->
+	<!-- Encoding -->
 	<filter>
 		<filter-name>Character encoding filter</filter-name>
 		<filter-class>shimmer.web.filter.CharacterEncodingFilter</filter-class>
