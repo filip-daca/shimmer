@@ -1,8 +1,5 @@
 package shimmer.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Class representing a Shimmer graph edge.
  * 
@@ -10,12 +7,29 @@ import java.util.List;
  */
 public class Edge {
 
+	// ************************************************************************
+	// FIELDS	
+	
 	private Node nodeFrom;
 	private Node nodeTo;
+	
+	// ************************************************************************
+	// CONSTRUCTORS
 	
 	public Edge(Node nodeFrom, Node nodeTo) {
 		this.nodeFrom = nodeFrom;
 		this.nodeTo = nodeTo;
+	}
+	
+	// ************************************************************************
+	// GETTERS / SETTERS
+	
+	public Node getNodeFrom() {
+		return nodeFrom;
+	}
+	
+	public Node getNodeTo() {
+		return nodeTo;
 	}
 	
 }

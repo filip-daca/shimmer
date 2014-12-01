@@ -15,8 +15,14 @@ import org.springframework.context.annotation.Scope;
 @Scope("view")
 public class HomePageController implements Serializable {
 	
+	// ************************************************************************
+	// STATIC FIELDS
+	
 	private static final long serialVersionUID = 1L;
-
+	
+	// ************************************************************************
+	// VIEW METHODS
+	
 	public String getHelloWorld() {
 		return "Hello world from Shimmer!";
 	}

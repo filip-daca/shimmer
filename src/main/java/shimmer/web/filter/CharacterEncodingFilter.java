@@ -13,8 +13,14 @@ import java.io.IOException;
  */
 public class CharacterEncodingFilter implements Filter {
 
+	// ************************************************************************
+	// TOOLS AND SERVICES
+	
     private Log log = LogFactory.getLog(CharacterEncodingFilter.class);
 
+    // ************************************************************************
+ 	// METHODS
+    
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("Initializing CharacterEncodingFilter");
