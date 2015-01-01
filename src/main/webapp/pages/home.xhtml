@@ -5,6 +5,7 @@
 		xmlns:p="http://primefaces.org/ui"
 		xmlns:ui="http://java.sun.com/jsf/facelets"
 		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
 		xmlns:sh="http://java.sun.com/jsf/composite/components">
     <ui:define name="content">
     
@@ -17,6 +18,7 @@
 				<h3 class="panel-title">Sample project visualiztion</h3>
 			</div>
 			<div class="panel-body">
+				
 				<h:outputText value="#{homePageController.helloWorld}" />
 				
 				<div id="shimmerContainer">
@@ -24,15 +26,28 @@
 					<div id="shimmerNetwork"></div>
 					<div id="shimmerPanel" class="panel panel-primary">
 						<div class="panel-heading">
-							Visualisation panel
+							Visualisation panel <sh:calculatingIndicatior />
 						</div>
 						<div class="panel-body">
 							<div>
 								Visualisation Mode: <span id="visualisationMode" class="label label-primary">Constellation Mode</span>
 							</div>
-							<button class="btn btn-success btn-xs" onclick="toggleHeatmap();">Change Mode</button>
-							
-							<sh:calculatingIndicatior />
+							<div>
+								<button class="btn btn-success btn-sm width-full margin-top" 
+									onclick="toggleHeatmap();">Change Mode</button>
+							</div>
+							<div>
+								<h:form>
+								
+								<p:selectOneMenu id="sizeMetricField" value="#{simulationController.properties.nodeSizeMetric}">
+									<f:selectItems values="#{Metric.values}" />
+									<p:ajax event="change" global="true"
+										listener="#{simulationController.reinitialize}" 
+										onstart="ShimmerWeb.show('calculatingStatus');"
+										oncomplete="ShimmerWeb.hide('calculatingStatus');" />
+								</p:selectOneMenu>
+								</h:form>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -41,8 +56,46 @@
 					<div class="panel-heading">
 						Project data
 					</div>
-					<div class="panel-body">
-						Project information
+					<div class="panel-body" id="shimmerInfo">
+						<div>
+							<label class="packageName badge badge-primary"></label>
+						</div>
+						
+						<div>
+							<label>Class count:</label>
+							<span class="classCount badge"></span>
+						</div>
+						
+						<div>
+							<label>Concrete:</label>
+							<span class="concreteClassesCount badge"></span>
+							
+							<label>Abstract:</label>
+							<span class="abstractClassesCount badge"></span>
+						</div>
+						
+						<div>
+							<label>Abstractness:</label>
+							<span class="abstractness badge"></span>
+						</div>
+						
+						<div>
+							<label>Efferents:</label>
+							<span class="efferentsCount badge"></span>
+							
+							<label>Afferents:</label>
+							<span class="afferentsCount badge"></span>
+						</div>
+						
+						<div>
+							<label>Instability:</label>
+							<span class="instability badge"></span>
+						</div>
+						
+						<div>
+							<label>Distance from main sequence:</label>
+							<span class="distanceFromMainSequence badge"></span>
+						</div>
 					</div>
 				</div>
 				
@@ -78,10 +131,9 @@
 				nodes: {
 					shape: 'dot',
 					fontColor: 'white',
-					color: {background: 'lightgrey', border: 'transparent'},
 				},
 				edges: {
-					width: 0,
+					width: 1,
 				},
 				smoothCurves: true,
 				configurePhysics: true,
@@ -157,15 +209,40 @@
 					$("#visualisationMode").text("Constallation");
 					$("#visualisationMode").removeClass("label-warning");
 					$("#visualisationMode").addClass("label-primary");
-					network.setOptions({nodes:{color: {border: 'transparent', backgrund: 'lightgrey'}}})
+					changeEdgesColor('transparent');
 					ShimmerWeb.show("shimmerHeatmap");
 				} else {
 					$("#visualisationMode").text("Graph");
 					$("#visualisationMode").removeClass("label-primary");
 					$("#visualisationMode").addClass("label-warning");
-					network.setOptions({nodes:{color: {border: 'black', backgrund: 'black'}}})
+					changeEdgesColor('black');
 					ShimmerWeb.hide("shimmerHeatmap");
 				}
+			}
+			
+			function changeEdgesColor(color) {
+				var nodesCount = Shimmer.nodesCount;
+				for (i = 0; i < nodesCount; i++) {
+					var oldBackgroundColor = nodes[i].color.background;
+					data.nodes[i].color = { background : oldBackgroundColor, border : color };
+					network.nodes[i].color = { background : oldBackgroundColor, border : color };
+				}
+				network.setData(data);
+				updateHeatmap();
+			}
+			
+			function nodeSelectCallback(event) {
+				var node = nodes[event.nodes[0]];
+				var metaData = node.shimmerProperties;
+				$("#shimmerInfo .packageName").text(node.label);
+				$("#shimmerInfo .classCount").text(metaData.classCount);
+				$("#shimmerInfo .concreteClassesCount").text(metaData.concreteClassesCount);
+				$("#shimmerInfo .abstractClassesCount").text(metaData.abstractClassesCount);
+				$("#shimmerInfo .abstractness").text(metaData.abstractness);
+				$("#shimmerInfo .efferentsCount").text(metaData.efferentsCount);
+				$("#shimmerInfo .afferentsCount").text(metaData.afferentsCount);
+				$("#shimmerInfo .instability").text(metaData.instability);
+				$("#shimmerInfo .distanceFromMainSequence").text(metaData.distanceFromMainSequence);
 			}
 			
 			updateHeatmap();
@@ -173,6 +250,7 @@
 			network.on('viewChanged', updateHeatmap);
 			network.on('startStabilization', startUpdatingHeatmap);
 			network.on('stabilized', stopUpdatingHeatmap);
+			network.on('select', nodeSelectCallback);
 			
 			/* ]]> */
 		</script>

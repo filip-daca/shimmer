@@ -155,7 +155,7 @@ public class GraphServiceImpl implements GraphService {
 			return;
 		}
 		
-		sb.append("color: ");
+		sb.append("color: {border: 'transparent', background: ");
 		switch (properties.getNodeColorMetric()) {
 		case DISTANCE_FROM_MAIN_SEQUENCE:
 			sb.append(floatMetricToColor(node.getDistanceFromMainSequence()));
@@ -174,7 +174,7 @@ public class GraphServiceImpl implements GraphService {
 			sb.append(floatMetricToColor((float) node.getClassCount() / (float) TOO_LARGE_PACKAGE));
 			break;
 		}
-		sb.append(", ");
+		sb.append("}, ");
 	}
 
 	private void appendSize(StringBuilder sb, Node node,

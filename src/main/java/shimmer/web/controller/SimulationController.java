@@ -93,4 +93,9 @@ public class SimulationController implements Serializable {
 		return graph.getNodesCount();
 	}
 	
+	public SimulationProperties getProperties() {
+		considerInitialization();
+		return properties;
+	}
+	
 }
