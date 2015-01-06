@@ -22,6 +22,11 @@ public class GraphServiceImpl implements GraphService {
 	// STATICS
 	
 	private static final int MINIMAL_RADIUS = 7;
+	private static final int MAXIMAL_RADIUS = 30;
+	
+	private static final int MINIMAL_HEAT = 0;
+	private static final int MAXIMAL_HEAT = 70;
+	
 	private static final int TOO_LARGE_PACKAGE = 50;
 	private static final float GOOD_METRIC = 0.1F;
 	private static final float BAD_METRIC = 0.9F;
@@ -131,15 +136,15 @@ public class GraphServiceImpl implements GraphService {
 		
 		switch (properties.getNodeHeatMetric()) {
 		case DISTANCE_FROM_MAIN_SEQUENCE:
-			sb.append(floatMetricToNumber(node.getDistanceFromMainSequence()));
+			sb.append(floatMetricToNumber(node.getDistanceFromMainSequence(), MINIMAL_HEAT, MAXIMAL_HEAT));
 			break;
 			
 		case ABSTRACTNESS:
-			sb.append(floatMetricToNumber(node.getAbstractness()));
+			sb.append(floatMetricToNumber(node.getAbstractness(), MINIMAL_HEAT, MAXIMAL_HEAT));
 			break;
 			
 		case INSTABILITY:
-			sb.append(floatMetricToNumber(node.getInstability()));
+			sb.append(floatMetricToNumber(node.getInstability(), MINIMAL_HEAT, MAXIMAL_HEAT));
 			break;
 			
 		case CLASS_COUNT:
@@ -186,15 +191,15 @@ public class GraphServiceImpl implements GraphService {
 		sb.append("radius: ");
 		switch (properties.getNodeSizeMetric()) {
 		case DISTANCE_FROM_MAIN_SEQUENCE:
-			sb.append(floatMetricToNumber(node.getDistanceFromMainSequence()));
+			sb.append(floatMetricToNumber(node.getDistanceFromMainSequence(), MINIMAL_RADIUS, MAXIMAL_RADIUS));
 			break;
 			
 		case ABSTRACTNESS:
-			sb.append(floatMetricToNumber(node.getAbstractness()));
+			sb.append(floatMetricToNumber(node.getAbstractness(), MINIMAL_RADIUS, MAXIMAL_RADIUS));
 			break;
 			
 		case INSTABILITY:
-			sb.append(floatMetricToNumber(node.getInstability()));
+			sb.append(floatMetricToNumber(node.getInstability(), MINIMAL_RADIUS, MAXIMAL_RADIUS));
 			break;
 			
 		case CLASS_COUNT:
@@ -204,8 +209,8 @@ public class GraphServiceImpl implements GraphService {
 		sb.append(", ");
 	}
 	
-	private int floatMetricToNumber(float metric) {
-		metric = metric * 30;
+	private int floatMetricToNumber(float metric, int min, int max) {
+		metric = min + metric * (max - min);
 		return Math.round(metric);
 	}
 	

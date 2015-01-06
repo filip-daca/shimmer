@@ -9,15 +9,6 @@
 
 	<name>Shimmer</name>
 
-	<repositories>
-		<repository>
-			<id>prime-repo</id>
-			<name>PrimeFaces Maven Repository</name>
-			<url>http://repository.primefaces.org</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
-
 	<properties>
 		<!-- Java -->
 		<java.version>1.7</java.version>
@@ -35,7 +26,7 @@
 		<spring-faces.version>2.3.3.RELEASE</spring-faces.version>
 		<spring-security.version>3.2.1.RELEASE</spring-security.version>
 		<!-- Primefaces -->
-		<primefaces.version>4.0</primefaces.version>
+		<primefaces.version>5.1</primefaces.version>
 		<primefaces-bootstrap-theme.version>1.0.10</primefaces-bootstrap-theme.version>
 		<!-- JSF -->
 		<jsf.api.version>2.0</jsf.api.version>

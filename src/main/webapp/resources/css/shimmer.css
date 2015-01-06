@@ -8,9 +8,9 @@
 }
 		
 #shimmerPanel {
-	width: 270px;
-	margin-left: 810px;
-	height: 650px;
+	width: 490px;
+	margin-left: 10px;
+	height: 310px;
 }
 	
 #shimmerNetwork, #shimmerHeatmap {
@@ -30,9 +30,9 @@
 }
 
 #shimmerProject {
-	width: 490px;
-	margin-left: 10px;
-	height: 310px;
+	width: 270px;
+	margin-left: 810px;
+	height: 650px;
 }
 
 .physicsConfiguration {
@@ -43,6 +43,12 @@
 
 .shimmerVisualisation {
 	height: 1100px;
+}
+
+/* Fields ------------------------------------------------------------------ */
+
+#shimmerPanel label {
+	width: 200px;
 }
 
 /* Basic classes ----------------------------------------------------------- */

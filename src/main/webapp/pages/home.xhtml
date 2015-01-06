@@ -22,87 +22,62 @@
 			<p:outputPanel id="shimmerSimulation">
 				
 				<div id="shimmerContainer">
-				
 					<div id="shimmerHeatmap"></div>
 					<div id="shimmerNetwork"></div>
 					
-					<div id="shimmerPanel" class="panel panel-primary">
-						<div class="panel-heading">
-							Visualisation panel <sh:calculatingIndicatior />
-						</div>
-						<div class="panel-body">
-							<div>
-								Visualisation Mode: <span id="visualisationMode" class="label label-primary">Constellation Mode</span>
-							</div>
-							<div>
-								<button class="btn btn-success btn-sm width-full margin-top" 
-									onclick="Shimmer.toggleHeatmap();">Change Mode</button>
-							</div>
-							<div>
-								<h:form>
-									<p:outputLabel for="sizeMetricField" value="Node size metric" />
-									<p:selectOneButton id="sizeMetricField" 
-											value="#{simulationController.properties.nodeSizeMetric}">
-										<f:selectItems value="#{enumSelectItemsProvider.metrics}" />
-										<p:ajax event="change" global="true"
-											listener="#{simulationController.generateGraph}"
-											update="@([id$=dataScript])" 
-											onstart="ShimmerWeb.show('calculatingStatus');"
-											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
-									</p:selectOneButton>
-								</h:form>
-							</div>
-						</div>
-					</div>
+					<sh:projectInformation />
 				</div>
-				
-				<div id="shimmerProject" class="panel panel-success">
+			
+				<div id="shimmerPanel" class="panel panel-primary">
 					<div class="panel-heading">
-						Project data
+						Simulation <sh:calculatingIndicatior />
 					</div>
-					<div class="panel-body" id="shimmerInfo">
+					<div class="panel-body">
 						<div>
-							<label class="packageName badge badge-primary"></label>
+							<button class="btn btn-success btn-sm width-half margin-bottom" 
+								onclick="Shimmer.toggleHeatmap();">Change Mode</button>
 						</div>
-						
+						<p:outputLabel value="Visualisation Mode: "/><span id="visualisationMode" class="label label-primary">Constellation Mode</span>
+
 						<div>
-							<label>Class count:</label>
-							<span class="classCount badge"></span>
-						</div>
-						
-						<div>
-							<label>Concrete:</label>
-							<span class="concreteClassesCount badge"></span>
-							
-							<label>Abstract:</label>
-							<span class="abstractClassesCount badge"></span>
-						</div>
-						
-						<div>
-							<label>Abstractness:</label>
-							<span class="abstractness badge"></span>
-						</div>
-						
-						<div>
-							<label>Efferents:</label>
-							<span class="efferentsCount badge"></span>
-							
-							<label>Afferents:</label>
-							<span class="afferentsCount badge"></span>
-						</div>
-						
-						<div>
-							<label>Instability:</label>
-							<span class="instability badge"></span>
-						</div>
-						
-						<div>
-							<label>Distance from main sequence:</label>
-							<span class="distanceFromMainSequence badge"></span>
+							<h:form>
+								<p:outputLabel for="sizeMetricField" value="Node size metric:" />
+								<h:selectOneMenu id="sizeMetricField"
+										value="#{simulationController.properties.nodeSizeMetric}">
+									<f:selectItems value="#{enumSelectItemsProvider.metrics}" />
+									<p:ajax event="change" global="true" 
+										listener="#{simulationController.generateGraph}"
+										update="@([id$=dataScript])" 
+										onstart="ShimmerWeb.show('calculatingStatus');"
+										oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+								</h:selectOneMenu>
+								
+								<p:outputLabel for="colorMetricField" value="Node color metric:" />
+								<h:selectOneMenu id="colorMetricField"
+										value="#{simulationController.properties.nodeColorMetric}">
+									<f:selectItems value="#{enumSelectItemsProvider.metrics}" />
+									<p:ajax event="change" global="true" 
+										listener="#{simulationController.generateGraph}"
+										update="@([id$=dataScript])" 
+										onstart="ShimmerWeb.show('calculatingStatus');"
+										oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+								</h:selectOneMenu>
+								
+								<p:outputLabel for="heatMetricField" value="Node heat metric:" />
+								<h:selectOneMenu id="heatMetricField"
+										value="#{simulationController.properties.nodeHeatMetric}">
+									<f:selectItems value="#{enumSelectItemsProvider.metrics}" />
+									<p:ajax event="change" global="true" 
+										listener="#{simulationController.generateGraph}"
+										update="@([id$=dataScript])" 
+										onstart="ShimmerWeb.show('calculatingStatus');"
+										oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+								</h:selectOneMenu>
+							</h:form>
 						</div>
 					</div>
 				</div>
-				
+			
 			</p:outputPanel>	
 			</div>
 		</div>
