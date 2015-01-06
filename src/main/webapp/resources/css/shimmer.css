@@ -47,7 +47,8 @@
 
 /* Fields ------------------------------------------------------------------ */
 
-#shimmerPanel label {
+#shimmerPanel label,
+label.wide-label {
 	width: 200px;
 }
 

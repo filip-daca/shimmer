@@ -10,12 +10,24 @@
     <ui:define name="content">
     
     	<div class="well">
-    		<h2>Proof of concept mode</h2>
+    		<h2>Shimmering constellations</h2>
+    		<h:form id="basicSettingsForm">
+	    		<p:outputLabel value="Project *.class files path:" styleClass="wide-label" />
+	    		<p:inputText value="#{simulationController.properties.directoryPath}" size="100" />
+	    		<p:commandLink styleClass="btn btn-primary btn-sm" 
+	    				ajax="true" global="true"
+						actionListener="#{simulationController.generateGraph}"
+						update="@([id$=dataScript])" 
+						onstart="ShimmerWeb.show('calculatingStatus');"
+						oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();">
+					<i class="glyphicon glyphicon-ok"></i>
+				</p:commandLink>
+    		</h:form>
     	</div>
     	
     	<div class="shimmerVisualisation panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Sample project visualiztion</h3>
+				<h3 class="panel-title">Project visualiztion</h3>
 			</div>
 			<div class="panel-body">
 			
@@ -40,7 +52,7 @@
 						<p:outputLabel value="Visualisation Mode: "/><span id="visualisationMode" class="label label-primary">Constellation Mode</span>
 
 						<div>
-							<h:form>
+							<h:form id="extraSettingsForm">
 								<p:outputLabel for="sizeMetricField" value="Node size metric:" />
 								<h:selectOneMenu id="sizeMetricField"
 										value="#{simulationController.properties.nodeSizeMetric}">
