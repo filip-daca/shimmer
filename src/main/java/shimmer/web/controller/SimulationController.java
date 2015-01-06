@@ -60,13 +60,20 @@ public class SimulationController implements Serializable {
 	public void initialize() {
 		// Create default properties
 		properties = new SimulationProperties();
-		
+
+		generateGraph();
+		initialized = true;
+	}
+	
+	/**
+	 * Generates graph and JSON elements from properties
+	 */
+	public void generateGraph() {
 		graph = jDependService.generateGraph(properties.getDirectoryPath());
 		metricsService.calculateMetrics(graph, properties);
 		findbugsService.applyAnalysis(graph, properties);
 		edgesJSON = graphService.generateEdgesJSON(graph, properties);
 		nodesJSON = graphService.generateNodesJSON(graph, properties);
-		initialized = true;
 	}
 	
 	private void considerInitialization() {

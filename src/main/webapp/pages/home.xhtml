@@ -18,12 +18,14 @@
 				<h3 class="panel-title">Sample project visualiztion</h3>
 			</div>
 			<div class="panel-body">
-				
-				<h:outputText value="#{homePageController.helloWorld}" />
+			
+			<p:outputPanel id="shimmerSimulation">
 				
 				<div id="shimmerContainer">
+				
 					<div id="shimmerHeatmap"></div>
 					<div id="shimmerNetwork"></div>
+					
 					<div id="shimmerPanel" class="panel panel-primary">
 						<div class="panel-heading">
 							Visualisation panel <sh:calculatingIndicatior />
@@ -34,18 +36,20 @@
 							</div>
 							<div>
 								<button class="btn btn-success btn-sm width-full margin-top" 
-									onclick="toggleHeatmap();">Change Mode</button>
+									onclick="Shimmer.toggleHeatmap();">Change Mode</button>
 							</div>
 							<div>
 								<h:form>
-								
-								<p:selectOneMenu id="sizeMetricField" value="#{simulationController.properties.nodeSizeMetric}">
-									<f:selectItems values="#{Metric.values}" />
-									<p:ajax event="change" global="true"
-										listener="#{simulationController.reinitialize}" 
-										onstart="ShimmerWeb.show('calculatingStatus');"
-										oncomplete="ShimmerWeb.hide('calculatingStatus');" />
-								</p:selectOneMenu>
+									<p:outputLabel for="sizeMetricField" value="Node size metric" />
+									<p:selectOneButton id="sizeMetricField" 
+											value="#{simulationController.properties.nodeSizeMetric}">
+										<f:selectItems value="#{enumSelectItemsProvider.metrics}" />
+										<p:ajax event="change" global="true"
+											listener="#{simulationController.generateGraph}"
+											update="@([id$=dataScript])" 
+											onstart="ShimmerWeb.show('calculatingStatus');"
+											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+									</p:selectOneButton>
 								</h:form>
 							</div>
 						</div>
@@ -99,158 +103,50 @@
 					</div>
 				</div>
 				
+			</p:outputPanel>	
 			</div>
 		</div>
 		
+		<!-- This field is updated every time the data changes -->
+		<p:outputPanel id="dataScript">
+			<script type="text/javascript">
+			/* <![CDATA[ */
+			
+				// Nodes and edges
+				var nodes = #{simulationController.nodesJSON}
+				var edges = #{simulationController.edgesJSON}
+			    
+				Shimmer.data = {
+					nodes: nodes,
+					edges: edges
+				};
+				
+			/* ]]> */
+			</script>
+		</p:outputPanel>
 		
+		<!-- This is standard script field -->
 		<script type="text/javascript">
 		/* <![CDATA[ */
 		
-			// Ustawienia symulacji
-			var Shimmer = {
-				width: 800,
-				height: 650,
-				nodesCount: #{simulationController.nodesCount},
-				enableHeatmap: true,
-				heatmapUpdateInterval: 100,
-				heatmapTimeout: 0,
-			}
-		
-			// Nodes and edges
-			var nodes = #{simulationController.nodesJSON}
-			var edges = #{simulationController.edgesJSON}
-		
-			// create a network
-			var container = document.getElementById('shimmerNetwork');
-			var data = {
-				nodes: nodes,
-				edges: edges
-			};
+			// Simulation settings
+			Shimmer.width = 800;
+			Shimmer.height = 650;
+			Shimmer.nodesCount = #{simulationController.nodesCount};
+
+			// Create a network and heatmap
+			Shimmer.networkContainer = document.getElementById('shimmerNetwork');
+			Shimmer.heatmapContainer =  document.getElementById('shimmerHeatmap');
+			Shimmer.createNetwork();
+			Shimmer.createHeatmap();
+			
+			Shimmer.updateHeatmap();
 		  
-			var options = {
-				nodes: {
-					shape: 'dot',
-					fontColor: 'white',
-				},
-				edges: {
-					width: 1,
-				},
-				smoothCurves: true,
-				configurePhysics: true,
-			};
-			var network = new vis.Network(container, data, options);
-		  
-			var heatmap = h337.create({
-				container: document.getElementById('shimmerHeatmap'),
-				gradient: { .1: 'rgba(0,0,0,0)', 0.25: "rgba(0,0,90, .6)", .6: "blue", .9: "cyan", .95: 'rgba(255,255,255,.4)'},
-				maxOpacity: .6,
-				radius: 10,
-				blur: .90
-			});
-			
-			function getNodeX(i) {
-				var canvasScaledXCenter = network.getScale() * network.getCenterCoordinates().x;
-				var nodeScaledXDelta = Shimmer.width / 2 + network.getScale() * network.nodes[i].x;
-				
-				return Math.floor(nodeScaledXDelta - canvasScaledXCenter);
-			}
-			
-			function getNodeY(i) {
-				var canvasScaledYCenter = network.getScale() * network.getCenterCoordinates().y;
-				var nodeScaledYDelta = Shimmer.height / 2 + network.getScale() * network.nodes[i].y;
-				
-				return Math.floor(nodeScaledYDelta - canvasScaledYCenter);
-			}
-			
-			function getRandom(from, to) {
-				return Math.floor((Math.random() * to) + from);
-			}
-			
-			function getRandomColor() {
-				if (getRandom(1, 100) < 15) {
-					return 'red';
-				} else if (getRandom(1, 100) > 85) {
-					return 'green';
-				} else {
-					return 'lightgray';
-				}
-			}
-		  
-			function updateHeatmap(properties) {
-				var nodesCount = Shimmer.nodesCount;
-				var nodeX, nodeY;
-		
-				if (!Shimmer.enableHeatmap) {
-					// Not updating heatmap when it's disabled
-					return;
-				}
-				
-				heatmap.setData({min: 0, max:30, data: []});
-				for (i = 0; i < nodesCount; i++) {
-					nodeX = getNodeX(i);
-					nodeY = getNodeY(i);
-					heatmap.addData({x: nodeX, y: nodeY, value: nodes[i].heatValue, radius: network.getScale() * 100});
-				}
-			};
-			
-			function startUpdatingHeatmap() {
-				ShimmerWeb.show("calculatingStatus");
-				Shimmer.heatmapTimeout = setInterval(function(){updateHeatmap()}, Shimmer.heatmapUpdateInterval);
-			}
-			
-			function stopUpdatingHeatmap() {
-				clearInterval(Shimmer.heatmapTimeout);
-				ShimmerWeb.hide("calculatingStatus");
-			}
-			
-			function toggleHeatmap() {
-				Shimmer.enableHeatmap = !Shimmer.enableHeatmap;
-				if (Shimmer.enableHeatmap) {
-					$("#visualisationMode").text("Constallation");
-					$("#visualisationMode").removeClass("label-warning");
-					$("#visualisationMode").addClass("label-primary");
-					changeEdgesColor('transparent');
-					ShimmerWeb.show("shimmerHeatmap");
-				} else {
-					$("#visualisationMode").text("Graph");
-					$("#visualisationMode").removeClass("label-primary");
-					$("#visualisationMode").addClass("label-warning");
-					changeEdgesColor('black');
-					ShimmerWeb.hide("shimmerHeatmap");
-				}
-			}
-			
-			function changeEdgesColor(color) {
-				var nodesCount = Shimmer.nodesCount;
-				for (i = 0; i < nodesCount; i++) {
-					var oldBackgroundColor = nodes[i].color.background;
-					data.nodes[i].color = { background : oldBackgroundColor, border : color };
-					network.nodes[i].color = { background : oldBackgroundColor, border : color };
-				}
-				network.setData(data);
-				updateHeatmap();
-			}
-			
-			function nodeSelectCallback(event) {
-				var node = nodes[event.nodes[0]];
-				var metaData = node.shimmerProperties;
-				$("#shimmerInfo .packageName").text(node.label);
-				$("#shimmerInfo .classCount").text(metaData.classCount);
-				$("#shimmerInfo .concreteClassesCount").text(metaData.concreteClassesCount);
-				$("#shimmerInfo .abstractClassesCount").text(metaData.abstractClassesCount);
-				$("#shimmerInfo .abstractness").text(metaData.abstractness);
-				$("#shimmerInfo .efferentsCount").text(metaData.efferentsCount);
-				$("#shimmerInfo .afferentsCount").text(metaData.afferentsCount);
-				$("#shimmerInfo .instability").text(metaData.instability);
-				$("#shimmerInfo .distanceFromMainSequence").text(metaData.distanceFromMainSequence);
-			}
-			
-			updateHeatmap();
-		  
-			network.on('viewChanged', updateHeatmap);
-			network.on('startStabilization', startUpdatingHeatmap);
-			network.on('stabilized', stopUpdatingHeatmap);
-			network.on('select', nodeSelectCallback);
+			// Assign listeners
+			Shimmer.network.on('viewChanged', Shimmer.updateHeatmap);
+			Shimmer.network.on('startStabilization', Shimmer.startUpdatingHeatmap);
+			Shimmer.network.on('stabilized', Shimmer.stopUpdatingHeatmap);
+			Shimmer.network.on('select', Shimmer.nodeSelectCallback);
 			
 			/* ]]> */
 		</script>
