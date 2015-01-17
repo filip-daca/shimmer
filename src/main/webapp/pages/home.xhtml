@@ -14,14 +14,22 @@
     		<h:form id="basicSettingsForm">
 	    		<p:outputLabel value="Project *.class files path:" styleClass="wide-label" />
 	    		<p:inputText value="#{simulationController.properties.directoryPath}" size="100" />
-	    		<p:commandLink styleClass="btn btn-primary btn-sm" 
+	    		<p:commandLink styleClass="btn btn-primary btn-sm margin-left" 
 	    				ajax="true" global="true"
 						actionListener="#{simulationController.generateGraph}"
-						update="@([id$=dataScript])" 
+						update="@([id$=dataScript])"
+						onclick="PF('progressBar').setValue(0); 
+							ShimmerWeb.componentShow('progressBar');
+							PF('progressBar').start();"
 						onstart="ShimmerWeb.show('calculatingStatus');"
-						oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();">
+						oncomplete="ShimmerWeb.hide('calculatingStatus');
+							Shimmer.reloadData();
+							ShimmerWeb.componentHide('progressBar');">
 					<i class="glyphicon glyphicon-ok"></i>
 				</p:commandLink>
+				<p:progressBar id="progressBar" styleClass="margin-top" widgetVar="progressBar" ajax="true" 
+					value="#{simulationController.loadingProgress}" 
+					labelTemplate="{value}%"  global="false" interval="200" style="display: none;" />
     		</h:form>
     	</div>
     	

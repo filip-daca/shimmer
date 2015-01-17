@@ -53,6 +53,8 @@ public class SimulationController implements Serializable {
 	private String edgesJSON;
 	private String nodesJSON;
 	
+	private Integer loadingProgress;
+	
 	// ************************************************************************
 	// PERSISTANCE AND INITIALIZATION
 	
@@ -69,17 +71,30 @@ public class SimulationController implements Serializable {
 	 * Generates graph and JSON elements from properties
 	 */
 	public void generateGraph() {
+		setLoadindProgress(0);
 		graph = jDependService.generateGraph(properties.getDirectoryPath());
+		setLoadindProgress(20);
 		metricsService.calculateMetrics(graph, properties);
+		setLoadindProgress(40);
 		findbugsService.applyAnalysis(graph, properties);
+		setLoadindProgress(60);
 		edgesJSON = graphService.generateEdgesJSON(graph, properties);
+		setLoadindProgress(80);
 		nodesJSON = graphService.generateNodesJSON(graph, properties);
+		setLoadindProgress(100);
 	}
 	
 	private void considerInitialization() {
 		if (!initialized) {
 			initialize();
 		}
+	}
+	
+	// ************************************************************************
+	// LOADING PROGRESS
+	
+	private synchronized void setLoadindProgress(int value) {
+		loadingProgress = value;
 	}
 	
 	// ************************************************************************
@@ -103,6 +118,17 @@ public class SimulationController implements Serializable {
 	public SimulationProperties getProperties() {
 		considerInitialization();
 		return properties;
+	}
+	
+	public synchronized int getLoadingProgress() {
+		if (loadingProgress == null) {
+			return 0;
+		} else if (loadingProgress == 100) {
+			loadingProgress = null;
+			return 100;
+		} else {
+			return loadingProgress;
+		}
 	}
 	
 }
