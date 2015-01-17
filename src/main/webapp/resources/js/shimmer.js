@@ -132,12 +132,14 @@ var Shimmer = {
 			$("#visualisationMode").removeClass("label-warning");
 			$("#visualisationMode").addClass("label-primary");
 			Shimmer.changeEdgesColor('transparent');
+			Shimmer.changeFontColor('white');
 			ShimmerWeb.show("shimmerHeatmap");
 		} else {
 			$("#visualisationMode").text("Graph");
 			$("#visualisationMode").removeClass("label-primary");
 			$("#visualisationMode").addClass("label-warning");
 			Shimmer.changeEdgesColor('black');
+			Shimmer.changeFontColor('black');
 			ShimmerWeb.hide("shimmerHeatmap");
 		}
 	},
@@ -156,6 +158,14 @@ var Shimmer = {
 		}
 		Shimmer.reloadData();
 		Shimmer.updateHeatmap();
+	},
+	
+	/**
+	 * Changes color of caption font.
+	 * @param color - color to change
+	 */
+	changeFontColor: function(color) {
+		Shimmer.network.setOptions({nodes: {fontColor: color}});
 	},
 	
 	nodeSelectCallback: function(event) {
