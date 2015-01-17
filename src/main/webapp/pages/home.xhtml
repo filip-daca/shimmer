@@ -57,10 +57,22 @@
 							<button class="btn btn-success btn-sm width-half margin-bottom" 
 								onclick="Shimmer.toggleHeatmap();">Change Mode</button>
 						</div>
+						
 						<p:outputLabel value="Visualisation Mode: "/><span id="visualisationMode" class="label label-primary">Constellation Mode</span>
 
 						<div>
 							<h:form id="extraSettingsForm">
+								<div>
+									<p:outputLabel value="Show package tree: "/>
+									<p:inputSwitch value="#{simulationController.properties.packageTreeEdges}">
+										<p:ajax event="change" global="true" 
+											listener="#{simulationController.generateGraph}"
+											update="@([id$=dataScript])" 
+											onstart="ShimmerWeb.show('calculatingStatus');"
+											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+									</p:inputSwitch>
+								</div>
+							
 								<p:outputLabel for="sizeMetricField" value="Node size metric:" />
 								<h:selectOneMenu id="sizeMetricField"
 										value="#{simulationController.properties.nodeSizeMetric}">
@@ -127,7 +139,6 @@
 			// Simulation settings
 			Shimmer.width = 800;
 			Shimmer.height = 650;
-			Shimmer.nodesCount = #{simulationController.nodesCount};
 
 			// Create a network and heatmap
 			Shimmer.networkContainer = document.getElementById('shimmerNetwork');

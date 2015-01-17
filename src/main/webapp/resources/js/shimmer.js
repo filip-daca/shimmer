@@ -2,7 +2,6 @@
 var Shimmer = {
 	width: 800,
 	height: 650,
-	nodesCount: 0,
 	enableHeatmap: true,
 	heatmapUpdateInterval: 100,
 	heatmapTimeout: 0,
@@ -84,7 +83,7 @@ var Shimmer = {
 	 */
 	updateHeatmap: function () {
 		var i;
-		var nodesCount = Shimmer.nodesCount;
+		var nodesCount = Shimmer.data.nodes.length;
 		var nodeX, nodeY;
 
 		if (!Shimmer.enableHeatmap) {
@@ -150,7 +149,7 @@ var Shimmer = {
 	 */
 	changeEdgesColor: function(color) {
 		var i;
-		var nodesCount = Shimmer.nodesCount;
+		var nodesCount = Shimmer.data.nodes.length;
 		for (i = 0; i < nodesCount; i++) {
 			var oldBackgroundColor = Shimmer.data.nodes[i].color.background;
 			Shimmer.data.nodes[i].color = { background : oldBackgroundColor, border : color };

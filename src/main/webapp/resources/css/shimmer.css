@@ -304,3 +304,13 @@ body.basic-template {
 	text-align: inherit;
 	border: inherit;
 }
+
+.basic-template div.ui-inputswitch {
+	height: 20px;
+	vertical-align: middle;
+}
+
+.basic-template .ui-inputswitch span {
+	margin: -5px 0px;
+	vertical-align: top;
+}
