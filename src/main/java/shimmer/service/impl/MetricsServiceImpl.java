@@ -21,7 +21,7 @@ public class MetricsServiceImpl implements MetricsService {
 	
 	@Override
 	public void calculateMetrics(Graph graph, SimulationProperties properties) {
-		for (Node node : graph.getNodes().values()) {
+		for (Node node : graph.getNodes()) {
 			if (instabilityCalculationRequired(properties)) {
 				calculateInstability(node);
 			}

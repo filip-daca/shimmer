@@ -1,9 +1,9 @@
 package shimmer.domain;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.Collection;
+
+import shimmer.domain.collections.Edges;
+import shimmer.domain.collections.Nodes;
 
 /**
  * Class representing a Shimmer graph.
@@ -15,85 +15,75 @@ public class Graph {
 	// ************************************************************************
 	// FIELDS
 	
-	// Package structure
+	// Package structure - only used when package tree is needed
 	private PackageTreeNode packageRoot;
 	
 	// Map with nodes (id -> node)
-	private Map<Integer, Node> nodes;
+	private Nodes nodes;
 	
 	// Set with edges
-	private Set<Edge> edges;
+	private Edges edges;
 	
 	// ************************************************************************
 	// CONSTRUCTORS
 	
-	public Graph() { 
+	public Graph() {
 		this.packageRoot = new PackageTreeNode(null);
-		this.nodes = new LinkedHashMap<Integer, Node>();
-		this.edges = new LinkedHashSet<Edge>();
+		this.nodes = new Nodes();
+		this.edges = new Edges();
 	}
 	
 	// ************************************************************************
 	// METHODS
-	
-	/**
-	 * Adds a node with a tree manner.
-	 * 
-	 * @param parentId
-	 * @deprecated
-	 */
-	public void addNode(int parentId) {
-		int newId = nodes.size();
-		Node newNode = new Node(newId);
-		Node parentNode = nodes.get(parentId);
-		
-		Edge newEdge = new Edge(newNode, parentNode);
-		newNode.getEdges().add(newEdge);
-		parentNode.getEdges().add(newEdge);
-		
-		edges.add(newEdge);
-		nodes.put(newId, newNode);
-	}
 
 	/**
 	 * Adds a node treated as package.
 	 * 
-	 * @param newNode - package node
+	 * @param newPackageNode - package node to add
+	 * @param addTreeEdges - build package tree?
 	 */
-	public void addPackageNode(Node newNode) {
-		Node parentNode = packageRoot.findParent(newNode.getName());
-		
-		if (parentNode != null) {
-			Edge newEdge = new Edge(newNode, parentNode);
-			newNode.getEdges().add(newEdge);
-			parentNode.getEdges().add(newEdge);
-			edges.add(newEdge);
+	public void addAnalysedPackageNode(Node newPackageNode, boolean addTreeEdges) {
+		// Adding new node to data collections
+		nodes.add(newPackageNode);
+		if (addTreeEdges) {
+			packageRoot.addNode(nodes, newPackageNode, newPackageNode.getName());
 		}
-		
-		nodes.put(newNode.getId(), newNode);
-		packageRoot.addNode(newNode, newNode.getName());
 	}
 	
 	/**
-	 * Returns number of nodes.
-	 * 
-	 * @return number of nodes
+	 * Generates edges of a package tree.
 	 */
-	public int getNodesCount() {
-		return nodes.size();
+	public void generateTreeEdges() {
+		for (PackageTreeNode packageTreeNode : packageRoot.getChildren().values()) {
+			packageTreeNode.generateEdges(edges);
+		}
 	}
-	
+
 	// ************************************************************************
 	// PRIVATE METHODS
 	
 	// ************************************************************************
 	// GETTERS / SETTERS
 	
-	public Set<Edge> getEdges() {
-		return edges;
+	/**
+	 * @return number of nodes
+	 */
+	public int getNodesCount() {
+		return nodes.count();
 	}
 	
-	public Map<Integer, Node> getNodes() {
-		return nodes;
+	/**
+	 * @return collection od edges
+	 */
+	public Collection<Edge> getEdges() {
+		return edges.getCollection();
 	}
+
+	/**
+	 * @return collection of nodes
+	 */
+	public Collection<Node> getNodes() {
+		return nodes.getCollection();
+	}
+	
 }

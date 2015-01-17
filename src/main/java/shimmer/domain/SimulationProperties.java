@@ -13,6 +13,7 @@ public class SimulationProperties {
 	private Metric nodeSizeMetric;
 	private Metric nodeColorMetric;
 	private Metric nodeHeatMetric;
+	private boolean packageTreeEdges;
 	
 	// ************************************************************************
 	// CONSTRUCTORS
@@ -23,6 +24,7 @@ public class SimulationProperties {
 		this.nodeSizeMetric = Metric.CLASS_COUNT;
 		this.nodeColorMetric = Metric.DISTANCE_FROM_MAIN_SEQUENCE;
 		this.nodeHeatMetric = Metric.ABSTRACTNESS;
+		this.packageTreeEdges = true;
 	}
 	
 	// ************************************************************************
@@ -58,6 +60,14 @@ public class SimulationProperties {
 	
 	public void setDirectoryPath(String directoryPath) {
 		this.directoryPath = directoryPath;
+	}
+	
+	public boolean isPackageTreeEdges() {
+		return packageTreeEdges;
+	}
+	
+	public void setPackageTreeEdges(boolean packageTreeEdges) {
+		this.packageTreeEdges = packageTreeEdges;
 	}
 	
 }

@@ -12,6 +12,7 @@ import jdepend.framework.JavaPackage;
 import jdepend.framework.PackageComparator;
 import shimmer.domain.Graph;
 import shimmer.domain.Node;
+import shimmer.domain.factory.NodeFactory;
 import shimmer.service.JDependService;
 
 /**
@@ -21,7 +22,7 @@ import shimmer.service.JDependService;
  */
 @Named
 public class JDependServiceImpl implements JDependService {
-
+	
 	// ************************************************************************
 	// SERVICE FIELDS
 	
@@ -31,7 +32,8 @@ public class JDependServiceImpl implements JDependService {
 	// IMPLEMENTATIONS
 	
 	@Override
-	public Graph generateGraph(String directoryName) {
+	public Graph generateGraph(String directoryName, 
+			boolean packageTreeEdges, boolean dependenciesEdges) {
 		analyzer = new JDepend();
 		try {
 			addDirectory(directoryName);
@@ -48,12 +50,23 @@ public class JDependServiceImpl implements JDependService {
         // Generating graph
         Graph graph = new Graph();
         
+        // Adding packages
         for (JavaPackage javaPackage : packageList) {
-        	Node newPackageNode = new Node(graph.getNodesCount(), javaPackage.getName(), 
-					javaPackage.getClassCount(), javaPackage.getVolatility(), 
-					javaPackage.getAbstractClassCount(), javaPackage.getConcreteClassCount(),
-					javaPackage.getEfferents().size(), javaPackage.getAfferents().size());
-        	graph.addPackageNode(newPackageNode);
+        	Node newPackageNode = NodeFactory.newAnalysedPackageNode(javaPackage.getName(), 
+				javaPackage.getClassCount(), javaPackage.getAbstractClassCount(), 
+				javaPackage.getConcreteClassCount(),
+				javaPackage.getEfferents().size(), javaPackage.getAfferents().size());
+        	graph.addAnalysedPackageNode(newPackageNode, packageTreeEdges);
+        }
+        
+        // Adding package tree edges
+        if (packageTreeEdges) {
+        	graph.generateTreeEdges();
+        }
+        
+        // Adding dependencies edges
+        if (dependenciesEdges) {
+        	
         }
 		
         return graph;

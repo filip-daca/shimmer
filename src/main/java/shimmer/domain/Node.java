@@ -27,7 +27,6 @@ public class Node {
 	private int concreteClassesCount;
 	private int afferentsCount;
 	private int efferentsCount;
-	private int volatility;
 	
 	// Metrics results 
 	private float abstractness;
@@ -41,27 +40,25 @@ public class Node {
 		this.edges = new ArrayList<Edge>();
 	}
 	
-	public Node(int id) {
+	public Node(String name) {
 		this();
-		this.id = id;
-	}
-	
-	public Node(int id, String name) {
-		this(id);
 		this.name = name;
 	}
 	
-	public Node(int id, String name, int classCount, int abstractClassesCount,
-			int concreteClassesCount, int volatility, int efferentsCount,
-			int afferentsCount) {
-		this(id, name);
-		this.nodeType = NodeType.PACKAGE;
+	public Node(String name, int classCount, int abstractClassesCount,
+			int concreteClassesCount, int efferentsCount, int afferentsCount) {
+		this(name);
+		this.nodeType = NodeType.ANALYSED_PACKAGE;
 		this.classCount = classCount;
 		this.abstractClassesCount = abstractClassesCount;
 		this.concreteClassesCount = concreteClassesCount;
-		this.volatility = volatility;
 		this.afferentsCount = afferentsCount;
 		this.efferentsCount = efferentsCount;
+	}
+	
+	public Node(String name, NodeType type) {
+		this(name);
+		this.nodeType = type;
 	}
 	
 	// ************************************************************************
@@ -75,6 +72,10 @@ public class Node {
 		return id;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -83,24 +84,24 @@ public class Node {
 		return abstractness;
 	}
 	
+	public void setAbstractness(float abstractness) {
+		this.abstractness = abstractness;
+	}
+	
 	public float getDistanceFromMainSequence() {
 		return distanceFromMainSequence;
+	}
+	
+	public void setDistanceFromMainSequence(float distanceFromMainSequence) {
+		this.distanceFromMainSequence = distanceFromMainSequence;
 	}
 	
 	public float getInstability() {
 		return instability;
 	}
 	
-	public void setDistanceFromMainSequence(Float distanceFromMainSequence) {
-		this.distanceFromMainSequence = distanceFromMainSequence;
-	}
-	
-	public void setInstability(Float instability) {
+	public void setInstability(float instability) {
 		this.instability = instability;
-	}
-	
-	public void setAbstractness(Float abstractness) {
-		this.abstractness = abstractness;
 	}
 	
 	public int getAbstractClassesCount() {
@@ -121,6 +122,10 @@ public class Node {
 	
 	public int getEfferentsCount() {
 		return efferentsCount;
+	}
+	
+	public NodeType getNodeType() {
+		return nodeType;
 	}
 	
 }

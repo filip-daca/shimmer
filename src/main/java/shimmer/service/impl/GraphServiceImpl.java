@@ -8,6 +8,7 @@ import shimmer.domain.Edge;
 import shimmer.domain.Graph;
 import shimmer.domain.Node;
 import shimmer.domain.SimulationProperties;
+import shimmer.enums.NodeType;
 import shimmer.service.GraphService;
 
 /**
@@ -55,7 +56,7 @@ public class GraphServiceImpl implements GraphService {
 	public String generateNodesJSON(Graph graph, SimulationProperties properties) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[\n");
-		for (Node node : graph.getNodes().values()) {
+		for (Node node : graph.getNodes()) {
 			appendNode(sb, node, properties);
 		}
 		sb.append("]\n");
@@ -72,6 +73,7 @@ public class GraphServiceImpl implements GraphService {
 		appendColor(sb, node, properties);
 		appendHeat(sb, node, properties);
 		appendName(sb, node);
+		appendShape(sb, node);
 		appendProperties(sb, node);
 		sb.append("}, \n");
 	}
@@ -205,6 +207,16 @@ public class GraphServiceImpl implements GraphService {
 		case CLASS_COUNT:
 			sb.append(MINIMAL_RADIUS + node.getClassCount() / 1.5);
 			break;
+		}
+		sb.append(", ");
+	}
+	
+	private void appendShape(StringBuilder sb, Node node) {
+		sb.append("shape: ");
+		if (node.getNodeType() == NodeType.TREE_NODE) {
+			sb.append("'square'");
+		} else {
+			sb.append("'dot'");
 		}
 		sb.append(", ");
 	}

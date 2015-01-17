@@ -3,6 +3,11 @@ package shimmer.domain;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import shimmer.domain.collections.Edges;
+import shimmer.domain.collections.Nodes;
+import shimmer.domain.factory.NodeFactory;
+import shimmer.domain.factory.PackageTreeNodeFactory;
+import shimmer.domain.helper.GraphHelper;
 
 import com.google.common.collect.Lists;
 
@@ -16,7 +21,7 @@ public class PackageTreeNode {
 	// ************************************************************************
 	// FIELDS	
 	
-	private Node lastNode;
+	private Node node;
 	private Map<String, PackageTreeNode> children;
 	
 	// ************************************************************************
@@ -24,22 +29,23 @@ public class PackageTreeNode {
 	
 	public PackageTreeNode(Node node) {
 		this.children = new HashMap<String, PackageTreeNode>();
-		this.lastNode = node;
+		this.node = node;
+	}
+	
+	// ************************************************************************
+	// DIAGNOSTICS
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.getClass().getName());
+		sb.append(" ");
+		sb.append(getName());
+		return sb.toString();
 	}
 	
 	// ************************************************************************
 	// METHODS
-	
-	/**
-	 * Finds a parent node for a package.
-	 * 
-	 * @param packageName - name of a package
-	 * @return Node of a parent in a subtree
-	 */
-	public Node findParent(String packageName) {
-		List<String> packageNames = Lists.newArrayList(packageName.split("\\."));
-		return findParent(packageNames);
-	}
 	
 	/**
 	 * Adds a package node to a tree.
@@ -47,56 +53,78 @@ public class PackageTreeNode {
 	 * @param newNode - node of a new package
 	 * @param packageName - name of a package
 	 */
-	public void addNode(Node newNode, String packageName) {
+	public void addNode(Nodes nodes, Node newNode, String packageName) {
 		List<String> packageNames = Lists.newArrayList(packageName.split("\\."));
-		addPackage(newNode, packageNames);
+		addPackage(nodes, newNode, packageNames);
 	}
 
 	// ************************************************************************
 	// PRIVATE METHODS
-	
+
 	/**
-	 * Recursively travels down the tree, looking
-	 * for a parent node for a package.
+	 * Recursively travels down the tree, adding a package.
 	 * 
-	 * @param packageNames - path of packages
-	 * @return Node of a parent in subtree
+	 * @param nodes - all nodes collection
+	 * @param newNode - node to add in leaf
+	 * @param packageNames - package names to visit
 	 */
-	private Node findParent(List<String> packageNames) {
+	private void addPackage(Nodes nodes, Node newNode, List<String> packageNames) {
 		if (packageNames.isEmpty()) {
-			return lastNode;
+			this.node = newNode;
 		} else {
-			PackageTreeNode child = children.get(packageNames.get(0));
-			if (child != null) {
-				packageNames.remove(0);
-				return child.findParent(packageNames);
-			} else {
-				return lastNode;
+			// Attempt to go deeper
+			String childPackageNameSnippet = packageNames.get(0);
+			PackageTreeNode childPackageTreeNode = children.get(childPackageNameSnippet);
+			packageNames.remove(0);
+			
+			// Need to create a child
+			if (childPackageTreeNode == null) {
+				String childPackageName = GraphHelper.getFullPackageName(getName(), childPackageNameSnippet);
+				Node childNode = NodeFactory.newTreeNode(childPackageName);
+				nodes.add(childNode);
+				childPackageTreeNode = PackageTreeNodeFactory.newPackageTreeNode(childNode);
+				children.put(childPackageNameSnippet, childPackageTreeNode);
 			}
+			
+			// Add new package recursively
+			childPackageTreeNode.addPackage(nodes, newNode, packageNames);
 		}
 	}
 
 	/**
-	 * recursively travels down the tree, adding a package.
+	 * Recursively travels down the tree, adding edges.
 	 * 
-	 * @param newNode
-	 * @param packageNames
+	 * @param edges - all edges collection
 	 */
-	private void addPackage(Node newNode, List<String> packageNames) {
-		if (packageNames.isEmpty()) {
-			this.lastNode = newNode;
-		} else {
-			String childPackageName = packageNames.get(0);
-			PackageTreeNode child = children.get(childPackageName);
-			packageNames.remove(0);
-			if (child != null) {
-				child.addPackage(newNode, packageNames);
-			} else {
-				child = new PackageTreeNode(this.lastNode);
-				children.put(childPackageName, child);
-				child.addPackage(newNode, packageNames);
-			}
+	public void generateEdges(Edges edges) {
+		// For every child
+		for (PackageTreeNode childTreeNode : children.values()) {
+			// Create new edge
+			Edge newEdge = new Edge(node, childTreeNode.node);
+			edges.add(newEdge);
+			node.getEdges().add(newEdge);
+			childTreeNode.node.getEdges().add(newEdge);
+			
+			// Populate edge creation
+			childTreeNode.generateEdges(edges);
 		}
 	}
+	
+	// ************************************************************************
+	// GETTERS / SETTERS
+	
+	public Map<String, PackageTreeNode> getChildren() {
+		return children;
+	}
+	
+	public String getName() {
+		if (node == null) {
+			return "";
+		} else {
+			return node.getName();
+		}
+	}
+
+	
 	
 }

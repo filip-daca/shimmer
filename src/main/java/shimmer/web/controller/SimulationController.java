@@ -72,7 +72,8 @@ public class SimulationController implements Serializable {
 	 */
 	public void generateGraph() {
 		setLoadindProgress(0);
-		graph = jDependService.generateGraph(properties.getDirectoryPath());
+		graph = jDependService.generateGraph(properties.getDirectoryPath(), 
+			properties.isPackageTreeEdges(), true);
 		setLoadindProgress(20);
 		metricsService.calculateMetrics(graph, properties);
 		setLoadindProgress(40);
