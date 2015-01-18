@@ -34,6 +34,8 @@ public class SimulationProperties {
 	 */
 	private boolean libraryPackages;
 	
+	private boolean constellation;
+	
 	// ************************************************************************
 	// CONSTRUCTORS
 	
@@ -46,6 +48,7 @@ public class SimulationProperties {
 		this.dependenciesEdges = false;
 		this.fullPackageTree = false;
 		this.libraryPackages = true;
+		this.constellation = true;
 	}
 	
 	// ************************************************************************
@@ -113,6 +116,14 @@ public class SimulationProperties {
 	
 	public void setDependenciesEdges(boolean dependenciesEdges) {
 		this.dependenciesEdges = dependenciesEdges;
+	}
+	
+	public boolean isConstellation() {
+		return constellation;
+	}
+	
+	public void setConstellation(boolean constellation) {
+		this.constellation = constellation;
 	}
 	
 }

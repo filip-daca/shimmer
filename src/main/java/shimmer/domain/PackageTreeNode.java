@@ -9,7 +9,6 @@ import shimmer.domain.collections.Nodes;
 import shimmer.domain.factory.NodeFactory;
 import shimmer.domain.factory.PackageTreeNodeFactory;
 import shimmer.domain.helper.GraphHelper;
-import shimmer.enums.NodeType;
 
 import com.google.common.collect.Lists;
 

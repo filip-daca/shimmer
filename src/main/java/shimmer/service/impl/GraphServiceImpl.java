@@ -162,7 +162,12 @@ public class GraphServiceImpl implements GraphService {
 			return;
 		}
 		
-		sb.append("color: {border: 'transparent', background: ");
+		if (properties.isConstellation()) {
+			sb.append("color: {border: 'transparent', background: ");
+		} else {
+			sb.append("color: {border: 'black', background: ");
+		}
+		
 		switch (properties.getNodeColorMetric()) {
 		case DISTANCE_FROM_MAIN_SEQUENCE:
 			sb.append(floatMetricToColor(node.getDistanceFromMainSequence()));

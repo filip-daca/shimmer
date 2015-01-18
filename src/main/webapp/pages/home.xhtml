@@ -62,12 +62,16 @@
 
 						<div>
 							<h:form id="extraSettingsForm">
+								<p:inputText value="#{simulationController.properties.constellation}" 
+									id="constellationModeSwitch" type="hidden" />
+							
 								<div>
 									<p:outputLabel value="Package tree edges: "/>
 									<p:inputSwitch value="#{simulationController.properties.packageTreeEdges}">
 										<p:ajax event="change" global="true" 
 											listener="#{simulationController.generateGraph}"
-											update="@([id$=dataScript])" 
+											update="@([id$=dataScript])"
+											process="@form"
 											onstart="ShimmerWeb.show('calculatingStatus');"
 											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
 									</p:inputSwitch>
@@ -79,6 +83,7 @@
 										<p:ajax event="change" global="true" 
 											listener="#{simulationController.generateGraph}"
 											update="@([id$=dataScript])" 
+											process="@form"
 											onstart="ShimmerWeb.show('calculatingStatus');"
 											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
 									</p:inputSwitch>
@@ -90,6 +95,7 @@
 										<p:ajax event="change" global="true" 
 											listener="#{simulationController.generateGraph}"
 											update="@([id$=dataScript])" 
+											process="@form"
 											onstart="ShimmerWeb.show('calculatingStatus');"
 											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
 									</p:inputSwitch>
@@ -102,6 +108,7 @@
 									<p:ajax event="change" global="true" 
 										listener="#{simulationController.generateGraph}"
 										update="@([id$=dataScript])" 
+										process="@form"
 										onstart="ShimmerWeb.show('calculatingStatus');"
 										oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
 								</h:selectOneMenu>
@@ -113,6 +120,7 @@
 									<p:ajax event="change" global="true" 
 										listener="#{simulationController.generateGraph}"
 										update="@([id$=dataScript])" 
+										process="@form"
 										onstart="ShimmerWeb.show('calculatingStatus');"
 										oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
 								</h:selectOneMenu>
@@ -124,6 +132,7 @@
 									<p:ajax event="change" global="true" 
 										listener="#{simulationController.generateGraph}"
 										update="@([id$=dataScript])" 
+										process="@form"
 										onstart="ShimmerWeb.show('calculatingStatus');"
 										oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
 								</h:selectOneMenu>
@@ -164,7 +173,8 @@
 
 			// Create a network and heatmap
 			Shimmer.networkContainer = document.getElementById('shimmerNetwork');
-			Shimmer.heatmapContainer =  document.getElementById('shimmerHeatmap');
+			Shimmer.heatmapContainer = document.getElementById('shimmerHeatmap');
+			Shimmer.constellationSwitch = $('input[id$=constellationModeSwitch]');
 			Shimmer.createNetwork();
 			Shimmer.createHeatmap();
 			

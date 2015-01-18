@@ -13,6 +13,8 @@ var Shimmer = {
 	heatmapContainer: undefined,
 	heatmap: undefined,
 	
+	constellationSwitch: undefined,
+	
 	/**
 	 * Creates new network.
 	 */
@@ -130,17 +132,33 @@ var Shimmer = {
 			$("#visualisationMode").text("Constallation");
 			$("#visualisationMode").removeClass("label-warning");
 			$("#visualisationMode").addClass("label-primary");
-			Shimmer.changeEdgesColor('transparent');
-			Shimmer.changeFontColor('white');
+			Shimmer.changeColorsToConstellation();
 			ShimmerWeb.show("shimmerHeatmap");
+			Shimmer.constellationSwitch.val("true");
 		} else {
 			$("#visualisationMode").text("Graph");
 			$("#visualisationMode").removeClass("label-primary");
 			$("#visualisationMode").addClass("label-warning");
-			Shimmer.changeEdgesColor('black');
-			Shimmer.changeFontColor('black');
+			Shimmer.changeColorsToGraph();
 			ShimmerWeb.hide("shimmerHeatmap");
+			Shimmer.constellationSwitch.val("false");
 		}
+	},
+	
+	/**
+	 * Applies constellation colors.
+	 */
+	changeColorsToConstellation: function() {
+		Shimmer.changeEdgesColor('transparent');
+		Shimmer.changeFontColor('white');
+	},
+	
+	/**
+	 * Applies graph colors.
+	 */
+	changeColorsToGraph: function() {
+		Shimmer.changeEdgesColor('black');
+		Shimmer.changeFontColor('black');
 	},
 	
 	/**
