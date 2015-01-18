@@ -3,11 +3,13 @@ package shimmer.domain;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import shimmer.domain.collections.Edges;
 import shimmer.domain.collections.Nodes;
 import shimmer.domain.factory.NodeFactory;
 import shimmer.domain.factory.PackageTreeNodeFactory;
 import shimmer.domain.helper.GraphHelper;
+import shimmer.enums.NodeType;
 
 import com.google.common.collect.Lists;
 
@@ -52,10 +54,13 @@ public class PackageTreeNode {
 	 * 
 	 * @param newNode - node of a new package
 	 * @param packageName - name of a package
+	 * @param addExtraTreeNodes - visualize each step in package tree?
 	 */
-	public void addNode(Nodes nodes, Node newNode, String packageName) {
+	public void addJoint(Nodes nodes, Node newNode, String packageName, 
+			boolean addExtraTreeNodes) {
+		
 		List<String> packageNames = Lists.newArrayList(packageName.split("\\."));
-		addPackage(nodes, newNode, packageNames);
+		addJoint(nodes, newNode, packageNames, addExtraTreeNodes);
 	}
 
 	// ************************************************************************
@@ -67,27 +72,36 @@ public class PackageTreeNode {
 	 * @param nodes - all nodes collection
 	 * @param newNode - node to add in leaf
 	 * @param packageNames - package names to visit
+	 * @param addExtraTreeNodes - visualize each step in package tree?
 	 */
-	private void addPackage(Nodes nodes, Node newNode, List<String> packageNames) {
+	private void addJoint(Nodes nodes, Node newNode, List<String> packageNames,
+			boolean addExtraTreeNodes) {
+		
 		if (packageNames.isEmpty()) {
 			this.node = newNode;
 		} else {
 			// Attempt to go deeper
 			String childPackageNameSnippet = packageNames.get(0);
-			PackageTreeNode childPackageTreeNode = children.get(childPackageNameSnippet);
+			PackageTreeNode childJoint = children.get(childPackageNameSnippet);
 			packageNames.remove(0);
 			
 			// Need to create a child
-			if (childPackageTreeNode == null) {
-				String childPackageName = GraphHelper.getFullPackageName(getName(), childPackageNameSnippet);
-				Node childNode = NodeFactory.newTreeNode(childPackageName);
-				nodes.add(childNode);
-				childPackageTreeNode = PackageTreeNodeFactory.newPackageTreeNode(childNode);
-				children.put(childPackageNameSnippet, childPackageTreeNode);
+			if (childJoint == null) {
+				
+				if (addExtraTreeNodes) {
+					String childPackageName = GraphHelper.getFullPackageName(getName(), childPackageNameSnippet);
+					Node childNode = NodeFactory.newTreeNode(childPackageName);
+					nodes.add(childNode);
+					childJoint = PackageTreeNodeFactory.newJoint(childNode);
+				} else {
+					childJoint = PackageTreeNodeFactory.newEmptyJoint();
+				}
+				
+				children.put(childPackageNameSnippet, childJoint);
 			}
 			
 			// Add new package recursively
-			childPackageTreeNode.addPackage(nodes, newNode, packageNames);
+			childJoint.addJoint(nodes, newNode, packageNames, addExtraTreeNodes);
 		}
 	}
 
@@ -98,15 +112,19 @@ public class PackageTreeNode {
 	 */
 	public void generateEdges(Edges edges) {
 		// For every child
-		for (PackageTreeNode childTreeNode : children.values()) {
-			// Create new edge
-			Edge newEdge = new Edge(node, childTreeNode.node);
-			edges.add(newEdge);
-			node.getEdges().add(newEdge);
-			childTreeNode.node.getEdges().add(newEdge);
+		for (PackageTreeNode childJoint : children.values()) {
+			Node child = childJoint.node;
+		
+			if (child != null && node != null) {
+				// Create new edge
+				Edge newEdge = new Edge(node, childJoint.node);
+				edges.add(newEdge);
+				node.getEdges().add(newEdge);
+				childJoint.node.getEdges().add(newEdge);
+			}
 			
 			// Populate edge creation
-			childTreeNode.generateEdges(edges);
+			childJoint.generateEdges(edges);
 		}
 	}
 	

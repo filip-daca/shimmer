@@ -14,8 +14,12 @@ public class PackageTreeNodeFactory {
 		return new PackageTreeNode(null);
 	}
 
-	public static PackageTreeNode newPackageTreeNode(Node childNode) {
+	public static PackageTreeNode newJoint(Node childNode) {
 		return new PackageTreeNode(childNode);
+	}
+
+	public static PackageTreeNode newEmptyJoint() {
+		return new PackageTreeNode(null);
 	}
 	
 }

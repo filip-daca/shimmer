@@ -13,18 +13,39 @@ public class SimulationProperties {
 	private Metric nodeSizeMetric;
 	private Metric nodeColorMetric;
 	private Metric nodeHeatMetric;
+	
+	/**
+	 * Show package tree edges?
+	 */
 	private boolean packageTreeEdges;
+	
+	/**
+	 * Show dependencies edges?
+	 */
+	private boolean dependenciesEdges;
+	
+	/**
+	 * Visualize extra package tree nodes?
+	 */
+	private boolean fullPackageTree;
+	
+	/**
+	 * Visualize included library packages?
+	 */
+	private boolean libraryPackages;
 	
 	// ************************************************************************
 	// CONSTRUCTORS
 	
 	public SimulationProperties() {
-		// TODO: get path from JSF!
 		this.directoryPath = "C:\\Users\\9470m\\git\\shimmer\\target\\classes";
 		this.nodeSizeMetric = Metric.CLASS_COUNT;
 		this.nodeColorMetric = Metric.DISTANCE_FROM_MAIN_SEQUENCE;
 		this.nodeHeatMetric = Metric.ABSTRACTNESS;
 		this.packageTreeEdges = true;
+		this.dependenciesEdges = false;
+		this.fullPackageTree = false;
+		this.libraryPackages = true;
 	}
 	
 	// ************************************************************************
@@ -68,6 +89,30 @@ public class SimulationProperties {
 	
 	public void setPackageTreeEdges(boolean packageTreeEdges) {
 		this.packageTreeEdges = packageTreeEdges;
+	}
+	
+	public boolean isFullPackageTree() {
+		return fullPackageTree;
+	}
+	
+	public void setFullPackageTree(boolean fullPackageTree) {
+		this.fullPackageTree = fullPackageTree;
+	}
+	
+	public boolean isLibraryPackages() {
+		return libraryPackages;
+	}
+	
+	public void setLibraryPackages(boolean libraryPackages) {
+		this.libraryPackages = libraryPackages;
+	}
+	
+	public boolean isDependenciesEdges() {
+		return dependenciesEdges;
+	}
+	
+	public void setDependenciesEdges(boolean dependenciesEdges) {
+		this.dependenciesEdges = dependenciesEdges;
 	}
 	
 }

@@ -39,14 +39,20 @@ public class Graph {
 	/**
 	 * Adds a node treated as package.
 	 * 
-	 * @param newPackageNode - package node to add
-	 * @param addTreeEdges - build package tree?
+	 * @param analysedPackageNode - package node to add
+	 * @param buildPackageTreeEdges - build package tree edges?
+	 * @param buildFullPackageTree - build package tree nodes?
 	 */
-	public void addAnalysedPackageNode(Node newPackageNode, boolean addTreeEdges) {
+	public void addAnalysedPackageNode(Node analysedPackageNode, 
+			boolean buildPackageTreeEdges, 
+			boolean buildFullPackageTree) {
+		
 		// Adding new node to data collections
-		nodes.add(newPackageNode);
-		if (addTreeEdges) {
-			packageRoot.addNode(nodes, newPackageNode, newPackageNode.getName());
+		nodes.add(analysedPackageNode);
+		
+		if (buildPackageTreeEdges || buildFullPackageTree) {
+			packageRoot.addJoint(nodes, analysedPackageNode, 
+					analysedPackageNode.getName(), buildFullPackageTree);
 		}
 	}
 	

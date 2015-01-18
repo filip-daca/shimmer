@@ -63,8 +63,30 @@
 						<div>
 							<h:form id="extraSettingsForm">
 								<div>
-									<p:outputLabel value="Show package tree: "/>
+									<p:outputLabel value="Package tree edges: "/>
 									<p:inputSwitch value="#{simulationController.properties.packageTreeEdges}">
+										<p:ajax event="change" global="true" 
+											listener="#{simulationController.generateGraph}"
+											update="@([id$=dataScript])" 
+											onstart="ShimmerWeb.show('calculatingStatus');"
+											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+									</p:inputSwitch>
+								</div>
+								
+								<div>
+									<p:outputLabel value="Full package tree: "/>
+									<p:inputSwitch value="#{simulationController.properties.fullPackageTree}">
+										<p:ajax event="change" global="true" 
+											listener="#{simulationController.generateGraph}"
+											update="@([id$=dataScript])" 
+											onstart="ShimmerWeb.show('calculatingStatus');"
+											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+									</p:inputSwitch>
+								</div>
+								
+								<div>
+									<p:outputLabel value="Library packages: "/>
+									<p:inputSwitch value="#{simulationController.properties.libraryPackages}">
 										<p:ajax event="change" global="true" 
 											listener="#{simulationController.generateGraph}"
 											update="@([id$=dataScript])" 

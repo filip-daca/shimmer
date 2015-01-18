@@ -13,11 +13,15 @@ public interface JDependService {
 	 * Runs JDepend module and generates shimmer Graph.
 	 * 
 	 * @param directoryName - name of project directory
-	 * @param packageTreeEdges - build package tree edges
-	 * @param dependenciesEdges - build dependencies edges
+	 * @param packageTreeEdges - build package tree edges?
+	 * @param dependenciesEdges - build dependencies edges?
+	 * @param fullPackageTree - build extra package tree nodes?
+	 * @param libraryPackages - include library packages?
+	 * 
 	 * @return project graph
 	 */
 	Graph generateGraph(String directoryName, boolean packageTreeEdges,
-			boolean dependenciesEdges);
+			boolean dependenciesEdges, boolean fullPackageTree, 
+			boolean libraryPackages);
 
 }

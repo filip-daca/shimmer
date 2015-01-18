@@ -33,7 +33,9 @@ public class JDependServiceImpl implements JDependService {
 	
 	@Override
 	public Graph generateGraph(String directoryName, 
-			boolean packageTreeEdges, boolean dependenciesEdges) {
+			boolean buildPackageTreeEdges, boolean buildDependenciesEdges,
+			boolean buildFullPackageTree, boolean buildLibraryPackages) {
+		
 		analyzer = new JDepend();
 		try {
 			addDirectory(directoryName);
@@ -56,16 +58,17 @@ public class JDependServiceImpl implements JDependService {
 				javaPackage.getClassCount(), javaPackage.getAbstractClassCount(), 
 				javaPackage.getConcreteClassCount(),
 				javaPackage.getEfferents().size(), javaPackage.getAfferents().size());
-        	graph.addAnalysedPackageNode(newPackageNode, packageTreeEdges);
+        	
+        	graph.addAnalysedPackageNode(newPackageNode, buildPackageTreeEdges, buildFullPackageTree);
         }
         
         // Adding package tree edges
-        if (packageTreeEdges) {
+        if (buildPackageTreeEdges) {
         	graph.generateTreeEdges();
         }
         
         // Adding dependencies edges
-        if (dependenciesEdges) {
+        if (buildDependenciesEdges) {
         	
         }
 		

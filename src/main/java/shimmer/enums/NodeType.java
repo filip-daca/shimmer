@@ -6,5 +6,7 @@ package shimmer.enums;
  * @author filip.daca@javatech.com.pl
  */
 public enum NodeType {
-	ANALYSED_PACKAGE, TREE_NODE;
+	ANALYSED_PACKAGE, 
+	TREE_NODE,
+	LIBRARY_PACKAGE;
 }
