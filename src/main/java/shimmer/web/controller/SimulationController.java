@@ -71,7 +71,7 @@ public class SimulationController implements Serializable {
 	 * Generates graph and JSON elements from properties
 	 */
 	public void generateGraph() {
-		setLoadindProgress(0);
+		setLoadindProgress(5);
 		graph = jDependService.generateGraph(properties.getDirectoryPath(), 
 			properties.isPackageTreeEdges(), properties.isDependenciesEdges(),
 			properties.isFullPackageTree(), properties.isLibraryPackages());

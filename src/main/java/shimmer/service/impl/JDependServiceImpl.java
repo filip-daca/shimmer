@@ -54,6 +54,12 @@ public class JDependServiceImpl implements JDependService {
         
         // Adding packages
         for (JavaPackage javaPackage : packageList) {
+        	
+        	// Skip library packages
+        	if (javaPackage.isLibraryPackage() && !buildLibraryPackages){
+        		continue;
+        	}
+        	
         	Node newPackageNode = NodeFactory.newAnalysedPackageNode(javaPackage.getName(), 
 				javaPackage.getClassCount(), javaPackage.getAbstractClassCount(), 
 				javaPackage.getConcreteClassCount(),

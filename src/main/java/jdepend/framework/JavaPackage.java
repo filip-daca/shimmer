@@ -301,4 +301,11 @@ public class JavaPackage {
     public int hashCode() {
         return getName().hashCode();
     }
+
+    /**
+     * @return Wheater package is a library case. 
+     */
+	public boolean isLibraryPackage() {
+		return classes.isEmpty();
+	}
 }
