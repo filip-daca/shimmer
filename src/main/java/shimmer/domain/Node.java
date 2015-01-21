@@ -62,6 +62,14 @@ public class Node {
 	}
 	
 	// ************************************************************************
+	// METHODS
+	
+	@Override
+	public String toString() {
+		return getName();
+	}
+	
+	// ************************************************************************
 	// GETTERS / SETTERS
 	
 	public List<Edge> getEdges() {

@@ -89,8 +89,17 @@ public class PackageTreeNode {
 				
 				if (addExtraTreeNodes) {
 					String childPackageName = GraphHelper.getFullPackageName(getName(), childPackageNameSnippet);
-					Node childNode = NodeFactory.newTreeNode(childPackageName);
-					nodes.add(childNode);
+					
+					Node childNode;
+					// There is an analysed package already
+					if (nodes.contains(childPackageName)) {
+						childNode = nodes.get(childPackageName);
+					// Create a tree joint
+					} else {
+						childNode = NodeFactory.newTreeNode(childPackageName);
+						nodes.add(childNode);
+					}
+					
 					childJoint = PackageTreeNodeFactory.newJoint(childNode);
 				} else {
 					childJoint = PackageTreeNodeFactory.newEmptyJoint();
