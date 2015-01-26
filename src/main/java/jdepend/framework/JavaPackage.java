@@ -14,8 +14,8 @@ public class JavaPackage {
     private String name;
     private int volatility;
     private HashSet classes;
-    private List afferents;
-    private List efferents;
+    private List<JavaPackage> afferents;
+    private List<JavaPackage> efferents;
     private Map<JavaPackage, Integer> afferentsCount;
     private Map<JavaPackage, Integer> efferentsCount;
 
@@ -217,12 +217,12 @@ public class JavaPackage {
         }
     }
 
-    public Collection getEfferents() {
+    public Collection<JavaPackage> getEfferents() {
         return efferents;
     }
 
-    public void setEfferents(Collection efferents) {
-        this.efferents = new ArrayList(efferents);
+    public void setEfferents(Collection<JavaPackage> efferents) {
+        this.efferents = new ArrayList<JavaPackage>(efferents);
     }
     
     public Map<JavaPackage, Integer> getEfferentsCount() {

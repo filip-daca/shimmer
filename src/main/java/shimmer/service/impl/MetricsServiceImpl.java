@@ -38,22 +38,43 @@ public class MetricsServiceImpl implements MetricsService {
 	
 	// ************************************************************************
 	// PRIVATE METHODS
-	
-	private void calculateDistance(Node node) {
-		node.setDistanceFromMainSequence((node.getAbstractness() + node.getInstability()) / (float) 2);
-	}
 
+	/**
+	 * A = Ac / Cc
+	 * @param node
+	 */
 	private void calculateAbstractness(Node node) {
 		if (node.getClassCount() > 0) {
-			node.setAbstractness((float) node.getAfferentsCount() / (float) node.getClassCount());
+			float classCount = node.getClassCount();
+			float abstractClassesCount = node.getAbstractClassesCount();
+			float abstractness = abstractClassesCount / classCount;
+			node.setAbstractness(abstractness);
 		}
 	}
 
+	/**
+	 * I = Ce / (Ce + Ca)
+	 * @param node
+	 */
 	private void calculateInstability(Node node) {
-		if (node.getEfferentsCount() + node.getAfferentsCount() > 0) {
-			node.setInstability((float) node.getEfferentsCount() 
-					/ (float) (node.getEfferentsCount() + node.getAfferentsCount()));
+		float efferentsCount = node.getEfferentsCount();
+		float afferentsCount = node.getAfferentsCount();
+		
+		if (efferentsCount + afferentsCount > 0) {
+			float instability = efferentsCount / (efferentsCount + afferentsCount);
+			node.setInstability(instability);
 		}
+	}
+	/**
+	 * A + I = 1  -> perfect case
+	 * D = |A + I - 1|
+	 * @param node
+	 */
+	private void calculateDistance(Node node) {
+		float abstractness = node.getAbstractness();
+		float instability = node.getInstability();
+		float distance = Math.abs(abstractness + instability - 1);
+		node.setDistanceFromMainSequence(distance);
 	}
 	
 	private boolean isMetricCalculationRequired(SimulationProperties properties, Metric metric) {

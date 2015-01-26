@@ -6,6 +6,7 @@ import java.util.Map;
 
 import shimmer.domain.collections.Edges;
 import shimmer.domain.collections.Nodes;
+import shimmer.domain.factory.EdgeFactory;
 import shimmer.domain.factory.NodeFactory;
 import shimmer.domain.factory.PackageTreeNodeFactory;
 import shimmer.domain.helper.GraphHelper;
@@ -125,7 +126,7 @@ public class PackageTreeNode {
 		
 			if (child != null && node != null) {
 				// Create new edge
-				Edge newEdge = new Edge(node, childJoint.node);
+				Edge newEdge = EdgeFactory.newPackageTreeEdge(node, childJoint.node);
 				edges.add(newEdge);
 				node.getEdges().add(newEdge);
 				childJoint.node.getEdges().add(newEdge);

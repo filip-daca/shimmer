@@ -18,8 +18,7 @@
 	    				ajax="true" global="true"
 						actionListener="#{simulationController.generateGraph}"
 						update="@([id$=dataScript])"
-						onclick="PF('progressBar').setValue(0); 
-							ShimmerWeb.componentShow('progressBar');
+						onclick="ShimmerWeb.componentShow('progressBar');
 							PF('progressBar').start();"
 						onstart="ShimmerWeb.show('calculatingStatus');"
 						oncomplete="ShimmerWeb.hide('calculatingStatus');
@@ -29,7 +28,7 @@
 				</p:commandLink>
 				<p:progressBar id="progressBar" styleClass="margin-top" widgetVar="progressBar" ajax="true" 
 					value="#{simulationController.loadingProgress}" 
-					labelTemplate="{value}%"  global="false" interval="200" style="display: none;" />
+					labelTemplate="{value}%" global="false" interval="200" style="display: none;" />
     		</h:form>
     	</div>
     	
@@ -72,6 +71,31 @@
 											listener="#{simulationController.generateGraph}"
 											update="@([id$=dataScript])"
 											process="@form"
+											onstart="ShimmerWeb.show('calculatingStatus');"
+											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+									</p:inputSwitch>
+								</div>
+								
+								<div>
+									<p:outputLabel value="Dependencies edges: "/>
+									<p:inputSwitch value="#{simulationController.properties.dependenciesEdges}">
+										<p:ajax event="change" global="true" 
+											listener="#{simulationController.generateGraph}"
+											update="@([id$=dataScript])"
+											process="@form"
+											onstart="ShimmerWeb.show('calculatingStatus');"
+											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+									</p:inputSwitch>
+								</div>
+								
+								<div>
+									<p:outputLabel value="Weighted dependencies: "/>
+									<p:inputSwitch value="#{simulationController.properties.dependenciesWeighted}">
+										<p:ajax event="change" global="true" 
+											listener="#{simulationController.generateGraph}"
+											update="@([id$=dataScript])"
+											process="@form"
+											onclick=""
 											onstart="ShimmerWeb.show('calculatingStatus');"
 											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
 									</p:inputSwitch>

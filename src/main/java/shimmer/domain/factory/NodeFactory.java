@@ -22,4 +22,8 @@ public class NodeFactory {
 	public static Node newTreeNode(String name) {
 		return new Node(name, NodeType.TREE_NODE);
 	}
+
+	public static Node newLibraryPackageNode(String name, int efferentsCount, int afferentsCount) {
+		return new Node(name, efferentsCount, afferentsCount);
+	}
 }

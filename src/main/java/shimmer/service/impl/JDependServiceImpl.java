@@ -60,12 +60,18 @@ public class JDependServiceImpl implements JDependService {
         		continue;
         	}
         	
-        	Node newPackageNode = NodeFactory.newAnalysedPackageNode(javaPackage.getName(), 
-				javaPackage.getClassCount(), javaPackage.getAbstractClassCount(), 
-				javaPackage.getConcreteClassCount(),
-				javaPackage.getEfferents().size(), javaPackage.getAfferents().size());
+        	Node newNode;
+        	if (javaPackage.isLibraryPackage()) {
+        		newNode = NodeFactory.newLibraryPackageNode(javaPackage.getName(),
+    				javaPackage.getEfferents().size(), javaPackage.getAfferents().size());
+        	} else {
+        		newNode = NodeFactory.newAnalysedPackageNode(javaPackage.getName(), 
+    				javaPackage.getClassCount(), javaPackage.getAbstractClassCount(), 
+    				javaPackage.getConcreteClassCount(),
+    				javaPackage.getEfferents().size(), javaPackage.getAfferents().size());
+        	}
         	
-        	graph.addAnalysedPackageNode(newPackageNode, buildPackageTreeEdges, buildFullPackageTree);
+        	graph.addAnalysedPackageNode(newNode, buildPackageTreeEdges, buildFullPackageTree);
         }
         
         // Adding package tree edges
@@ -75,7 +81,22 @@ public class JDependServiceImpl implements JDependService {
         
         // Adding dependencies edges
         if (buildDependenciesEdges) {
-        	
+        	for (JavaPackage javaPackage : packageList) {
+        		// Skip library packages
+            	if (javaPackage.isLibraryPackage() && !buildLibraryPackages){
+            		continue;
+            	}
+            	
+            	for (JavaPackage efferentPackage : javaPackage.getEfferents()) {
+            		// Skip library packages
+            		if (efferentPackage.isLibraryPackage() && !buildLibraryPackages){
+                		continue;
+                	}
+
+            		graph.addEfferentEdge(javaPackage.getName(), efferentPackage.getName(), 
+            				javaPackage.getEfferentsCount().get(efferentPackage));
+            	}
+        	}
         }
 		
         return graph;

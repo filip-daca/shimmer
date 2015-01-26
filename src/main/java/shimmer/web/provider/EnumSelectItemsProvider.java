@@ -3,6 +3,7 @@ package shimmer.web.provider;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
+import shimmer.domain.helper.NamesHelper;
 import shimmer.enums.Metric;
 
 import javax.faces.model.SelectItem;
@@ -42,7 +43,7 @@ public class EnumSelectItemsProvider {
 
 
 	private static SelectItem selectItemFromEnum(Enum<?> e) {
-        return new SelectItem(e, StringUtils.capitalize(e.name().toLowerCase().replace("_", " ")));
+        return new SelectItem(e, NamesHelper.enumToNiceString(e));
     }
 
     // GETTERY / SETTERY ------------------------------------------------------------------------ /

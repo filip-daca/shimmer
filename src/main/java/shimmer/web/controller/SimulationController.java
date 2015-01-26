@@ -53,7 +53,7 @@ public class SimulationController implements Serializable {
 	private String edgesJSON;
 	private String nodesJSON;
 	
-	private Integer loadingProgress;
+	private volatile Integer loadingProgress;
 	
 	// ************************************************************************
 	// PERSISTANCE AND INITIALIZATION

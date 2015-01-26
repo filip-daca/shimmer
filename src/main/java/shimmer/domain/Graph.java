@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import shimmer.domain.collections.Edges;
 import shimmer.domain.collections.Nodes;
+import shimmer.domain.factory.EdgeFactory;
 
 /**
  * Class representing a Shimmer graph.
@@ -63,6 +64,18 @@ public class Graph {
 		for (PackageTreeNode packageTreeNode : packageRoot.getChildren().values()) {
 			packageTreeNode.generateEdges(edges);
 		}
+	}
+	
+	/**
+	 * Adds an efferent edge
+	 * @param package1Name - name of package 1
+	 * @param package2Name - name of package 2
+	 * @param includeCount - number of iclusions
+	 */
+	public void addEfferentEdge(String package1Name, String package2Name, Integer includeCount) {
+		Node packageNode1 = nodes.get(package1Name);
+		Node packageNode2 = nodes.get(package2Name);
+		edges.add(EdgeFactory.newDependencyEdge(packageNode1, packageNode2, includeCount));
 	}
 
 	// ************************************************************************

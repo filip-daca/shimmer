@@ -8,6 +8,7 @@ import shimmer.domain.Edge;
 import shimmer.domain.Graph;
 import shimmer.domain.Node;
 import shimmer.domain.SimulationProperties;
+import shimmer.domain.helper.NamesHelper;
 import shimmer.enums.NodeType;
 import shimmer.service.GraphService;
 
@@ -21,6 +22,9 @@ public class GraphServiceImpl implements GraphService {
 
 	// ************************************************************************
 	// STATICS
+	
+	private static final int MINIMAL_LENGTH = 10;
+	private static final int MAXIMAL_LENGTH = 200;
 	
 	private static final int MINIMAL_RADIUS = 7;
 	private static final int MAXIMAL_RADIUS = 30;
@@ -45,6 +49,9 @@ public class GraphServiceImpl implements GraphService {
 			sb.append(edge.getNodeFrom().getId());
 			sb.append(", to:");
 			sb.append(edge.getNodeTo().getId());
+			if (properties.isDependenciesWeighted()) {
+				appendLength(sb, edge);
+			}
 			edge.getNodeFrom();
 			sb.append("}, \n");
 		}
@@ -80,6 +87,14 @@ public class GraphServiceImpl implements GraphService {
 	
 	private void appendProperties(StringBuilder sb, Node node) {
 		sb.append("shimmerProperties: {");
+		
+		sb.append("nodeType: '");
+		sb.append(node.getNodeType());
+		sb.append("', ");
+		
+		sb.append("nodeTypeText: '");
+		sb.append(NamesHelper.enumToNiceString(node.getNodeType()));
+		sb.append("', ");
 		
 		sb.append("classCount: ");
 		sb.append(node.getClassCount());
@@ -168,6 +183,28 @@ public class GraphServiceImpl implements GraphService {
 			sb.append("color: {border: 'black', background: ");
 		}
 		
+		switch (node.getNodeType()) {
+		case ANALYSED_PACKAGE:
+			appendAnalysedPackageColor(sb, node, properties);
+			break;
+
+		case LIBRARY_PACKAGE:
+			sb.append("'purple'");
+			break;
+			
+		case TREE_NODE:
+			sb.append("'blue'");
+			break;
+			
+		default:
+			break;
+		}
+		
+		sb.append("}, ");
+	}
+	
+	private void appendAnalysedPackageColor(StringBuilder sb, Node node,
+			SimulationProperties properties) {
 		switch (properties.getNodeColorMetric()) {
 		case DISTANCE_FROM_MAIN_SEQUENCE:
 			sb.append(floatMetricToColor(node.getDistanceFromMainSequence()));
@@ -186,7 +223,6 @@ public class GraphServiceImpl implements GraphService {
 			sb.append(floatMetricToColor((float) node.getClassCount() / (float) TOO_LARGE_PACKAGE));
 			break;
 		}
-		sb.append("}, ");
 	}
 
 	private void appendSize(StringBuilder sb, Node node,
@@ -210,7 +246,7 @@ public class GraphServiceImpl implements GraphService {
 			break;
 			
 		case CLASS_COUNT:
-			sb.append(MINIMAL_RADIUS + node.getClassCount() / 1.5);
+			sb.append(Math.min((MINIMAL_RADIUS + node.getClassCount() / 1.5), MAXIMAL_RADIUS));
 			break;
 		}
 		sb.append(", ");
@@ -242,6 +278,28 @@ public class GraphServiceImpl implements GraphService {
 		}
 		return String.format("'#%02x%02x%02x'", result.getRed(), 
 				result.getGreen(), result.getBlue());
+	}
+
+	private void appendLength(StringBuilder sb, Edge edge) {
+		int classCount = edge.getNodeFrom().getClassCount();
+		int strength = edge.getStrength();
+		int length = MINIMAL_LENGTH;
+		
+		switch (edge.getEdgeType()) {
+		case PACKAGE_EDGE:
+			length = MINIMAL_LENGTH;
+			break;
+			
+		case DEPENDENCY_EDGE:
+			if (classCount > 0) {
+				float weight = (float) strength / (float) classCount;
+				length = MAXIMAL_LENGTH - Math.round(weight * MAXIMAL_LENGTH) + MINIMAL_LENGTH; 
+			}
+			break;
+		}
+				
+		sb.append(", length:");
+		sb.append(length);
 	}
 
 }

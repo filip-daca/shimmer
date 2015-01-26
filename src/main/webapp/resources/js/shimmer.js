@@ -186,17 +186,27 @@ var Shimmer = {
 	},
 	
 	nodeSelectCallback: function(event) {
+		if (!event.nodes || event.nodes.length == 0) {
+			return;
+		}
+		
 		var node = nodes[event.nodes[0]];
 		var metaData = node.shimmerProperties;
 		$("#shimmerInfo .packageName").text(node.label);
-		$("#shimmerInfo .classCount").text(metaData.classCount);
-		$("#shimmerInfo .concreteClassesCount").text(metaData.concreteClassesCount);
-		$("#shimmerInfo .abstractClassesCount").text(metaData.abstractClassesCount);
-		$("#shimmerInfo .abstractness").text(metaData.abstractness);
-		$("#shimmerInfo .efferentsCount").text(metaData.efferentsCount);
-		$("#shimmerInfo .afferentsCount").text(metaData.afferentsCount);
-		$("#shimmerInfo .instability").text(metaData.instability);
-		$("#shimmerInfo .distanceFromMainSequence").text(metaData.distanceFromMainSequence);
+		$("#shimmerInfo .nodeType").text(metaData.nodeTypeText);
+		if (metaData.nodeType === "ANALYSED_PACKAGE") {
+			$("#shimmerInfo .classCount").text(metaData.classCount);
+			$("#shimmerInfo .concreteClassesCount").text(metaData.concreteClassesCount);
+			$("#shimmerInfo .abstractClassesCount").text(metaData.abstractClassesCount);
+			$("#shimmerInfo .abstractness").text(metaData.abstractness);
+			$("#shimmerInfo .efferentsCount").text(metaData.efferentsCount);
+			$("#shimmerInfo .afferentsCount").text(metaData.afferentsCount);
+			$("#shimmerInfo .instability").text(metaData.instability);
+			$("#shimmerInfo .distanceFromMainSequence").text(metaData.distanceFromMainSequence);
+			$("#shimmerInfo .analysedPackageInfo").show();
+		} else {
+			$("#shimmerInfo .analysedPackageInfo").hide();
+		}
 	},
 	
 	getRandom: function(from, to) {

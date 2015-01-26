@@ -34,6 +34,11 @@ public class SimulationProperties {
 	 */
 	private boolean libraryPackages;
 	
+	/**
+	 * Add weight information about depencendy edge?
+	 */
+	private boolean dependenciesWeighted;
+	
 	private boolean constellation;
 	
 	// ************************************************************************
@@ -49,6 +54,7 @@ public class SimulationProperties {
 		this.fullPackageTree = false;
 		this.libraryPackages = true;
 		this.constellation = true;
+		this.dependenciesWeighted = true;
 	}
 	
 	// ************************************************************************
@@ -126,4 +132,11 @@ public class SimulationProperties {
 		this.constellation = constellation;
 	}
 	
+	public boolean isDependenciesWeighted() {
+		return dependenciesWeighted;
+	}
+	
+	public void setDependenciesWeighted(boolean dependenciesWeighted) {
+		this.dependenciesWeighted = dependenciesWeighted;
+	}
 }

@@ -19,9 +19,9 @@ public class Node {
 	private int id;
 	private String name;
 	private List<Edge> edges;
+	private NodeType nodeType;
 	
 	// Package specific fields
-	private NodeType nodeType;
 	private int classCount;
 	private int abstractClassesCount;
 	private int concreteClassesCount;
@@ -45,10 +45,14 @@ public class Node {
 		this.name = name;
 	}
 	
+	public Node(String name, NodeType type) {
+		this(name);
+		this.nodeType = type;
+	}
+	
 	public Node(String name, int classCount, int abstractClassesCount,
 			int concreteClassesCount, int efferentsCount, int afferentsCount) {
-		this(name);
-		this.nodeType = NodeType.ANALYSED_PACKAGE;
+		this(name, NodeType.ANALYSED_PACKAGE);
 		this.classCount = classCount;
 		this.abstractClassesCount = abstractClassesCount;
 		this.concreteClassesCount = concreteClassesCount;
@@ -56,14 +60,15 @@ public class Node {
 		this.efferentsCount = efferentsCount;
 	}
 	
-	public Node(String name, NodeType type) {
-		this(name);
-		this.nodeType = type;
+	public Node(String name, int efferentsCount, int afferentsCount) {
+		this(name, NodeType.LIBRARY_PACKAGE);
+		this.afferentsCount = afferentsCount;
+		this.efferentsCount = efferentsCount;
 	}
 	
 	// ************************************************************************
 	// METHODS
-	
+
 	@Override
 	public String toString() {
 		return getName();
