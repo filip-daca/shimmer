@@ -5,7 +5,7 @@ import org.springframework.util.StringUtils;
 /**
  * Helps with small Graph problems.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class GraphHelper {
 

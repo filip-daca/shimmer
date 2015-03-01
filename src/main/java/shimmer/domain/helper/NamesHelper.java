@@ -5,7 +5,7 @@ import org.springframework.util.StringUtils;
 /**
  * Helps with providing names and captions.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class NamesHelper {
 

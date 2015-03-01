@@ -7,7 +7,7 @@ import shimmer.enums.EdgeType;
 /**
  * Factory helps building new Edges.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class EdgeFactory {
 	

@@ -8,27 +8,35 @@
 		xmlns:f="http://java.sun.com/jsf/core"
 		xmlns:sh="http://java.sun.com/jsf/composite/components">
     <ui:define name="content">
-    
+
     	<div class="well">
     		<h2>Shimmering constellations</h2>
     		<h:form id="basicSettingsForm">
+    			<!-- Project path -->
 	    		<p:outputLabel value="Project *.class files path:" styleClass="wide-label" />
 	    		<p:inputText value="#{simulationController.properties.directoryPath}" size="100" />
+	    		
+	    		<!-- Analysis start button -->
 	    		<p:commandLink styleClass="btn btn-primary btn-sm margin-left" 
 	    				ajax="true" global="true"
 						actionListener="#{simulationController.generateGraph}"
-						update="@([id$=dataScript])"
 						onclick="ShimmerWeb.componentShow('progressBar');
-							PF('progressBar').start();"
-						onstart="ShimmerWeb.show('calculatingStatus');"
-						oncomplete="ShimmerWeb.hide('calculatingStatus');
-							Shimmer.reloadData();
-							ShimmerWeb.componentHide('progressBar');">
+							PF('progressBar').start();
+							PF('analysisCompletePoll').start();"
+						onstart="ShimmerWeb.show('calculatingStatus');">
 					<i class="glyphicon glyphicon-ok"></i>
 				</p:commandLink>
+				
+				<!-- Analysis progress bar -->
 				<p:progressBar id="progressBar" styleClass="margin-top" widgetVar="progressBar" ajax="true" 
-					value="#{simulationController.loadingProgress}" 
-					labelTemplate="{value}%" global="false" interval="200" style="display: none;" />
+					value="#{simulationController.loadingProgress}"
+					labelTemplate="{value}%" global="false" interval="300" style="display: none;" />
+				
+				<!-- Analysis complete poll -->
+				<p:poll interval="5" stop="#{simulationController.visualizationReady}" autoStart="false"
+					widgetVar="analysisCompletePoll"
+					binding="#{simulationController.analysisCompletePoll}"
+					update="@([id$=dataScript])" />
     		</h:form>
     	</div>
     	
@@ -169,27 +177,14 @@
 			</div>
 		</div>
 		
-		<!-- This field is updated every time the data changes -->
-		<p:outputPanel id="dataScript">
-			<script type="text/javascript">
-			/* <![CDATA[ */
-			
-				// Nodes and edges
-				var nodes = #{simulationController.nodesJSON}
-				var edges = #{simulationController.edgesJSON}
-			    
-				Shimmer.data = {
-					nodes: nodes,
-					edges: edges
-				};
-				
-			/* ]]> */
-			</script>
-		</p:outputPanel>
-		
 		<!-- This is standard script field -->
 		<script type="text/javascript">
 		/* <![CDATA[ */
+		             
+		    Shimmer.data = {
+				nodes: [],
+				edges: []
+			};
 		
 			// Simulation settings
 			Shimmer.width = 800;
@@ -212,6 +207,31 @@
 			
 			/* ]]> */
 		</script>
+		
+		<!-- This field is updated every time the data changes -->
+		<p:outputPanel id="dataScript">
+			<ui:fragment rendered="#{simulationController.visualizationReady}">
+				<script type="text/javascript">
+				/* <![CDATA[ */
+				
+					// Nodes and edges
+					var nodes = #{simulationController.nodesJSON}
+					var edges = #{simulationController.edgesJSON}
+				    
+					Shimmer.data = {
+						nodes: nodes,
+						edges: edges
+					};
+					
+					// Reloading data after update
+					ShimmerWeb.hide('calculatingStatus');
+					Shimmer.reloadData();
+					ShimmerWeb.componentHide('progressBar');
+					
+				/* ]]> */
+				</script>
+			</ui:fragment>
+		</p:outputPanel>
     </ui:define>
 </ui:composition>
 </html>

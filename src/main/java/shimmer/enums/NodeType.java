@@ -3,7 +3,7 @@ package shimmer.enums;
 /**
  * Names a type of a Shimmer graph node.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public enum NodeType {
 	ANALYSED_PACKAGE, 

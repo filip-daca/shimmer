@@ -16,7 +16,7 @@ import com.google.common.collect.Lists;
 /**
  * Class representing a package tree node for faster analysis.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class PackageTreeNode {
 	

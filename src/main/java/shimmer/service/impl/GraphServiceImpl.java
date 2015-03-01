@@ -15,7 +15,7 @@ import shimmer.service.GraphService;
 /**
  * Standard implementation of methods to operate with Graphs.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 @Named
 public class GraphServiceImpl implements GraphService {

@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Encoding filter forces utf-8 characters.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class CharacterEncodingFilter implements Filter {
 

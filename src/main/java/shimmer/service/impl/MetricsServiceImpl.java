@@ -11,7 +11,7 @@ import shimmer.service.MetricsService;
 /**
  * Standard implementation of methods to operate with basic metrics.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 @Named
 public class MetricsServiceImpl implements MetricsService {

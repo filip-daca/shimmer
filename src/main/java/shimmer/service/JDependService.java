@@ -5,7 +5,7 @@ import shimmer.domain.Graph;
 /**
  * Service provides methods to operate with Findbugs Library.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public interface JDependService {
 

@@ -5,7 +5,7 @@ import shimmer.enums.Metric;
 /**
  * Class represents a set of settigs for Shimmer simulation.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class SimulationProperties {
 

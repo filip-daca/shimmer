@@ -9,7 +9,7 @@ import shimmer.domain.factory.EdgeFactory;
 /**
  * Class representing a Shimmer graph.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class Graph {
 

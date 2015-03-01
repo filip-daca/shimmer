@@ -3,7 +3,7 @@ package shimmer.enums;
 /**
  * Names a type of a Shimmer graph edge.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public enum EdgeType {
 	PACKAGE_EDGE,

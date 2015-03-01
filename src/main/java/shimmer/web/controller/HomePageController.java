@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Scope;
 /**
  * Basic controller for home page
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 @Named
 @Scope("view")

@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>shimmer</groupId>
-	<artifactId>shimmer</artifactId>
+	<groupId>Shimmer</groupId>
+	<artifactId>Shimmer</artifactId>
 	<packaging>war</packaging>
 	<version>0.1</version>
 
@@ -267,6 +267,13 @@
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>${joda-time.version}</version>
+		</dependency>
+		
+		<!-- Findbugs -->
+		<dependency>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>findbugs-maven-plugin</artifactId>
+			<version>3.0.0</version>
 		</dependency>
             
 	</dependencies>

@@ -5,7 +5,7 @@ import shimmer.enums.EdgeType;
 /**
  * Class representing a Shimmer graph edge.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class Edge {
 

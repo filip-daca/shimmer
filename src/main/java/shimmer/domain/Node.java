@@ -8,7 +8,7 @@ import shimmer.enums.NodeType;
 /**
  * Class representing a Shimmer graph node.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class Node {
 	

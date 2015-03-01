@@ -18,7 +18,7 @@ import shimmer.service.JDependService;
 /**
  * Standard implementation of methods to operate with JDepend.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 @Named
 public class JDependServiceImpl implements JDependService {

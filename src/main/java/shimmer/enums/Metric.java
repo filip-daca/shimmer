@@ -3,7 +3,7 @@ package shimmer.enums;
 /**
  * This enum names a metric to represent in Simulation.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public enum Metric {
 

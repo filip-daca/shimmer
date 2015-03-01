@@ -6,7 +6,7 @@ import shimmer.domain.PackageTreeNode;
 /**
  * Factory to create PackageTreeNodes
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class PackageTreeNodeFactory {
 

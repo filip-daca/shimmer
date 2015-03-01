@@ -6,7 +6,7 @@ import shimmer.enums.NodeType;
 /**
  * Factory helps building new Nodes.
  * 
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class NodeFactory {
 	
