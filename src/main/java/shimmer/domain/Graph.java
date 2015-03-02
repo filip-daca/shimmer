@@ -77,6 +77,17 @@ public class Graph {
 		Node packageNode2 = nodes.get(package2Name);
 		edges.add(EdgeFactory.newDependencyEdge(packageNode1, packageNode2, includeCount));
 	}
+	
+	/**
+	 * Adds a bug information
+	 * @param bug - bug instance
+	 * @param className - name of class
+	 */
+	public void addBug(Bug bug, String className) {
+		String packageName = className.substring(0, className.lastIndexOf('.'));
+		Node packageNode = nodes.get(packageName);
+		packageNode.getBugs().add(bug);
+	}
 
 	// ************************************************************************
 	// PRIVATE METHODS

@@ -1,9 +1,11 @@
 package shimmer.service.impl;
 
 import java.awt.Color;
+import java.util.List;
 
 import javax.inject.Named;
 
+import shimmer.domain.Bug;
 import shimmer.domain.Edge;
 import shimmer.domain.Graph;
 import shimmer.domain.Node;
@@ -128,7 +130,30 @@ public class GraphServiceImpl implements GraphService {
 		sb.append(node.getDistanceFromMainSequence());
 		sb.append(", ");
 		
+		if (node.getNodeType() == NodeType.ANALYSED_PACKAGE) {
+			sb.append("bugs: [");
+			appendBugs(sb, node.getBugs());
+			sb.append("], ");
+		}
+		
 		sb.append("}, ");
+	}
+
+	private void appendBugs(StringBuilder sb, List<Bug> bugs) {
+		for (Bug bug : bugs) {
+			sb.append("{");
+			sb.append("type: '");
+			sb.append(bug.getBugType());
+			sb.append("', abbrev: '");
+			sb.append(bug.getBugAbbrev());
+			sb.append("', category: '");
+			sb.append(bug.getBugCategory());
+			sb.append("', priority: ");
+			sb.append(bug.getBugPriority());
+			sb.append(", rank: ");
+			sb.append(bug.getBugRank());
+			sb.append("},");
+		}
 	}
 
 	private void appendId(StringBuilder sb, Node node) {

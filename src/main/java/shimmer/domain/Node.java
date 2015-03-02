@@ -33,11 +33,25 @@ public class Node {
 	private float instability;
 	private float distanceFromMainSequence;
 	
+	// Bugs
+	private List<Bug> bugs;
+	private int priority1Bugs;
+	private int priority2Bugs;
+	private int priority3Bugs;
+	private int priority4Bugs;
+	private int priority5Bugs;
+	
 	// ************************************************************************
 	// CONSTRUCTORS
 	
 	public Node() {
 		this.edges = new ArrayList<Edge>();
+		this.bugs = new ArrayList<Bug>();
+		this.priority1Bugs = 0;
+		this.priority2Bugs = 0;
+		this.priority3Bugs = 0;
+		this.priority4Bugs = 0;
+		this.priority5Bugs = 0;
 	}
 	
 	public Node(String name) {
@@ -139,6 +153,50 @@ public class Node {
 	
 	public NodeType getNodeType() {
 		return nodeType;
+	}
+	
+	public List<Bug> getBugs() {
+		return bugs;
+	}
+	
+	public void setPriority1Bugs(int priority1Bugs) {
+		this.priority1Bugs = priority1Bugs;
+	}
+	
+	public int getPriority1Bugs() {
+		return priority1Bugs;
+	}
+	
+	public void setPriority2Bugs(int priority2Bugs) {
+		this.priority2Bugs = priority2Bugs;
+	}
+	
+	public int getPriority2Bugs() {
+		return priority2Bugs;
+	}
+	
+	public void setPriority3Bugs(int priority3Bugs) {
+		this.priority3Bugs = priority3Bugs;
+	}
+	
+	public int getPriority3Bugs() {
+		return priority3Bugs;
+	}
+	
+	public void setPriority4Bugs(int priority4Bugs) {
+		this.priority4Bugs = priority4Bugs;
+	}
+	
+	public int getPriority4Bugs() {
+		return priority4Bugs;
+	}
+	
+	public void setPriority5Bugs(int priority5Bugs) {
+		this.priority5Bugs = priority5Bugs;
+	}
+	
+	public int getPriority5Bugs() {
+		return priority5Bugs;
 	}
 	
 }
