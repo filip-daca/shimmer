@@ -14,8 +14,7 @@ public interface MetricsService {
 	 * Calculates selected metrics.
 	 * 
 	 * @param graph - Shimmer graph
-	 * @param properties - set of properties
 	 */
-	void calculateMetrics(Graph graph, SimulationProperties properties);
+	void calculateMetrics(Graph graph);
 
 }
