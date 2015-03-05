@@ -6,7 +6,7 @@ import shimmer.domain.SimulationProperties;
 /**
  * Service provides methods to operate with basic metrics.
  * 
- * @author Filip Daca
+ * @author filip.daca@javatech.com.pl
  */
 public interface MetricsService {
 
@@ -14,7 +14,8 @@ public interface MetricsService {
 	 * Calculates selected metrics.
 	 * 
 	 * @param graph - Shimmer graph
+	 * @param properties - set of properties
 	 */
-	void calculateMetrics(Graph graph);
+	void calculateMetrics(Graph graph, SimulationProperties properties);
 
 }

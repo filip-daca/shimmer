@@ -41,6 +41,12 @@ public class SimulationProperties {
 	
 	private boolean constellation;
 	
+	/**
+	 * Calculate only dependencies, metrics and packages that
+	 * are needed in view?
+	 */
+	private boolean lazyAnalysis;
+	
 	// ************************************************************************
 	// CONSTRUCTORS
 	
@@ -55,6 +61,7 @@ public class SimulationProperties {
 		this.libraryPackages = true;
 		this.constellation = true;
 		this.dependenciesWeighted = true;
+		this.lazyAnalysis = false;
 	}
 	
 	// ************************************************************************
@@ -138,5 +145,13 @@ public class SimulationProperties {
 	
 	public void setDependenciesWeighted(boolean dependenciesWeighted) {
 		this.dependenciesWeighted = dependenciesWeighted;
+	}
+	
+	public boolean isLazyAnalysis() {
+		return lazyAnalysis;
+	}
+	
+	public void setLazyAnalysis(boolean lazyAnalysis) {
+		this.lazyAnalysis = lazyAnalysis;
 	}
 }
