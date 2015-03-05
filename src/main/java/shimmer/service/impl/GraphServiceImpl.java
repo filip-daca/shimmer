@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.inject.Named;
 
+import org.primefaces.json.JSONArray;
+import org.primefaces.json.JSONException;
+import org.primefaces.json.JSONObject;
+
 import shimmer.domain.Bug;
 import shimmer.domain.Edge;
 import shimmer.domain.Graph;
@@ -35,6 +39,7 @@ public class GraphServiceImpl implements GraphService {
 	private static final int MAXIMAL_HEAT = 70;
 	
 	private static final int TOO_LARGE_PACKAGE = 50;
+	private static final int TOO_LARGE_CLASS = 500;
 	private static final float GOOD_METRIC = 0.1F;
 	private static final float BAD_METRIC = 0.9F;
 	
@@ -43,248 +48,201 @@ public class GraphServiceImpl implements GraphService {
 	
 	@Override
 	public String generateEdgesJSON(Graph graph, SimulationProperties properties) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("[\n");
-		for (Edge edge : graph.getEdges()) {
-			sb.append("{");
-			sb.append("from:");
-			sb.append(edge.getNodeFrom().getId());
-			sb.append(", to:");
-			sb.append(edge.getNodeTo().getId());
-			if (properties.isDependenciesWeighted()) {
-				appendLength(sb, edge);
+		try {
+			JSONArray edgesArrayJSON = new JSONArray();
+			for (Edge edge : graph.getEdges()) {
+				JSONObject edgeJSON = new JSONObject();
+				edgeJSON.put("from", edge.getNodeFrom().getId());
+				edgeJSON.put("to", edge.getNodeTo().getId());
+				if (properties.isDependenciesWeighted()) {
+					edgeJSON.put("length", calculateLength(edge));
+				}
+				edgesArrayJSON.put(edgeJSON);
 			}
-			edge.getNodeFrom();
-			sb.append("}, \n");
+			return edgesArrayJSON.toString(4);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "[]";
 		}
-		sb.append("]\n");
-		return sb.toString();
 	}
 
 	@Override
 	public String generateNodesJSON(Graph graph, SimulationProperties properties) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("[\n");
-		for (Node node : graph.getNodes()) {
-			appendNode(sb, node, properties);
+		try {	
+			JSONArray nodesArrayJSON = new JSONArray();
+			for (Node node : graph.getNodes()) {
+				JSONObject nodeJSON = nodeToJSON(node, properties);
+				nodesArrayJSON.put(nodeJSON);
+			}
+			return nodesArrayJSON.toString(4);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "[]";
 		}
-		sb.append("]\n");
-		return sb.toString();
 	}
 	
 	// ************************************************************************
 	// PRIVATE METHODS
 
-	private void appendNode(StringBuilder sb, Node node, SimulationProperties properties) {
-		sb.append("{");
-		appendId(sb, node);
-		appendSize(sb, node, properties);
-		appendColor(sb, node, properties);
-		appendHeat(sb, node, properties);
-		appendName(sb, node);
-		appendShape(sb, node);
-		appendProperties(sb, node);
-		sb.append("}, \n");
+	private JSONObject nodeToJSON(Node node, SimulationProperties properties) throws JSONException {
+		JSONObject nodeJSON = new JSONObject();
+		nodeJSON.put("id", node.getId());
+		nodeJSON.put("label", node.getName());
+		nodeJSON.put("radius", getNodeSize(node, properties));
+		nodeJSON.put("color", getNodeColorJSON(node, properties));
+		nodeJSON.put("heatValue", getNodeHeat(node, properties));
+		nodeJSON.put("shape", getNodeShape(node));
+		nodeJSON.put("shimmerProperties", getNodeShimmerPropertiesJSON(node));
+		return nodeJSON;
 	}
 	
-	private void appendProperties(StringBuilder sb, Node node) {
-		sb.append("shimmerProperties: {");
-		
-		sb.append("nodeType: '");
-		sb.append(node.getNodeType());
-		sb.append("', ");
-		
-		sb.append("nodeTypeText: '");
-		sb.append(NamesHelper.enumToNiceString(node.getNodeType()));
-		sb.append("', ");
-		
-		sb.append("classCount: ");
-		sb.append(node.getClassCount());
-		sb.append(", ");
-		
-		sb.append("concreteClassesCount: ");
-		sb.append(node.getConcreteClassesCount());
-		sb.append(", ");
-		
-		sb.append("abstractClassesCount: ");
-		sb.append(node.getAbstractClassesCount());
-		sb.append(", ");
-		
-		sb.append("abstractness: ");
-		sb.append(node.getAbstractness());
-		sb.append(", ");
-		
-		sb.append("efferentsCount: ");
-		sb.append(node.getEfferentsCount());
-		sb.append(", ");
-		
-		sb.append("afferentsCount: ");
-		sb.append(node.getAfferentsCount());
-		sb.append(", ");
-		
-		sb.append("instability: ");
-		sb.append(node.getInstability());
-		sb.append(", ");
-		
-		sb.append("distanceFromMainSequence: ");
-		sb.append(node.getDistanceFromMainSequence());
-		sb.append(", ");
+	private JSONObject getNodeShimmerPropertiesJSON(Node node) throws JSONException {
+		JSONObject shimmerPropertiesJSON = new JSONObject();
+		shimmerPropertiesJSON.put("nodeType", node.getNodeType());
+		shimmerPropertiesJSON.put("nodeTypeText", NamesHelper.enumToNiceString(node.getNodeType()));
+		shimmerPropertiesJSON.put("classCount", node.getClassCount());
+		shimmerPropertiesJSON.put("concreteClassesCount", node.getConcreteClassesCount());
+		shimmerPropertiesJSON.put("abstractClassesCount", node.getAbstractClassesCount());
+		shimmerPropertiesJSON.put("abstractness", node.getAbstractness());
+		shimmerPropertiesJSON.put("efferentsCount", node.getEfferentsCount());
+		shimmerPropertiesJSON.put("afferentsCount", node.getAfferentsCount());
+		shimmerPropertiesJSON.put("instability", node.getInstability());
+		shimmerPropertiesJSON.put("distanceFromMainSequence", node.getDistanceFromMainSequence());
 		
 		if (node.getNodeType() == NodeType.ANALYSED_PACKAGE) {
-			sb.append("bugs: [");
-			appendBugs(sb, node.getBugs());
-			sb.append("], ");
+			shimmerPropertiesJSON.put("bugs", bugsToJSON(node.getBugs()));
 		}
 		
-		sb.append("}, ");
+		return shimmerPropertiesJSON;
 	}
 
-	private void appendBugs(StringBuilder sb, List<Bug> bugs) {
+	private JSONArray bugsToJSON(List<Bug> bugs) throws JSONException {
+		JSONArray bugsArrayJSON = new JSONArray();
 		for (Bug bug : bugs) {
-			sb.append("{");
-			sb.append("type: '");
-			sb.append(bug.getBugType());
-			sb.append("', abbrev: '");
-			sb.append(bug.getBugAbbrev());
-			sb.append("', category: '");
-			sb.append(bug.getBugCategory());
-			sb.append("', priority: ");
-			sb.append(bug.getBugPriority());
-			sb.append(", rank: ");
-			sb.append(bug.getBugRank());
-			sb.append("},");
+			JSONObject bugJSON = new JSONObject();
+			bugJSON.put("type", bug.getBugType());
+			bugJSON.put("abbrev", bug.getBugAbbrev());
+			bugJSON.put("category", bug.getBugCategory());
+			bugJSON.put("priority", bug.getBugPriority());
+			bugJSON.put("rank", bug.getBugRank());
+			bugsArrayJSON.put(bugJSON);
 		}
+		return bugsArrayJSON;
 	}
 
-	private void appendId(StringBuilder sb, Node node) {
-		sb.append("id:");
-		sb.append(node.getId());
-		sb.append(", ");
-	}
-
-	private void appendName(StringBuilder sb, Node node) {
-		sb.append("label: '");
-		sb.append(node.getName());
-		sb.append("', ");
-	}
-
-	private void appendHeat(StringBuilder sb, Node node,
-			SimulationProperties properties) {
+	private int getNodeHeat(Node node, SimulationProperties properties) {
 		if (properties.getNodeHeatMetric() == null) {
-			return;
+			return 0;
 		}
-		
-		sb.append("heatValue: ");
-		
 		switch (properties.getNodeHeatMetric()) {
 		case DISTANCE_FROM_MAIN_SEQUENCE:
-			sb.append(floatMetricToNumber(node.getDistanceFromMainSequence(), MINIMAL_HEAT, MAXIMAL_HEAT));
-			break;
+			return floatMetricToNumber(node.getDistanceFromMainSequence(), MINIMAL_HEAT, MAXIMAL_HEAT);
 			
 		case ABSTRACTNESS:
-			sb.append(floatMetricToNumber(node.getAbstractness(), MINIMAL_HEAT, MAXIMAL_HEAT));
-			break;
+			return floatMetricToNumber(node.getAbstractness(), MINIMAL_HEAT, MAXIMAL_HEAT);
 			
 		case INSTABILITY:
-			sb.append(floatMetricToNumber(node.getInstability(), MINIMAL_HEAT, MAXIMAL_HEAT));
-			break;
+			return floatMetricToNumber(node.getInstability(), MINIMAL_HEAT, MAXIMAL_HEAT);
 			
 		case CLASS_COUNT:
-			sb.append(node.getClassCount());
-			break;
+			return node.getClassCount();
+			
+		case AVERAGE_SIZE:
+			return floatMetricToNumber(node.getAverageSize(), MINIMAL_HEAT, MAXIMAL_HEAT);
+			
+		default:
+			return 0;
 		}
-		sb.append(", ");
 	}
 
-	private void appendColor(StringBuilder sb, Node node,
-			SimulationProperties properties) {
+	private JSONObject getNodeColorJSON(Node node, SimulationProperties properties) throws JSONException {
+		JSONObject colorJSON = new JSONObject();
 		if (properties.getNodeColorMetric() == null) {
-			return;
+			return colorJSON;
 		}
 		
 		if (properties.isConstellation()) {
-			sb.append("color: {border: 'transparent', background: ");
+			colorJSON.put("border", "transparent");
 		} else {
-			sb.append("color: {border: 'black', background: ");
+			colorJSON.put("border", "black");
 		}
+		colorJSON.put("background", getNodeColor(node, properties));
 		
-		switch (node.getNodeType()) {
-		case ANALYSED_PACKAGE:
-			appendAnalysedPackageColor(sb, node, properties);
-			break;
-
-		case LIBRARY_PACKAGE:
-			sb.append("'purple'");
-			break;
-			
-		case TREE_NODE:
-			sb.append("'blue'");
-			break;
-			
-		default:
-			break;
-		}
-		
-		sb.append("}, ");
+		return colorJSON;
 	}
 	
-	private void appendAnalysedPackageColor(StringBuilder sb, Node node,
-			SimulationProperties properties) {
+	private String getNodeColor(Node node, SimulationProperties properties) {
+		switch (node.getNodeType()) {
+		case ANALYSED_PACKAGE:
+			return getAnalysedPackageColor(node, properties);
+
+		case LIBRARY_PACKAGE:
+			return "purple";
+			
+		case TREE_NODE:
+			return "blue";
+			
+		default:
+			return "lightgray";
+		}
+	}
+
+	private String getAnalysedPackageColor(Node node, SimulationProperties properties) {
 		switch (properties.getNodeColorMetric()) {
 		case DISTANCE_FROM_MAIN_SEQUENCE:
-			sb.append(floatMetricToColor(node.getDistanceFromMainSequence()));
-			break;
+			return floatMetricToColor(node.getDistanceFromMainSequence());
 			
 		case ABSTRACTNESS:
-			sb.append(floatMetricToColor(node.getAbstractness()));
-			break;
+			return floatMetricToColor(node.getAbstractness());
 			
 		case INSTABILITY:
-			sb.append(floatMetricToColor(node.getInstability()));
-			break;
+			return floatMetricToColor(node.getInstability());
 			
 		case CLASS_COUNT:
 			// FIXME: find a better way to represent a color
-			sb.append(floatMetricToColor((float) node.getClassCount() / (float) TOO_LARGE_PACKAGE));
-			break;
+			return floatMetricToColor((float) node.getClassCount() / (float) TOO_LARGE_PACKAGE);
+		
+		case AVERAGE_SIZE:
+			// FIXME: find a better way to represent a color
+			return floatMetricToColor((float) node.getAverageSize() / (float) TOO_LARGE_CLASS);
+			
+		default:
+			return "lightgray";
 		}
 	}
 
-	private void appendSize(StringBuilder sb, Node node,
-			SimulationProperties properties) {
+	private int getNodeSize(Node node, SimulationProperties properties) {
 		if (properties.getNodeSizeMetric() == null) {
-			return;
+			return 0;
 		}
 		
-		sb.append("radius: ");
 		switch (properties.getNodeSizeMetric()) {
 		case DISTANCE_FROM_MAIN_SEQUENCE:
-			sb.append(floatMetricToNumber(node.getDistanceFromMainSequence(), MINIMAL_RADIUS, MAXIMAL_RADIUS));
-			break;
+			return floatMetricToNumber(node.getDistanceFromMainSequence(), MINIMAL_RADIUS, MAXIMAL_RADIUS);
 			
 		case ABSTRACTNESS:
-			sb.append(floatMetricToNumber(node.getAbstractness(), MINIMAL_RADIUS, MAXIMAL_RADIUS));
-			break;
+			return floatMetricToNumber(node.getAbstractness(), MINIMAL_RADIUS, MAXIMAL_RADIUS);
 			
 		case INSTABILITY:
-			sb.append(floatMetricToNumber(node.getInstability(), MINIMAL_RADIUS, MAXIMAL_RADIUS));
-			break;
+			return floatMetricToNumber(node.getInstability(), MINIMAL_RADIUS, MAXIMAL_RADIUS);
 			
 		case CLASS_COUNT:
-			sb.append(Math.min((MINIMAL_RADIUS + node.getClassCount() / 1.5), MAXIMAL_RADIUS));
-			break;
+			return (int) Math.min((MINIMAL_RADIUS + node.getClassCount() / 1.5), MAXIMAL_RADIUS);
+		
+		case AVERAGE_SIZE:
+			return (int) Math.min((MINIMAL_RADIUS + node.getAverageSize() / 50), MAXIMAL_RADIUS);
+			
+		default:
+			return MINIMAL_RADIUS;
 		}
-		sb.append(", ");
 	}
 	
-	private void appendShape(StringBuilder sb, Node node) {
-		sb.append("shape: ");
+	private String getNodeShape(Node node) {
 		if (node.getNodeType() == NodeType.TREE_NODE) {
-			sb.append("'square'");
+			return "square";
 		} else {
-			sb.append("'dot'");
+			return "dot";
 		}
-		sb.append(", ");
 	}
 	
 	private int floatMetricToNumber(float metric, int min, int max) {
@@ -301,11 +259,11 @@ public class GraphServiceImpl implements GraphService {
 		} else {
 			result = Color.GREEN;
 		}
-		return String.format("'#%02x%02x%02x'", result.getRed(), 
+		return String.format("#%02x%02x%02x", result.getRed(), 
 				result.getGreen(), result.getBlue());
 	}
 
-	private void appendLength(StringBuilder sb, Edge edge) {
+	private int calculateLength(Edge edge) {
 		int classCount = edge.getNodeFrom().getClassCount();
 		int strength = edge.getStrength();
 		int length = MINIMAL_LENGTH;
@@ -323,8 +281,7 @@ public class GraphServiceImpl implements GraphService {
 			break;
 		}
 				
-		sb.append(", length:");
-		sb.append(length);
+		return length;
 	}
 
 }

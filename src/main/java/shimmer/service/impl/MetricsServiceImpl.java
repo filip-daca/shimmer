@@ -24,6 +24,10 @@ public class MetricsServiceImpl implements MetricsService {
 		boolean eagerAnalysis = !properties.isLazyAnalysis();
 		
 		for (Node node : graph.getNodes()) {
+			if (eagerAnalysis || averageSizeCalculationRequired(properties)){
+				calculateAverageSize(node);
+			}
+			
 			if (eagerAnalysis || instabilityCalculationRequired(properties)) {
 				calculateInstability(node);
 			}
@@ -42,8 +46,18 @@ public class MetricsServiceImpl implements MetricsService {
 	// PRIVATE METHODS
 
 	/**
+	 * As = Ts / Cc
+	 * @param node - package node
+	 */
+	private void calculateAverageSize(Node node) {
+		if (node.getClassCount() > 0) {
+			node.setAverageSize(node.getTotalSize() / node.getClassCount());
+		}
+	}
+
+	/**
 	 * A = Ac / Cc
-	 * @param node
+	 * @param node - package node
 	 */
 	private void calculateAbstractness(Node node) {
 		if (node.getClassCount() > 0) {
@@ -56,7 +70,7 @@ public class MetricsServiceImpl implements MetricsService {
 
 	/**
 	 * I = Ce / (Ce + Ca)
-	 * @param node
+	 * @param node - package node
 	 */
 	private void calculateInstability(Node node) {
 		float efferentsCount = node.getEfferentsCount();
@@ -70,7 +84,7 @@ public class MetricsServiceImpl implements MetricsService {
 	/**
 	 * A + I = 1  -> perfect case
 	 * D = |A + I - 1|
-	 * @param node
+	 * @param node - package node
 	 */
 	private void calculateDistance(Node node) {
 		float abstractness = node.getAbstractness();
@@ -99,6 +113,11 @@ public class MetricsServiceImpl implements MetricsService {
 			SimulationProperties properties) {
 		return distanceCalculationRequired(properties)
 				|| isMetricCalculationRequired(properties, Metric.INSTABILITY);
+	}
+	
+	private boolean averageSizeCalculationRequired(
+			SimulationProperties properties) {
+		return isMetricCalculationRequired(properties, Metric.AVERAGE_SIZE);
 	}
 	
 }

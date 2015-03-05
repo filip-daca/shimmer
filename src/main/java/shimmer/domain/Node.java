@@ -22,6 +22,7 @@ public class Node {
 	private NodeType nodeType;
 	
 	// Package specific fields
+	private int totalSize;
 	private int classCount;
 	private int abstractClassesCount;
 	private int concreteClassesCount;
@@ -32,14 +33,12 @@ public class Node {
 	private float abstractness;
 	private float instability;
 	private float distanceFromMainSequence;
+	private float averageSize;
 	
 	// Bugs
 	private List<Bug> bugs;
-	private int priority1Bugs;
-	private int priority2Bugs;
-	private int priority3Bugs;
-	private int priority4Bugs;
-	private int priority5Bugs;
+	private int totalBugs;
+	private int[] priorityBugs;
 	
 	// ************************************************************************
 	// CONSTRUCTORS
@@ -47,11 +46,7 @@ public class Node {
 	public Node() {
 		this.edges = new ArrayList<Edge>();
 		this.bugs = new ArrayList<Bug>();
-		this.priority1Bugs = 0;
-		this.priority2Bugs = 0;
-		this.priority3Bugs = 0;
-		this.priority4Bugs = 0;
-		this.priority5Bugs = 0;
+		this.priorityBugs = new int[6];
 	}
 	
 	public Node(String name) {
@@ -159,44 +154,36 @@ public class Node {
 		return bugs;
 	}
 	
-	public void setPriority1Bugs(int priority1Bugs) {
-		this.priority1Bugs = priority1Bugs;
+	public int getPriorityBugs(int priority) {
+		return priorityBugs[priority];
 	}
 	
-	public int getPriority1Bugs() {
-		return priority1Bugs;
+	public void setPriorityBugs(int priority, int numberOfBugs) {
+		this.priorityBugs[priority] = numberOfBugs;
 	}
 	
-	public void setPriority2Bugs(int priority2Bugs) {
-		this.priority2Bugs = priority2Bugs;
+	public int getTotalBugs() {
+		return totalBugs;
 	}
 	
-	public int getPriority2Bugs() {
-		return priority2Bugs;
+	public void setTotalBugs(int totalBugs) {
+		this.totalBugs = totalBugs;
 	}
 	
-	public void setPriority3Bugs(int priority3Bugs) {
-		this.priority3Bugs = priority3Bugs;
+	public int getTotalSize() {
+		return totalSize;
 	}
 	
-	public int getPriority3Bugs() {
-		return priority3Bugs;
+	public void setTotalSize(int totalSize) {
+		this.totalSize = totalSize;
 	}
 	
-	public void setPriority4Bugs(int priority4Bugs) {
-		this.priority4Bugs = priority4Bugs;
+	public float getAverageSize() {
+		return averageSize;
 	}
 	
-	public int getPriority4Bugs() {
-		return priority4Bugs;
-	}
-	
-	public void setPriority5Bugs(int priority5Bugs) {
-		this.priority5Bugs = priority5Bugs;
-	}
-	
-	public int getPriority5Bugs() {
-		return priority5Bugs;
+	public void setAverageSize(float averageSize) {
+		this.averageSize = averageSize;
 	}
 	
 }

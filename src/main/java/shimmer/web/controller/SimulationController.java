@@ -6,7 +6,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.component.poll.Poll;
 import org.springframework.context.annotation.Scope;
 
 import shimmer.domain.Graph;
@@ -55,8 +54,7 @@ public class SimulationController implements Serializable {
 	private volatile String edgesJSON;
 	private volatile String nodesJSON;
 	
-	private volatile Integer loadingProgress;
-	private Poll analysisCompletePoll;
+	private volatile int loadingProgress;
 	
 	// ************************************************************************
 	// THREAD WORK
@@ -77,10 +75,13 @@ public class SimulationController implements Serializable {
 	 * Generates graph and JSON elements from properties
 	 */
 	public void generateGraph() {
-		// Skip running analysis when wirk is in progress
+		// Skip running analysis when work is in progress
 		if (graphGenerationThread.isAlive()) {
 			return;
 		}
+		
+		setVisualizationReady(false);
+		setLoadindProgress(0);
 		
 		graphGenerationThread = new Thread() {
 	        public void run() {
@@ -91,7 +92,7 @@ public class SimulationController implements Serializable {
 	    		setLoadindProgress(20);
 	    		metricsService.calculateMetrics(graph, properties);
 	    		setLoadindProgress(40);
-	    		findbugsService.applyAnalysis(graph, properties);
+	    		findbugsService.applyAnalysis(graph, properties.getDirectoryPath());
 	    		setLoadindProgress(80);
 	    		edgesJSON = graphService.generateEdgesJSON(graph, properties);
 	    		setLoadindProgress(90);
@@ -145,22 +146,7 @@ public class SimulationController implements Serializable {
 	}
 	
 	public synchronized int getLoadingProgress() {
-		if (loadingProgress == null) {
-			return 0;
-		} else if (loadingProgress == 100) {
-			loadingProgress = null;
-			return 100;
-		} else {
-			return loadingProgress;
-		}
-	}
-	
-	public Poll getAnalysisCompletePoll() {
-		return analysisCompletePoll;
-	}
-	
-	public void setAnalysisCompletePoll(Poll analysisCompletePoll) {
-		this.analysisCompletePoll = analysisCompletePoll;
+		return loadingProgress;
 	}
 	
 }

@@ -88,6 +88,23 @@ public class Graph {
 		Node packageNode = nodes.get(packageName);
 		packageNode.getBugs().add(bug);
 	}
+	
+	/**
+	 * Applies Findbugs information about package.
+	 * @param packageName - name of package
+	 * @param totalBugs - total number of bugs
+	 * @param totalSize - total lines of code
+	 * @param priorityBugs - array with bugs count of each priority
+	 */
+	public void applyFindbugsPackageAnalysis(String packageName, int totalBugs,
+			int totalSize, int[] priorityBugs) {
+		Node packageNode = nodes.get(packageName);
+		for (int i = 1; i < priorityBugs.length; i++) {
+			packageNode.setPriorityBugs(i, priorityBugs[i]);
+		}
+		packageNode.setTotalBugs(totalBugs);
+		packageNode.setTotalSize(totalSize);
+	}
 
 	// ************************************************************************
 	// PRIVATE METHODS

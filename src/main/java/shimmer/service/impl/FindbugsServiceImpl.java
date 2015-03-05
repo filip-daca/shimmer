@@ -2,6 +2,7 @@ package shimmer.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
 
 import javax.inject.Inject;
@@ -17,7 +18,6 @@ import org.xml.sax.SAXException;
 
 import shimmer.domain.Bug;
 import shimmer.domain.Graph;
-import shimmer.domain.SimulationProperties;
 import shimmer.service.FindbugsService;
 import edu.umd.cs.findbugs.FindBugs2;
 
@@ -46,9 +46,9 @@ public class FindbugsServiceImpl implements FindbugsService {
 	// IMPLEMENTATIONS
 	
 	@Override
-	public void applyAnalysis(Graph graph, SimulationProperties properties) {
+	public void applyAnalysis(Graph graph, String directoryPath) {
 		String analysisFilePath = fileProperties.getProperty("fileSystem.temp") + TEMPORARY_ANALYSIS_FILE;
-		runAnalysis(analysisFilePath, properties.getDirectoryPath());
+		runAnalysis(analysisFilePath, directoryPath);
 		
 		File analysisFile = new File(analysisFilePath);
 		if (analysisFile.exists()) {
@@ -99,6 +99,7 @@ public class FindbugsServiceImpl implements FindbugsService {
 			Element classElement = (Element) bugElement.getElementsByTagName("Class").item(0);
 			String className = classElement.getAttribute("classname");
 			
+			// Adding bug element to ShimmerGraph
 			graph.addBug(bug, className);
 		}
 		
@@ -106,24 +107,19 @@ public class FindbugsServiceImpl implements FindbugsService {
 		for (int i = 0; i < packageElements.getLength(); i++) {
 			Element packageElement = (Element) packageElements.item(i);
 			String packageName = packageElement.getAttribute("package");
-			int totalBugs = Integer.parseInt(packageElement.getAttribute("package"));
+			int totalBugs = Integer.parseInt(packageElement.getAttribute("total_bugs"));
+			int totalSize = Integer.parseInt(packageElement.getAttribute("total_size"));
 			
-			// TODO: add package bug summary
-			if (packageElement.hasAttribute("priority_1")) {
-				
+			int[] priorityBugs = new int[6];
+			Arrays.fill(priorityBugs, 0);
+			for (int j = 1; j < priorityBugs.length; j++) {
+				if (packageElement.hasAttribute("priority_" + j)) {
+					priorityBugs[j] = Integer.parseInt(packageElement.getAttribute("priority_" + j));
+				}
 			}
-			if (packageElement.hasAttribute("priority_2")) {
-							
-			}
-			if (packageElement.hasAttribute("priority_3")) {
-				
-			}
-			if (packageElement.hasAttribute("priority_4")) {
-				
-			}
-			if (packageElement.hasAttribute("priority_5")) {
-				
-			}
+			
+			// Adding package analysis to graph
+			graph.applyFindbugsPackageAnalysis(packageName, totalBugs, totalSize, priorityBugs);
 		}
 	}
 

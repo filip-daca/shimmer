@@ -8,6 +8,7 @@ package shimmer.enums;
 public enum Metric {
 
 	CLASS_COUNT,
+	AVERAGE_SIZE,
 	ABSTRACTNESS,
 	INSTABILITY,
 	DISTANCE_FROM_MAIN_SEQUENCE;

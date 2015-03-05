@@ -20,7 +20,7 @@
 	    		<p:commandLink styleClass="btn btn-primary btn-sm margin-left" 
 	    				ajax="true" global="true"
 						actionListener="#{simulationController.generateGraph}"
-						onclick="ShimmerWeb.componentShow('progressBar');
+						oncomplete="ShimmerWeb.componentShow('progressBar');
 							PF('progressBar').start();
 							PF('analysisCompletePoll').start();"
 						onstart="ShimmerWeb.show('calculatingStatus');">
@@ -35,7 +35,6 @@
 				<!-- Analysis complete poll -->
 				<p:poll interval="5" stop="#{simulationController.visualizationReady}" autoStart="false"
 					widgetVar="analysisCompletePoll"
-					binding="#{simulationController.analysisCompletePoll}"
 					update="@([id$=dataScript])" />
     		</h:form>
     	</div>
@@ -75,61 +74,35 @@
 								<div>
 									<p:outputLabel value="Package tree edges: "/>
 									<p:inputSwitch value="#{simulationController.properties.packageTreeEdges}">
-										<p:ajax event="change" global="true" 
-											listener="#{simulationController.generateGraph}"
-											update="@([id$=dataScript])"
-											process="@form"
-											onstart="ShimmerWeb.show('calculatingStatus');"
-											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+										<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 									</p:inputSwitch>
 								</div>
 								
 								<div>
 									<p:outputLabel value="Dependencies edges: "/>
 									<p:inputSwitch value="#{simulationController.properties.dependenciesEdges}">
-										<p:ajax event="change" global="true" 
-											listener="#{simulationController.generateGraph}"
-											update="@([id$=dataScript])"
-											process="@form"
-											onstart="ShimmerWeb.show('calculatingStatus');"
-											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+										<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 									</p:inputSwitch>
 								</div>
 								
 								<div>
 									<p:outputLabel value="Weighted dependencies: "/>
 									<p:inputSwitch value="#{simulationController.properties.dependenciesWeighted}">
-										<p:ajax event="change" global="true" 
-											listener="#{simulationController.generateGraph}"
-											update="@([id$=dataScript])"
-											process="@form"
-											onclick=""
-											onstart="ShimmerWeb.show('calculatingStatus');"
-											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+										<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 									</p:inputSwitch>
 								</div>
 								
 								<div>
 									<p:outputLabel value="Full package tree: "/>
 									<p:inputSwitch value="#{simulationController.properties.fullPackageTree}">
-										<p:ajax event="change" global="true" 
-											listener="#{simulationController.generateGraph}"
-											update="@([id$=dataScript])" 
-											process="@form"
-											onstart="ShimmerWeb.show('calculatingStatus');"
-											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+										<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 									</p:inputSwitch>
 								</div>
 								
 								<div>
 									<p:outputLabel value="Library packages: "/>
 									<p:inputSwitch value="#{simulationController.properties.libraryPackages}">
-										<p:ajax event="change" global="true" 
-											listener="#{simulationController.generateGraph}"
-											update="@([id$=dataScript])" 
-											process="@form"
-											onstart="ShimmerWeb.show('calculatingStatus');"
-											oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+										<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 									</p:inputSwitch>
 								</div>
 							
@@ -137,36 +110,21 @@
 								<h:selectOneMenu id="sizeMetricField"
 										value="#{simulationController.properties.nodeSizeMetric}">
 									<f:selectItems value="#{enumSelectItemsProvider.metrics}" />
-									<p:ajax event="change" global="true" 
-										listener="#{simulationController.generateGraph}"
-										update="@([id$=dataScript])" 
-										process="@form"
-										onstart="ShimmerWeb.show('calculatingStatus');"
-										oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+									<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 								</h:selectOneMenu>
 								
 								<p:outputLabel for="colorMetricField" value="Node color metric:" />
 								<h:selectOneMenu id="colorMetricField"
 										value="#{simulationController.properties.nodeColorMetric}">
 									<f:selectItems value="#{enumSelectItemsProvider.metrics}" />
-									<p:ajax event="change" global="true" 
-										listener="#{simulationController.generateGraph}"
-										update="@([id$=dataScript])" 
-										process="@form"
-										onstart="ShimmerWeb.show('calculatingStatus');"
-										oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+									<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 								</h:selectOneMenu>
 								
 								<p:outputLabel for="heatMetricField" value="Node heat metric:" />
 								<h:selectOneMenu id="heatMetricField"
 										value="#{simulationController.properties.nodeHeatMetric}">
 									<f:selectItems value="#{enumSelectItemsProvider.metrics}" />
-									<p:ajax event="change" global="true" 
-										listener="#{simulationController.generateGraph}"
-										update="@([id$=dataScript])" 
-										process="@form"
-										onstart="ShimmerWeb.show('calculatingStatus');"
-										oncomplete="ShimmerWeb.hide('calculatingStatus');Shimmer.reloadData();" />
+									<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 								</h:selectOneMenu>
 							</h:form>
 						</div>

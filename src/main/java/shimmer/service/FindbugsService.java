@@ -1,7 +1,6 @@
 package shimmer.service;
 
 import shimmer.domain.Graph;
-import shimmer.domain.SimulationProperties;
 
 /**
  * Service provides methods to operate with Findbugs Library.
@@ -14,8 +13,9 @@ public interface FindbugsService {
 	 * Reads Findbugs report file and generates Graph object.
 	 * 
 	 * @param findbugsReportFilename - file name of Findbugs report
+	 * @param directoryPath - path to project
 	 * @return project graph
 	 */
-	void applyAnalysis(Graph graph, SimulationProperties properties);
+	void applyAnalysis(Graph graph, String directoryPath);
 
 }
