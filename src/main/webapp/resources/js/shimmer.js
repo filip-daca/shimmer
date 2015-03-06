@@ -193,7 +193,9 @@ var Shimmer = {
 		var node = nodes[event.nodes[0]];
 		var metaData = node.shimmerProperties;
 		$("#shimmerInfo .packageName").text(node.label);
+		$("#bugReport .packageName").text(node.label);
 		$("#shimmerInfo .nodeType").text(metaData.nodeTypeText);
+		$("#bugReport .nodeType").text(metaData.nodeTypeText);
 		if (metaData.nodeType === "ANALYSED_PACKAGE") {
 			$("#shimmerInfo .classCount").text(metaData.classCount);
 			$("#shimmerInfo .totalSize").text(metaData.totalSize);
@@ -206,9 +208,17 @@ var Shimmer = {
 			$("#shimmerInfo .instability").text(ShimmerUtils.formatFloat(metaData.instability));
 			$("#shimmerInfo .distanceFromMainSequence").text(ShimmerUtils.formatFloat(metaData.distanceFromMainSequence));
 			$("#shimmerInfo .totalBugs").text(metaData.totalBugs);
+			
+			$("#bugReport .bugs").children().remove();
+			for (var i = 0; i < metaData.bugs.length; i++) {
+				$("#bugReport .bugs").append(ShimmerWeb.getBugElement(metaData.bugs[i]));
+			}
+			
 			$("#shimmerInfo .analysedPackageInfo").show();
+			$("#bugReport .analysedPackageInfo").show();
 		} else {
-			$("#shimmerInfo .analysedPackageInfo").hide();
+			$("#shimmerInfo .analysedPackageInfo").show();
+			$("#bugReport .analysedPackageInfo").hide();
 		}
 	},
 	
@@ -336,7 +346,65 @@ var ShimmerWeb = {
     	} else {
     		this.hide(id);
     	}
-    }
+    },
+    
+    /**
+     * Return well formed HTML bug description element.
+     * @param bug - findbugs bug JSON object
+     * @returns {String} - html bug element
+     */
+	getBugElement: function(bug) {
+		var bugContent = ShimmerWeb.getLabeledElement("Type", bug.type);
+		bugContent += ShimmerWeb.getLabeledElement("Class", bug.className);
+		bugContent += ShimmerWeb.getLabeledElement("Abbrev", bug.abbrev);
+		bugContent += ShimmerWeb.getLabeledElement("Category", bug.category);
+		bugContent += ShimmerWeb.getLabeledElement("Priority", bug.priority);
+		bugContent += ShimmerWeb.getLabeledElement("Rank", bug.rank);
+		
+		var bugElement = ShimmerWeb.wrapDiv("bug", bugContent);
+		return bugElement;
+	},
+	
+	/**
+	 * Wraps content with div element
+	 * @param className - class atribute value
+	 * @param content - element content
+	 * @returns {String} - content wrapped in div
+	 */
+	wrapDiv: function(className, content) {
+		return ShimmerWeb.wrapElement("div", className, content);
+	},
+	
+	/**
+	 * Wraps content with an HTML element
+	 * @param elementName - name of tag
+	 * @param className - class atribute value
+	 * @param content - element content
+	 * @returns {String} - content wrapped in tag
+	 */
+	wrapElement: function(elementName, className, content) {
+		var element = "<" + elementName
+		if (className != null) {
+			element += " class='" + className + "'";
+		}
+		element += ">";
+		element += content;
+		element += "</" + elementName + ">";
+		return element;
+	},
+	
+	/**
+	 * Creates a labeled component.
+	 * @param label - text label
+	 * @param value - field value
+	 * @returns {String} - labeled html component
+	 */
+	getLabeledElement: function(label, value) {
+		var labeledContent = ShimmerWeb.wrapElement("label", null, label);
+		labeledContent += ShimmerWeb.wrapElement("span", "badge", value);
+		var labeledElement = ShimmerWeb.wrapDiv(null, labeledContent);
+		return labeledElement;
+	}
 
 };
 

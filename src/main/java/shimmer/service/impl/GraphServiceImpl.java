@@ -128,6 +128,7 @@ public class GraphServiceImpl implements GraphService {
 			bugJSON.put("category", bug.getBugCategory());
 			bugJSON.put("priority", bug.getBugPriority());
 			bugJSON.put("rank", bug.getBugRank());
+			bugJSON.put("className", bug.getClassName());
 			bugsArrayJSON.put(bugJSON);
 		}
 		return bugsArrayJSON;

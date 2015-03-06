@@ -94,10 +94,11 @@ public class FindbugsServiceImpl implements FindbugsService {
 			String bugAbbrev = bugElement.getAttribute("abbrev");
 			int bugRank = Integer.parseInt(bugElement.getAttribute("rank"));
 			int bugPriority = Integer.parseInt(bugElement.getAttribute("priority"));
-			Bug bug = new Bug(bugType, bugCategory, bugAbbrev, bugRank, bugPriority);
 			
 			Element classElement = (Element) bugElement.getElementsByTagName("Class").item(0);
 			String className = classElement.getAttribute("classname");
+			
+			Bug bug = new Bug(bugType, bugCategory, bugAbbrev, bugRank, bugPriority, className);
 			
 			// Adding bug element to ShimmerGraph
 			graph.addBug(bug, className);

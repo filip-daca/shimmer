@@ -8,13 +8,17 @@ public class Bug {
 	private int bugRank;
 	private int bugPriority;
 	
+	// TODO: this field is temporary
+	private String className;
+	
 	public Bug(String bugType, String bugCategory, String bugAbbrev,
-			int bugRank, int bugPriority) {
+			int bugRank, int bugPriority, String className) {
 		this.bugType = bugType;
 		this.bugCategory = bugCategory;
 		this.bugAbbrev = bugAbbrev;
 		this.bugRank = bugRank;
 		this.bugPriority = bugPriority;
+		this.className = className;
 	}
 
 	public String getBugType() {
@@ -35,6 +39,10 @@ public class Bug {
 	
 	public int getBugPriority() {
 		return bugPriority;
+	}
+	
+	public String getClassName() {
+		return className;
 	}
 	
 }
