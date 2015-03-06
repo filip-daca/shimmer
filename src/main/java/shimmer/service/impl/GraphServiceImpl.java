@@ -101,6 +101,8 @@ public class GraphServiceImpl implements GraphService {
 		shimmerPropertiesJSON.put("nodeType", node.getNodeType());
 		shimmerPropertiesJSON.put("nodeTypeText", NamesHelper.enumToNiceString(node.getNodeType()));
 		shimmerPropertiesJSON.put("classCount", node.getClassCount());
+		shimmerPropertiesJSON.put("totalSize", node.getTotalSize());
+		shimmerPropertiesJSON.put("averageSize", node.getAverageSize());
 		shimmerPropertiesJSON.put("concreteClassesCount", node.getConcreteClassesCount());
 		shimmerPropertiesJSON.put("abstractClassesCount", node.getAbstractClassesCount());
 		shimmerPropertiesJSON.put("abstractness", node.getAbstractness());
@@ -108,6 +110,7 @@ public class GraphServiceImpl implements GraphService {
 		shimmerPropertiesJSON.put("afferentsCount", node.getAfferentsCount());
 		shimmerPropertiesJSON.put("instability", node.getInstability());
 		shimmerPropertiesJSON.put("distanceFromMainSequence", node.getDistanceFromMainSequence());
+		shimmerPropertiesJSON.put("totalBugs", node.getTotalBugs());
 		
 		if (node.getNodeType() == NodeType.ANALYSED_PACKAGE) {
 			shimmerPropertiesJSON.put("bugs", bugsToJSON(node.getBugs()));

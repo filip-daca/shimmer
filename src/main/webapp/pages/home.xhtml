@@ -30,11 +30,11 @@
 				<!-- Analysis progress bar -->
 				<p:progressBar id="progressBar" styleClass="margin-top" widgetVar="progressBar" ajax="true" 
 					value="#{simulationController.loadingProgress}"
-					labelTemplate="{value}%" global="false" interval="300" style="display: none;" />
+					labelTemplate="{value}%" global="false" interval="2500" style="display: none;" />
 				
 				<!-- Analysis complete poll -->
 				<p:poll interval="5" stop="#{simulationController.visualizationReady}" autoStart="false"
-					widgetVar="analysisCompletePoll"
+					widgetVar="analysisCompletePoll" 
 					update="@([id$=dataScript])" />
     		</h:form>
     	</div>

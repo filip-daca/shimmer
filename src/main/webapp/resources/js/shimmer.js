@@ -196,13 +196,16 @@ var Shimmer = {
 		$("#shimmerInfo .nodeType").text(metaData.nodeTypeText);
 		if (metaData.nodeType === "ANALYSED_PACKAGE") {
 			$("#shimmerInfo .classCount").text(metaData.classCount);
+			$("#shimmerInfo .totalSize").text(metaData.totalSize);
+			$("#shimmerInfo .averageSize").text(ShimmerUtils.formatFloat(metaData.averageSize));
 			$("#shimmerInfo .concreteClassesCount").text(metaData.concreteClassesCount);
 			$("#shimmerInfo .abstractClassesCount").text(metaData.abstractClassesCount);
-			$("#shimmerInfo .abstractness").text(metaData.abstractness);
+			$("#shimmerInfo .abstractness").text(ShimmerUtils.formatFloat(metaData.abstractness));
 			$("#shimmerInfo .efferentsCount").text(metaData.efferentsCount);
 			$("#shimmerInfo .afferentsCount").text(metaData.afferentsCount);
-			$("#shimmerInfo .instability").text(metaData.instability);
-			$("#shimmerInfo .distanceFromMainSequence").text(metaData.distanceFromMainSequence);
+			$("#shimmerInfo .instability").text(ShimmerUtils.formatFloat(metaData.instability));
+			$("#shimmerInfo .distanceFromMainSequence").text(ShimmerUtils.formatFloat(metaData.distanceFromMainSequence));
+			$("#shimmerInfo .totalBugs").text(metaData.totalBugs);
 			$("#shimmerInfo .analysedPackageInfo").show();
 		} else {
 			$("#shimmerInfo .analysedPackageInfo").hide();
@@ -335,6 +338,24 @@ var ShimmerWeb = {
     	}
     }
 
+};
+
+ShimmerUtils = {
+
+	/**
+	 * Ucina końcówkę długiej liczby zmiennoprzecinkowej i zwraca napis.
+	 * @param f - liczba
+	 * @returns
+	 */
+	formatFloat: function (f) {
+		var result = f.toString();
+		var suffixPosition = result.indexOf(".");
+		if (suffixPosition > 0) {
+			result = result.substring(0, suffixPosition + 3);
+		}
+		return result;
+		
+	}
 };
 
 /**
