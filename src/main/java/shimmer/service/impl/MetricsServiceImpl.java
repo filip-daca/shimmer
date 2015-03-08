@@ -4,8 +4,6 @@ import javax.inject.Named;
 
 import shimmer.domain.Graph;
 import shimmer.domain.Node;
-import shimmer.domain.SimulationProperties;
-import shimmer.enums.Metric;
 import shimmer.service.MetricsService;
 
 /**
@@ -20,25 +18,12 @@ public class MetricsServiceImpl implements MetricsService {
 	// IMPLEMENTATIONS
 	
 	@Override
-	public void calculateMetrics(Graph graph, SimulationProperties properties) {
-		boolean eagerAnalysis = !properties.isLazyAnalysis();
-		
+	public void calculateMetrics(Graph graph) {
 		for (Node node : graph.getNodes()) {
-			if (eagerAnalysis || averageSizeCalculationRequired(properties)){
-				calculateAverageSize(node);
-			}
-			
-			if (eagerAnalysis || instabilityCalculationRequired(properties)) {
-				calculateInstability(node);
-			}
-			
-			if (eagerAnalysis || abstractnessCalculationRequired(properties)) {
-				calculateAbstractness(node);
-			}
-			
-			if (eagerAnalysis || distanceCalculationRequired(properties)) {
-				calculateDistance(node);
-			}
+			calculateAverageSize(node);
+			calculateInstability(node);
+			calculateAbstractness(node);
+			calculateDistance(node);
 		}
 	}
 	
@@ -91,33 +76,6 @@ public class MetricsServiceImpl implements MetricsService {
 		float instability = node.getInstability();
 		float distance = Math.abs(abstractness + instability - 1);
 		node.setDistanceFromMainSequence(distance);
-	}
-	
-	private boolean isMetricCalculationRequired(SimulationProperties properties, Metric metric) {
-		return properties.getNodeColorMetric() == metric
-				|| properties.getNodeHeatMetric() == metric
-				|| properties.getNodeSizeMetric() == metric;
-	}
-
-	private boolean distanceCalculationRequired(SimulationProperties properties) {
-		return isMetricCalculationRequired(properties, Metric.DISTANCE_FROM_MAIN_SEQUENCE);
-	}
-
-	private boolean abstractnessCalculationRequired(
-			SimulationProperties properties) {
-		return distanceCalculationRequired(properties)
-				|| isMetricCalculationRequired(properties, Metric.ABSTRACTNESS);
-	}
-
-	private boolean instabilityCalculationRequired(
-			SimulationProperties properties) {
-		return distanceCalculationRequired(properties)
-				|| isMetricCalculationRequired(properties, Metric.INSTABILITY);
-	}
-	
-	private boolean averageSizeCalculationRequired(
-			SimulationProperties properties) {
-		return isMetricCalculationRequired(properties, Metric.AVERAGE_SIZE);
 	}
 	
 }

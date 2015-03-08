@@ -53,8 +53,8 @@ public class SimulationProperties {
 	public SimulationProperties() {
 		this.directoryPath = "C:\\Users\\9470m\\git\\shimmer\\target\\classes";
 		this.nodeSizeMetric = Metric.CLASS_COUNT;
-		this.nodeColorMetric = Metric.DISTANCE_FROM_MAIN_SEQUENCE;
-		this.nodeHeatMetric = Metric.ABSTRACTNESS;
+		this.nodeColorMetric = Metric.TOTAL_BUGS;
+		this.nodeHeatMetric = Metric.DISTANCE_FROM_MAIN_SEQUENCE;
 		this.packageTreeEdges = true;
 		this.dependenciesEdges = false;
 		this.fullPackageTree = false;

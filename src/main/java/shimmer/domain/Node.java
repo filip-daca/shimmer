@@ -30,6 +30,7 @@ public class Node {
 	private int efferentsCount;
 	
 	// Metrics results 
+	private int largestClassSize;
 	private float abstractness;
 	private float instability;
 	private float distanceFromMainSequence;
@@ -186,4 +187,11 @@ public class Node {
 		this.averageSize = averageSize;
 	}
 	
+	public int getLargestClassSize() {
+		return largestClassSize;
+	}
+	
+	public void setLargestClassSize(int largestClassSize) {
+		this.largestClassSize = largestClassSize;
+	}
 }

@@ -199,15 +199,37 @@ var Shimmer = {
 		if (metaData.nodeType === "ANALYSED_PACKAGE") {
 			$("#shimmerInfo .classCount").text(metaData.classCount);
 			$("#shimmerInfo .totalSize").text(metaData.totalSize);
-			$("#shimmerInfo .averageSize").text(ShimmerUtils.formatFloat(metaData.averageSize));
+			
+			var $averageSize = $("#shimmerInfo .averageSize");
+			$averageSize.text(ShimmerUtils.formatFloat(metaData.averageSize));
+			$averageSize.removeAttr("class");
+			$averageSize.addClass("averageSize badge");
+			$averageSize.addClass(ShimmerWeb.getBadgeColorClass(50, 200, metaData.averageSize));
+			
+			var $largestClassSize = $("#shimmerInfo .largestClassSize");
+			$largestClassSize.text(metaData.largestClassSize);
+			$largestClassSize.removeAttr("class");
+			$largestClassSize.addClass("largestClassSize badge");
+			$largestClassSize.addClass(ShimmerWeb.getBadgeColorClass(50, 200, metaData.largestClassSize));
+			
 			$("#shimmerInfo .concreteClassesCount").text(metaData.concreteClassesCount);
 			$("#shimmerInfo .abstractClassesCount").text(metaData.abstractClassesCount);
 			$("#shimmerInfo .abstractness").text(ShimmerUtils.formatFloat(metaData.abstractness));
 			$("#shimmerInfo .efferentsCount").text(metaData.efferentsCount);
 			$("#shimmerInfo .afferentsCount").text(metaData.afferentsCount);
 			$("#shimmerInfo .instability").text(ShimmerUtils.formatFloat(metaData.instability));
-			$("#shimmerInfo .distanceFromMainSequence").text(ShimmerUtils.formatFloat(metaData.distanceFromMainSequence));
-			$("#shimmerInfo .totalBugs").text(metaData.totalBugs);
+			
+			var $distanceFromMainSequence = $("#shimmerInfo .distanceFromMainSequence");
+			$distanceFromMainSequence.text(ShimmerUtils.formatFloat(metaData.distanceFromMainSequence));
+			$distanceFromMainSequence.removeAttr("class");
+			$distanceFromMainSequence.addClass("distanceFromMainSequence badge");
+			$distanceFromMainSequence.addClass(ShimmerWeb.getBadgeColorClass(0, 1, metaData.distanceFromMainSequence));
+			
+			var $totalBugs = $("#shimmerInfo .totalBugs");
+			$totalBugs.text(metaData.totalBugs);
+			$totalBugs.removeAttr("class");
+			$totalBugs.addClass("totalBugs badge");
+			$totalBugs.addClass(ShimmerWeb.getBadgeColorClass(0, 5, metaData.totalBugs));
 			
 			$("#bugReport .bugs").children().remove();
 			for (var i = 0; i < metaData.bugs.length; i++) {
@@ -215,10 +237,10 @@ var Shimmer = {
 			}
 			
 			$("#shimmerInfo .analysedPackageInfo").show();
-			$("#bugReport .analysedPackageInfo").show();
+			$("#bugReport").show();
 		} else {
-			$("#shimmerInfo .analysedPackageInfo").show();
-			$("#bugReport .analysedPackageInfo").hide();
+			$("#shimmerInfo .analysedPackageInfo").hide();
+			$("#bugReport").hide();
 		}
 	},
 	
@@ -404,8 +426,32 @@ var ShimmerWeb = {
 		labeledContent += ShimmerWeb.wrapElement("span", "badge", value);
 		var labeledElement = ShimmerWeb.wrapDiv(null, labeledContent);
 		return labeledElement;
+	},
+		
+	/**
+	 * Returns badge class coresponding to metric value
+	 * @param best - best value
+	 * @param worst - worst value
+	 * @param value - current value
+	 * @returns {String} - class name of corresponding badge color
+	 */
+	getBadgeColorClass: function(best, worst, value) {
+		var max;
+		if (best > worst) {
+			max = best - worst;
+			score = (value / max) * 10;
+			if (score > 10) {
+				score = 10;
+			}
+		} else {
+			max = worst - best;
+			score = 10 - (value / max) * 10;
+			if (score < 0) {
+				score = 0;
+			}
+		}
+		return "badge-score-" + Math.floor(score);
 	}
-
 };
 
 ShimmerUtils = {

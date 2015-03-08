@@ -119,8 +119,16 @@ public class FindbugsServiceImpl implements FindbugsService {
 				}
 			}
 			
+			NodeList classElements = packageElement.getElementsByTagName("ClassStats");
+			int largestClassSize = 0;
+			for (int j = 0; j < classElements.getLength(); j++) {
+				Element classElement = (Element) classElements.item(j);
+				int classSize = Integer.parseInt(classElement.getAttribute("size"));
+				largestClassSize = Math.max(largestClassSize, classSize);
+			}
+			
 			// Adding package analysis to graph
-			graph.applyFindbugsPackageAnalysis(packageName, totalBugs, totalSize, priorityBugs);
+			graph.applyFindbugsPackageAnalysis(packageName, totalBugs, totalSize, largestClassSize, priorityBugs);
 		}
 	}
 

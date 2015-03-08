@@ -14,6 +14,7 @@ import shimmer.domain.Edge;
 import shimmer.domain.Graph;
 import shimmer.domain.Node;
 import shimmer.domain.SimulationProperties;
+import shimmer.domain.helper.ColorsHelper;
 import shimmer.domain.helper.NamesHelper;
 import shimmer.enums.NodeType;
 import shimmer.service.GraphService;
@@ -39,7 +40,9 @@ public class GraphServiceImpl implements GraphService {
 	private static final int MAXIMAL_HEAT = 70;
 	
 	private static final int TOO_LARGE_PACKAGE = 50;
-	private static final int TOO_LARGE_CLASS = 500;
+	private static final int TOO_MANY_BUGS = 5;
+	private static final int TOO_LARGE_CLASS = 200;
+	
 	private static final float GOOD_METRIC = 0.1F;
 	private static final float BAD_METRIC = 0.9F;
 	
@@ -103,6 +106,7 @@ public class GraphServiceImpl implements GraphService {
 		shimmerPropertiesJSON.put("classCount", node.getClassCount());
 		shimmerPropertiesJSON.put("totalSize", node.getTotalSize());
 		shimmerPropertiesJSON.put("averageSize", node.getAverageSize());
+		shimmerPropertiesJSON.put("largestClassSize", node.getLargestClassSize());
 		shimmerPropertiesJSON.put("concreteClassesCount", node.getConcreteClassesCount());
 		shimmerPropertiesJSON.put("abstractClassesCount", node.getAbstractClassesCount());
 		shimmerPropertiesJSON.put("abstractness", node.getAbstractness());
@@ -135,7 +139,7 @@ public class GraphServiceImpl implements GraphService {
 	}
 
 	private int getNodeHeat(Node node, SimulationProperties properties) {
-		if (properties.getNodeHeatMetric() == null) {
+		if (properties.getNodeHeatMetric() == null || node.getNodeType() != NodeType.ANALYSED_PACKAGE) {
 			return 0;
 		}
 		switch (properties.getNodeHeatMetric()) {
@@ -194,22 +198,28 @@ public class GraphServiceImpl implements GraphService {
 	private String getAnalysedPackageColor(Node node, SimulationProperties properties) {
 		switch (properties.getNodeColorMetric()) {
 		case DISTANCE_FROM_MAIN_SEQUENCE:
-			return floatMetricToColor(node.getDistanceFromMainSequence());
+			return metricToColor(0, 1, node.getDistanceFromMainSequence());
 			
 		case ABSTRACTNESS:
+			// TODO: color of abstractness
 			return floatMetricToColor(node.getAbstractness());
 			
 		case INSTABILITY:
+			// TODO: color of instability
 			return floatMetricToColor(node.getInstability());
 			
 		case CLASS_COUNT:
-			// FIXME: find a better way to represent a color
-			return floatMetricToColor((float) node.getClassCount() / (float) TOO_LARGE_PACKAGE);
+			return metricToColor(5, TOO_LARGE_PACKAGE, node.getClassCount());
 		
 		case AVERAGE_SIZE:
-			// FIXME: find a better way to represent a color
-			return floatMetricToColor((float) node.getAverageSize() / (float) TOO_LARGE_CLASS);
+			return metricToColor(30, TOO_LARGE_CLASS, node.getClassCount());
 			
+		case LARGEST_CLASS_SIZE:
+			return metricToColor(30, TOO_LARGE_CLASS, node.getLargestClassSize());
+		
+		case TOTAL_BUGS:
+			return metricToColor(0, TOO_MANY_BUGS, node.getTotalBugs());
+		
 		default:
 			return "lightgray";
 		}
@@ -221,20 +231,18 @@ public class GraphServiceImpl implements GraphService {
 		}
 		
 		switch (properties.getNodeSizeMetric()) {
-		case DISTANCE_FROM_MAIN_SEQUENCE:
-			return floatMetricToNumber(node.getDistanceFromMainSequence(), MINIMAL_RADIUS, MAXIMAL_RADIUS);
-			
-		case ABSTRACTNESS:
-			return floatMetricToNumber(node.getAbstractness(), MINIMAL_RADIUS, MAXIMAL_RADIUS);
-			
-		case INSTABILITY:
-			return floatMetricToNumber(node.getInstability(), MINIMAL_RADIUS, MAXIMAL_RADIUS);
 			
 		case CLASS_COUNT:
 			return (int) Math.min((MINIMAL_RADIUS + node.getClassCount() / 1.5), MAXIMAL_RADIUS);
 		
 		case AVERAGE_SIZE:
-			return (int) Math.min((MINIMAL_RADIUS + node.getAverageSize() / 50), MAXIMAL_RADIUS);
+			return (int) Math.min((MINIMAL_RADIUS + node.getAverageSize() / 10), MAXIMAL_RADIUS);
+			
+		case LARGEST_CLASS_SIZE:
+			return (int) Math.min((MINIMAL_RADIUS + node.getLargestClassSize() / 10), MAXIMAL_RADIUS);
+			
+		case TOTAL_BUGS:
+			return (int) Math.min((MINIMAL_RADIUS + node.getTotalBugs() * 2), MAXIMAL_RADIUS);
 			
 		default:
 			return MINIMAL_RADIUS;
@@ -262,6 +270,17 @@ public class GraphServiceImpl implements GraphService {
 			result = Color.LIGHT_GRAY;
 		} else {
 			result = Color.GREEN;
+		}
+		return String.format("#%02x%02x%02x", result.getRed(), 
+				result.getGreen(), result.getBlue());
+	}
+	
+	private String metricToColor(float best, float worst, float value) {
+		Color result;
+		if (best < worst) {
+			result = ColorsHelper.colorTransition(Color.GREEN, Color.RED, best, worst, value);
+		} else {
+			result = ColorsHelper.colorTransition(Color.RED, Color.GREEN, worst, best, value);
 		}
 		return String.format("#%02x%02x%02x", result.getRed(), 
 				result.getGreen(), result.getBlue());

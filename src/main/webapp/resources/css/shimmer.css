@@ -45,11 +45,33 @@
 	/* height: 1100px; */
 }
 
+.bug {
+	border: 1px solid red;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	background-color: blanchedalmond;
+	padding: 5px;
+}
+
 /* Fields ------------------------------------------------------------------ */
 
 #shimmerPanel label,
 label.wide-label {
 	width: 200px;
+}
+
+#shimmerInfo span.badge {
+	float: right;
+}
+
+#shimmerInfo label {
+	margin: inherit;
+	font-weight: inherit;
+	font-size: 14px;
+}
+
+#shimmerInfo label.packageName {
+	font-weight: 700;
 }
 
 /* Basic classes ----------------------------------------------------------- */
@@ -203,6 +225,17 @@ body.basic-template {
 
 .basic-template .panel-success {
 	border-color: #5FC335;
+}
+
+.basic-template  .panel-danger>.panel-heading {
+	color: #FFFFFF;
+	background-color: #931A1A;
+	border-color: #931A1A;
+	background-image: none;
+}
+
+.basic-template  .panel-danger {
+	border-color: #931A1A;
 }
 
 .basic-template .ui-messages-info-icon,

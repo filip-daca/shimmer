@@ -90,12 +90,12 @@ public class SimulationController implements Serializable {
 	    			properties.isPackageTreeEdges(), properties.isDependenciesEdges(),
 	    			properties.isFullPackageTree(), properties.isLibraryPackages());
 	    		setLoadindProgress(20);
-	    		metricsService.calculateMetrics(graph, properties);
-	    		setLoadindProgress(40);
 	    		findbugsService.applyAnalysis(graph, properties.getDirectoryPath());
 	    		setLoadindProgress(80);
-	    		edgesJSON = graphService.generateEdgesJSON(graph, properties);
+	    		metricsService.calculateMetrics(graph);
 	    		setLoadindProgress(90);
+	    		edgesJSON = graphService.generateEdgesJSON(graph, properties);
+	    		setLoadindProgress(95);
 	    		nodesJSON = graphService.generateNodesJSON(graph, properties);
 	    		setLoadindProgress(100);
 	    		setVisualizationReady(true);

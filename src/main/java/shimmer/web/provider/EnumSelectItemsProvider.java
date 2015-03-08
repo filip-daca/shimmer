@@ -1,18 +1,16 @@
 package shimmer.web.provider;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
-
-import shimmer.domain.helper.NamesHelper;
-import shimmer.enums.Metric;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
-import org.springframework.util.StringUtils;
+import shimmer.domain.helper.NamesHelper;
+import shimmer.enums.Metric;
 
-import java.util.Arrays;
-import java.util.List;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 /**
  * @author filip.hubert.daca@gmail.com
@@ -23,6 +21,9 @@ public class EnumSelectItemsProvider {
 	// POLA ------------------------------------------------------------------------------------- /
 	
     private List<SelectItem> metrics = toSelectItems(Metric.values());
+    private List<SelectItem> sizeMetrics = toSelectItems(Metric.sizeMetrics());
+    private List<SelectItem> colorMetrics = toSelectItems(Metric.colorMetrics());
+    private List<SelectItem> heatMetrics = toSelectItems(Metric.heatMetrics());
 
     // METODY GŁÓWNE ---------------------------------------------------------------------------- /
     
@@ -35,7 +36,8 @@ public class EnumSelectItemsProvider {
         }));
     }
     
-    private List<SelectItem> toSelectItemsWithAllOption(Enum<?>... values) {
+    @SuppressWarnings("unused")
+	private List<SelectItem> toSelectItemsWithAllOption(Enum<?>... values) {
 		List<SelectItem> items = toSelectItems(values);
 		items.add(0, new SelectItem("", "All"));
 		return items;
@@ -50,5 +52,17 @@ public class EnumSelectItemsProvider {
     
     public List<SelectItem> getMetrics() {
 		return metrics;
+	}
+    
+    public List<SelectItem> getColorMetrics() {
+		return colorMetrics;
+	}
+    
+    public List<SelectItem> getHeatMetrics() {
+		return heatMetrics;
+	}
+    
+    public List<SelectItem> getSizeMetrics() {
+		return sizeMetrics;
 	}
 }

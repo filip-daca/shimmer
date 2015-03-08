@@ -109,21 +109,21 @@
 								<p:outputLabel for="sizeMetricField" value="Node size metric:" />
 								<h:selectOneMenu id="sizeMetricField"
 										value="#{simulationController.properties.nodeSizeMetric}">
-									<f:selectItems value="#{enumSelectItemsProvider.metrics}" />
+									<f:selectItems value="#{enumSelectItemsProvider.sizeMetrics}" />
 									<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 								</h:selectOneMenu>
 								
 								<p:outputLabel for="colorMetricField" value="Node color metric:" />
 								<h:selectOneMenu id="colorMetricField"
 										value="#{simulationController.properties.nodeColorMetric}">
-									<f:selectItems value="#{enumSelectItemsProvider.metrics}" />
+									<f:selectItems value="#{enumSelectItemsProvider.colorMetrics}" />
 									<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 								</h:selectOneMenu>
 								
 								<p:outputLabel for="heatMetricField" value="Node heat metric:" />
 								<h:selectOneMenu id="heatMetricField"
 										value="#{simulationController.properties.nodeHeatMetric}">
-									<f:selectItems value="#{enumSelectItemsProvider.metrics}" />
+									<f:selectItems value="#{enumSelectItemsProvider.heatMetrics}" />
 									<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 								</h:selectOneMenu>
 							</h:form>
