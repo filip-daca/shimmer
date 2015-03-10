@@ -19127,7 +19127,7 @@ return /******/ (function(modules) { // webpackBootstrap
     this.dynamicEdges = [];
     this.reroutedEdges = {};
 
-    this.fontDrawThreshold = 3;
+    this.fontDrawThreshold = networkConstants.nodes.fontDrawThreshold;
 
     // set defaults for the properties
     this.id = undefined;
