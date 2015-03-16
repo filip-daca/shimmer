@@ -27,6 +27,17 @@
 					<i class="glyphicon glyphicon-ok"></i>
 				</p:commandLink>
 				
+				<!-- Save graph -->
+           		<p:commandButton value="Save analysed project" ajax="false" styleClass="save-graph-button"
+           				icon="ui-icon-arrowthick-1-s">
+			        <p:fileDownload value="#{simulationController.saveGraph}" />
+			    </p:commandButton>
+	    		
+	    		<!-- Load saved graph start button -->
+	    		<p:fileUpload fileUploadListener="#{simulationController.loadGraph}" mode="advanced" dragDropSupport="false"
+           			update="@([id$=dataScript],[id$=extraSettingsForm])" sizeLimit="1000000" label="Upload analysed project graph" allowTypes="/(\.|\/)(json)$/"
+           			onstart="ShimmerWeb.show('calculatingStatus');" global="true" auto="true" styleClass="margin-top" />
+				
 				<!-- Analysis progress bar -->
 				<p:progressBar id="progressBar" styleClass="margin-top" widgetVar="progressBar" ajax="true" 
 					value="#{simulationController.loadingProgress}"
@@ -73,55 +84,60 @@
 							
 								<div>
 									<p:outputLabel value="Package tree edges: "/>
-									<p:inputSwitch value="#{simulationController.properties.packageTreeEdges}">
+									<p:inputSwitch value="#{simulationController.properties.packageTreeEdges}" 
+											disabled="#{simulationController.propertiesReadonly}">
 										<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 									</p:inputSwitch>
 								</div>
 								
 								<div>
 									<p:outputLabel value="Dependencies edges: "/>
-									<p:inputSwitch value="#{simulationController.properties.dependenciesEdges}">
+									<p:inputSwitch value="#{simulationController.properties.dependenciesEdges}"
+											disabled="#{simulationController.propertiesReadonly}">
 										<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 									</p:inputSwitch>
 								</div>
 								
 								<div>
 									<p:outputLabel value="Weighted dependencies: "/>
-									<p:inputSwitch value="#{simulationController.properties.dependenciesWeighted}">
+									<p:inputSwitch value="#{simulationController.properties.dependenciesWeighted}"
+											disabled="#{simulationController.propertiesReadonly}">
 										<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 									</p:inputSwitch>
 								</div>
 								
 								<div>
 									<p:outputLabel value="Full package tree: "/>
-									<p:inputSwitch value="#{simulationController.properties.fullPackageTree}">
+									<p:inputSwitch value="#{simulationController.properties.fullPackageTree}"
+											disabled="#{simulationController.propertiesReadonly}">
 										<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 									</p:inputSwitch>
 								</div>
 								
 								<div>
 									<p:outputLabel value="Library packages: "/>
-									<p:inputSwitch value="#{simulationController.properties.libraryPackages}">
+									<p:inputSwitch value="#{simulationController.properties.libraryPackages}"
+											disabled="#{simulationController.propertiesReadonly}">
 										<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 									</p:inputSwitch>
 								</div>
 							
 								<p:outputLabel for="sizeMetricField" value="Node size metric:" />
-								<h:selectOneMenu id="sizeMetricField"
+								<h:selectOneMenu id="sizeMetricField" disabled="#{simulationController.propertiesReadonly}"
 										value="#{simulationController.properties.nodeSizeMetric}">
 									<f:selectItems value="#{enumSelectItemsProvider.sizeMetrics}" />
 									<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 								</h:selectOneMenu>
 								
 								<p:outputLabel for="colorMetricField" value="Node color metric:" />
-								<h:selectOneMenu id="colorMetricField"
+								<h:selectOneMenu id="colorMetricField" disabled="#{simulationController.propertiesReadonly}"
 										value="#{simulationController.properties.nodeColorMetric}">
 									<f:selectItems value="#{enumSelectItemsProvider.colorMetrics}" />
 									<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 								</h:selectOneMenu>
 								
 								<p:outputLabel for="heatMetricField" value="Node heat metric:" />
-								<h:selectOneMenu id="heatMetricField"
+								<h:selectOneMenu id="heatMetricField" disabled="#{simulationController.propertiesReadonly}"
 										value="#{simulationController.properties.nodeHeatMetric}">
 									<f:selectItems value="#{enumSelectItemsProvider.heatMetrics}" />
 									<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
@@ -176,7 +192,8 @@
 					// Nodes and edges
 					var nodes = #{simulationController.nodesJSON}
 					var edges = #{simulationController.edgesJSON}
-				    
+
+					
 					Shimmer.data = {
 						nodes: nodes,
 						edges: edges

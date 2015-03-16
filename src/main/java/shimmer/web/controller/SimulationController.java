@@ -1,18 +1,33 @@
 package shimmer.web.controller;
 
+import java.io.InputStreamReader;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.velocity.runtime.parser.node.SetExecutor;
+import org.json.simple.parser.JSONParser;
+import org.omnifaces.util.Messages;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.json.JSONObject;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.push.impl.JSONDecoder;
+import org.primefaces.push.impl.JSONEncoder;
 import org.springframework.context.annotation.Scope;
+
+
+import org.springframework.util.StringUtils;
 
 import shimmer.domain.Graph;
 import shimmer.domain.SimulationProperties;
+import shimmer.enums.Metric;
+import shimmer.service.FileService;
 import shimmer.service.FindbugsService;
 import shimmer.service.GraphService;
 import shimmer.service.JDependService;
+import shimmer.service.JGitService;
 import shimmer.service.MetricsService;
 
 /**
@@ -42,13 +57,21 @@ public class SimulationController implements Serializable {
 	private FindbugsService findbugsService;
 	
 	@Inject
+	private JGitService jGitService;
+	
+	@Inject
 	private GraphService graphService;
+	
+	@Inject
+	private FileService fileService;
 	
 	// ************************************************************************
 	// CONTROLLER FIELDS
 	
 	private volatile boolean initialized = false;
 	private volatile boolean visualizationReady = false;
+	private boolean propertiesReadonly = false;
+	
 	private SimulationProperties properties;
 	private volatile Graph graph;
 	private volatile String edgesJSON;
@@ -86,11 +109,17 @@ public class SimulationController implements Serializable {
 		graphGenerationThread = new Thread() {
 	        public void run() {
 	        	setLoadindProgress(5);
+	        	if (StringUtils.hasText(properties.getGitUrl())) {
+//	        		String gitRepositoryPath = jGitService.cloneRepository(properties.getGitUrl());
+//	        		properties.setDirectoryPath(gitRepositoryPath);
+	        	}
 	    		graph = jDependService.generateGraph(properties.getDirectoryPath(), 
 	    			properties.isPackageTreeEdges(), properties.isDependenciesEdges(),
 	    			properties.isFullPackageTree(), properties.isLibraryPackages());
-	    		setLoadindProgress(20);
+	    		setLoadindProgress(30);
 	    		findbugsService.applyAnalysis(graph, properties.getDirectoryPath());
+	    		setLoadindProgress(60);
+	    		jGitService.applyHistoricalAnalysis(graph, properties.getGitUrl());
 	    		setLoadindProgress(80);
 	    		metricsService.calculateMetrics(graph);
 	    		setLoadindProgress(90);
@@ -102,6 +131,35 @@ public class SimulationController implements Serializable {
 	        }
 	    };
 	    graphGenerationThread.start();
+	    propertiesReadonly = false;
+	}
+	
+	public void loadGraph(FileUploadEvent event) {
+		JSONObject shimmerJSON = fileService.loadGraph(event.getFile());
+		if (shimmerJSON == null) {
+			return;
+		}
+		try {
+			edgesJSON = shimmerJSON.get("edges").toString();
+			nodesJSON = shimmerJSON.get("nodes").toString();
+			properties.setDependenciesEdges(shimmerJSON.getBoolean("dependenciesEdges"));
+			properties.setDependenciesWeighted(shimmerJSON.getBoolean("dependenciesWeighted"));
+			properties.setFullPackageTree(shimmerJSON.getBoolean("fullPackageTree"));
+			properties.setLibraryPackages(shimmerJSON.getBoolean("libraryPackages"));
+			properties.setNodeColorMetric(Metric.valueOf(shimmerJSON.getString("nodeColorMetric")));
+			properties.setNodeSizeMetric(Metric.valueOf(shimmerJSON.getString("nodeSizeMetric")));
+			properties.setNodeHeatMetric(Metric.valueOf(shimmerJSON.getString("nodeHeatMetric")));
+			setVisualizationReady(true);
+			propertiesReadonly = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Messages.addGlobalError("Unable to parse JSON from file");
+		}
+    }
+	
+	public StreamedContent getSaveGraph() {
+		JSONObject shimmerJSON = graphService.generateShimmerJSON(nodesJSON, edgesJSON, properties);
+		return fileService.saveGraph(shimmerJSON);
 	}
 	
 	private void considerInitialization() {
@@ -147,6 +205,10 @@ public class SimulationController implements Serializable {
 	
 	public synchronized int getLoadingProgress() {
 		return loadingProgress;
+	}
+	
+	public boolean isPropertiesReadonly() {
+		return propertiesReadonly;
 	}
 	
 }

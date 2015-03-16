@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Named;
 
+import org.omnifaces.util.Messages;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
@@ -55,6 +56,7 @@ public class GraphServiceImpl implements GraphService {
 			JSONArray edgesArrayJSON = new JSONArray();
 			for (Edge edge : graph.getEdges()) {
 				JSONObject edgeJSON = new JSONObject();
+				edgeJSON.put("type", edge.getEdgeType());
 				edgeJSON.put("from", edge.getNodeFrom().getId());
 				edgeJSON.put("to", edge.getNodeTo().getId());
 				if (properties.isDependenciesWeighted()) {
@@ -82,6 +84,27 @@ public class GraphServiceImpl implements GraphService {
 			e.printStackTrace();
 			return "[]";
 		}
+	}
+	
+	@Override
+	public JSONObject generateShimmerJSON(String nodesJSON,
+			String edgesJSON, SimulationProperties properties) {
+		JSONObject shimmerJSON = new JSONObject();
+		try {
+			shimmerJSON.put("edges", edgesJSON);
+			shimmerJSON.put("nodes", nodesJSON);
+			shimmerJSON.put("libraryPackages", properties.isLibraryPackages());
+			shimmerJSON.put("dependenciesEdges", properties.isDependenciesEdges());
+			shimmerJSON.put("dependenciesWeighted", properties.isDependenciesWeighted());
+			shimmerJSON.put("fullPackageTree", properties.isFullPackageTree());
+			shimmerJSON.put("nodeSizeMetric", properties.getNodeSizeMetric());
+			shimmerJSON.put("nodeColorMetric", properties.getNodeColorMetric());
+			shimmerJSON.put("nodeHeatMetric", properties.getNodeHeatMetric());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Messages.addGlobalError("Unable to prepare simulation JSON.");
+		}
+		return shimmerJSON;
 	}
 	
 	// ************************************************************************

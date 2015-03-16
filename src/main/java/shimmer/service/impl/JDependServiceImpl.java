@@ -7,6 +7,8 @@ import java.util.Collections;
 
 import javax.inject.Named;
 
+import org.omnifaces.util.Messages;
+
 import jdepend.framework.JDepend;
 import jdepend.framework.JavaPackage;
 import jdepend.framework.PackageComparator;
@@ -40,7 +42,7 @@ public class JDependServiceImpl implements JDependService {
 		try {
 			addDirectory(directoryName);
 		} catch (IOException e) {
-			// TODO: add a faces message
+			Messages.addGlobalError("Unable to add directory to analyze");
 		}
 		
 		// Running JDepend analyzer

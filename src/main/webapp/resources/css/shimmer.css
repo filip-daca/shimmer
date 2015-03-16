@@ -59,6 +59,14 @@
 	bottom: 30px;
 }
 
+.save-graph-button {
+	position: relative;
+	left: 280px;
+	top: 41px;
+	margin-bottom: -20px;
+	margin-top: -20px;
+}
+
 /* Fields ------------------------------------------------------------------ */
 
 #shimmerPanel label,
@@ -156,6 +164,11 @@ body.basic-template {
 .right-half-panel {
 	width: 560px;
 	float: right;
+}
+
+.inline-elements div {
+	display: inline;
+	margin-right: 120px;
 }
 
 /* --------------------------------------------------------------------------
@@ -324,6 +337,10 @@ body.basic-template {
 	background-color: #428bca;
 }
 
+.basic-template .badge-warning {
+	background-color: #FFE144;
+}
+
 .basic-template .badge-score-0 { background-color: #E00E00; }
 .basic-template .badge-score-1 { background-color: #E01E00; }
 .basic-template .badge-score-2 { background-color: #E74900; }
@@ -356,4 +373,8 @@ body.basic-template {
 .basic-template .ui-inputswitch span {
 	margin: -5px 0px;
 	vertical-align: top;
+}
+
+.basic-template .ui-button-text.ui-c {
+	font-weight: normal;
 }

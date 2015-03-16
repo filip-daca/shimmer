@@ -10,6 +10,7 @@ import shimmer.enums.Metric;
 public class SimulationProperties {
 
 	private String directoryPath;
+	private String gitUrl;
 	private Metric nodeSizeMetric;
 	private Metric nodeColorMetric;
 	private Metric nodeHeatMetric;
@@ -41,17 +42,12 @@ public class SimulationProperties {
 	
 	private boolean constellation;
 	
-	/**
-	 * Calculate only dependencies, metrics and packages that
-	 * are needed in view?
-	 */
-	private boolean lazyAnalysis;
-	
 	// ************************************************************************
 	// CONSTRUCTORS
 	
 	public SimulationProperties() {
 		this.directoryPath = "C:\\Users\\9470m\\git\\shimmer\\target\\classes";
+		this.gitUrl = "https://github.com/filip-daca/shimmer.git";
 		this.nodeSizeMetric = Metric.CLASS_COUNT;
 		this.nodeColorMetric = Metric.TOTAL_BUGS;
 		this.nodeHeatMetric = Metric.DISTANCE_FROM_MAIN_SEQUENCE;
@@ -61,7 +57,6 @@ public class SimulationProperties {
 		this.libraryPackages = true;
 		this.constellation = true;
 		this.dependenciesWeighted = true;
-		this.lazyAnalysis = false;
 	}
 	
 	// ************************************************************************
@@ -147,11 +142,11 @@ public class SimulationProperties {
 		this.dependenciesWeighted = dependenciesWeighted;
 	}
 	
-	public boolean isLazyAnalysis() {
-		return lazyAnalysis;
+	public String getGitUrl() {
+		return gitUrl;
 	}
 	
-	public void setLazyAnalysis(boolean lazyAnalysis) {
-		this.lazyAnalysis = lazyAnalysis;
+	public void setGitUrl(String gitUrl) {
+		this.gitUrl = gitUrl;
 	}
 }
