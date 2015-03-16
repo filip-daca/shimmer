@@ -377,12 +377,16 @@ var ShimmerWeb = {
      * @returns {String} - html bug element
      */
 	getBugElement: function(bug) {
-		var bugContent = ShimmerWeb.getLabeledElement("Type", bug.type);
-		bugContent += ShimmerWeb.getLabeledElement("Class", bug.className);
-		bugContent += ShimmerWeb.getLabeledElement("Abbrev", bug.abbrev);
-		bugContent += ShimmerWeb.getLabeledElement("Category", bug.category);
-		bugContent += ShimmerWeb.getLabeledElement("Priority", bug.priority);
-		bugContent += ShimmerWeb.getLabeledElement("Rank", bug.rank);
+		var bugContent = ShimmerWeb.getLabeledElement(null, bug.category.replace("_", " "), "right");
+		bugContent += ShimmerWeb.getLabeledElement(null, bug.className, "badge-warning");
+		
+		var bugProperties = ShimmerWeb.getLabeledElement("Confidence: ", bug.priority, ShimmerWeb.getBadgeColorClass(1, 5, bug.priority));
+		bugProperties += ShimmerWeb.getLabeledElement("Rank: ", bug.rank, ShimmerWeb.getBadgeColorClass(20, 1, bug.rank));
+		bugProperties += ShimmerWeb.getLabeledElement("Abbrev: ", bug.abbrev);
+		bugProperties = ShimmerWeb.wrapDiv("inline-elements", bugProperties);
+		
+		bugContent += bugProperties;
+		
 		bugContent += ShimmerWeb.wrapElement("h3", null, ShimmerFindbugsDescriptions[bug.type].title);
 		bugContent += ShimmerWeb.wrapDiv(null, ShimmerFindbugsDescriptions[bug.type].description);
 		
@@ -422,11 +426,19 @@ var ShimmerWeb = {
 	 * Creates a labeled component.
 	 * @param label - text label
 	 * @param value - field value
+	 * @param className - class atribute value
 	 * @returns {String} - labeled html component
 	 */
-	getLabeledElement: function(label, value) {
-		var labeledContent = ShimmerWeb.wrapElement("label", null, label);
-		labeledContent += ShimmerWeb.wrapElement("span", "badge", value);
+	getLabeledElement: function(label, value, className) {
+		var labeledContent = "";
+		if (label != null) {
+			labeledContent += ShimmerWeb.wrapElement("label", className, label);
+		}
+		var contentClassName = "badge";
+		if (className != null) {
+			contentClassName += " " + className;
+		}
+		labeledContent += ShimmerWeb.wrapElement("span", contentClassName, value);
 		var labeledElement = ShimmerWeb.wrapDiv(null, labeledContent);
 		return labeledElement;
 	},

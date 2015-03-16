@@ -26,6 +26,17 @@
 						onstart="ShimmerWeb.show('calculatingStatus');">
 					<i class="glyphicon glyphicon-ok"></i>
 				</p:commandLink>
+	    		
+	    		<!-- Load saved graph start button -->
+	    		<p:fileUpload fileUploadListener="#{simulationController.loadGraph}" mode="advanced" dragDropSupport="false"
+           			update="@([id$=dataScript])" sizeLimit="1000000" label="Upload analysed project graph" allowTypes="/(\.|\/)(json)$/"
+           			onstart="ShimmerWeb.show('calculatingStatus');" global="true" auto="true" styleClass="margin-top" />
+           			
+           		<!-- Save graph -->
+           		<p:commandButton value="Save analysed project" ajax="false" styleClass="save-graph-button"
+           				onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+			        <p:fileDownload value="#{simulationController.saveGraph}" />
+			    </p:commandButton>
 				
 				<!-- Analysis progress bar -->
 				<p:progressBar id="progressBar" styleClass="margin-top" widgetVar="progressBar" ajax="true" 

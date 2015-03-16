@@ -10,6 +10,7 @@ import shimmer.enums.Metric;
 public class SimulationProperties {
 
 	private String directoryPath;
+	
 	private Metric nodeSizeMetric;
 	private Metric nodeColorMetric;
 	private Metric nodeHeatMetric;

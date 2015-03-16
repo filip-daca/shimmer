@@ -1,15 +1,22 @@
 package shimmer.web.controller;
 
+import java.io.InputStreamReader;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.omnifaces.util.Messages;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.StreamedContent;
 import org.springframework.context.annotation.Scope;
 
 import shimmer.domain.Graph;
 import shimmer.domain.SimulationProperties;
+import shimmer.service.FileService;
 import shimmer.service.FindbugsService;
 import shimmer.service.GraphService;
 import shimmer.service.JDependService;
@@ -43,6 +50,9 @@ public class SimulationController implements Serializable {
 	
 	@Inject
 	private GraphService graphService;
+	
+	@Inject
+	private FileService fileService;
 	
 	// ************************************************************************
 	// CONTROLLER FIELDS
@@ -102,6 +112,25 @@ public class SimulationController implements Serializable {
 	        }
 	    };
 	    graphGenerationThread.start();
+	}
+	
+	public void loadGraph(FileUploadEvent event) {
+		JSONParser parser = new JSONParser();
+		try {
+			Object parsedObj = parser.parse(new InputStreamReader(event.getFile().getInputstream()));
+			JSONObject jsonObject = (JSONObject) parsedObj;
+			edgesJSON = jsonObject.get("edges").toString();
+			nodesJSON = jsonObject.get("nodes").toString();
+			setVisualizationReady(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Messages.addGlobalError("Unable to load JSON file");
+			setVisualizationReady(false);
+		}
+    }
+	
+	public StreamedContent getSaveGraph() {
+		return fileService.saveGraph(nodesJSON, edgesJSON);
 	}
 	
 	private void considerInitialization() {
