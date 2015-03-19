@@ -1,23 +1,16 @@
 package shimmer.web.controller;
 
-import java.io.InputStreamReader;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.velocity.runtime.parser.node.SetExecutor;
-import org.json.simple.parser.JSONParser;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.json.JSONObject;
 import org.primefaces.model.StreamedContent;
-import org.primefaces.push.impl.JSONDecoder;
-import org.primefaces.push.impl.JSONEncoder;
 import org.springframework.context.annotation.Scope;
-
-
 import org.springframework.util.StringUtils;
 
 import shimmer.domain.Graph;

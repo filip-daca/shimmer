@@ -24,4 +24,5 @@ public interface FileService {
 	 * @return shimmer JSON object
 	 */
 	JSONObject loadGraph(UploadedFile file);
+
 }

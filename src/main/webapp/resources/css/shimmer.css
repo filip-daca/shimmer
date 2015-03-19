@@ -171,6 +171,17 @@ body.basic-template {
 	margin-right: 120px;
 }
 
+.inline-elements div {
+	display: inline;
+	margin-right: 120px;
+}
+
+.save-graph-button {
+	position: relative;
+	left: 290px;
+	bottom: 63px;
+}
+
 /* --------------------------------------------------------------------------
  * Callouts
  *

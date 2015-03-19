@@ -60,6 +60,7 @@ public class FileServiceImpl implements FileService {
 		}
 	}	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject loadGraph(UploadedFile file) {
 		JSONParser parser = new JSONParser();
