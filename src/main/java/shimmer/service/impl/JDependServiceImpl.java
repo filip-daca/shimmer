@@ -34,9 +34,7 @@ public class JDependServiceImpl implements JDependService {
 	// IMPLEMENTATIONS
 	
 	@Override
-	public Graph generateGraph(String directoryName, 
-			boolean buildPackageTreeEdges, boolean buildDependenciesEdges,
-			boolean buildFullPackageTree, boolean buildLibraryPackages) {
+	public Graph generateGraph(String directoryName) {
 		
 		analyzer = new JDepend();
 		try {
@@ -57,11 +55,6 @@ public class JDependServiceImpl implements JDependService {
         // Adding packages
         for (JavaPackage javaPackage : packageList) {
         	
-        	// Skip library packages
-        	if (javaPackage.isLibraryPackage() && !buildLibraryPackages){
-        		continue;
-        	}
-        	
         	Node newNode;
         	if (javaPackage.isLibraryPackage()) {
         		newNode = NodeFactory.newLibraryPackageNode(javaPackage.getName(),
@@ -73,33 +66,19 @@ public class JDependServiceImpl implements JDependService {
     				javaPackage.getEfferents().size(), javaPackage.getAfferents().size());
         	}
         	
-        	graph.addAnalysedPackageNode(newNode, buildPackageTreeEdges, buildFullPackageTree);
+        	graph.addAnalysedPackageNode(newNode);
         }
         
         // Adding package tree edges
-        if (buildPackageTreeEdges) {
-        	graph.generateTreeEdges();
-        }
+    	graph.generateTreeEdges();
         
         // Adding dependencies edges
-        if (buildDependenciesEdges) {
-        	for (JavaPackage javaPackage : packageList) {
-        		// Skip library packages
-            	if (javaPackage.isLibraryPackage() && !buildLibraryPackages){
-            		continue;
-            	}
-            	
-            	for (JavaPackage efferentPackage : javaPackage.getEfferents()) {
-            		// Skip library packages
-            		if (efferentPackage.isLibraryPackage() && !buildLibraryPackages){
-                		continue;
-                	}
-
-            		graph.addEfferentEdge(javaPackage.getName(), efferentPackage.getName(), 
-            				javaPackage.getEfferentsCount().get(efferentPackage));
-            	}
+    	for (JavaPackage javaPackage : packageList) {
+        	for (JavaPackage efferentPackage : javaPackage.getEfferents()) {
+        		graph.addEfferentEdge(javaPackage.getName(), efferentPackage.getName(), 
+        				javaPackage.getEfferentsCount().get(efferentPackage));
         	}
-        }
+    	}
 		
         return graph;
 	}

@@ -54,13 +54,11 @@ public class PackageTreeNode {
 	 * 
 	 * @param newNode - node of a new package
 	 * @param packageName - name of a package
-	 * @param addExtraTreeNodes - visualize each step in package tree?
 	 */
-	public void addJoint(Nodes nodes, Node newNode, String packageName, 
-			boolean addExtraTreeNodes) {
+	public void addJoint(Nodes nodes, Node newNode, String packageName) {
 		
 		List<String> packageNames = Lists.newArrayList(packageName.split("\\."));
-		addJoint(nodes, newNode, packageNames, addExtraTreeNodes);
+		addJoint(nodes, newNode, packageNames);
 	}
 
 	// ************************************************************************
@@ -72,10 +70,8 @@ public class PackageTreeNode {
 	 * @param nodes - all nodes collection
 	 * @param newNode - node to add in leaf
 	 * @param packageNames - package names to visit
-	 * @param addExtraTreeNodes - visualize each step in package tree?
 	 */
-	private void addJoint(Nodes nodes, Node newNode, List<String> packageNames,
-			boolean addExtraTreeNodes) {
+	private void addJoint(Nodes nodes, Node newNode, List<String> packageNames) {
 		
 		if (packageNames.isEmpty()) {
 			this.node = newNode;
@@ -88,29 +84,24 @@ public class PackageTreeNode {
 			// Need to create a child
 			if (childJoint == null) {
 				
-				if (addExtraTreeNodes) {
-					String childPackageName = GraphHelper.getFullPackageName(getName(), childPackageNameSnippet);
-					
-					Node childNode;
-					// There is an analysed package already
-					if (nodes.contains(childPackageName)) {
-						childNode = nodes.get(childPackageName);
-					// Create a tree joint
-					} else {
-						childNode = NodeFactory.newTreeNode(childPackageName);
-						nodes.add(childNode);
-					}
-					
-					childJoint = PackageTreeNodeFactory.newJoint(childNode);
+				String childPackageName = GraphHelper.getFullPackageName(getName(), childPackageNameSnippet);
+				Node childNode;
+				
+				// There is an analysed package already
+				if (nodes.contains(childPackageName)) {
+					childNode = nodes.get(childPackageName);
+				// Create a directory tree joint
 				} else {
-					childJoint = PackageTreeNodeFactory.newEmptyJoint();
+					childNode = NodeFactory.newDirectoryNode(childPackageName);
+					nodes.add(childNode);
 				}
 				
+				childJoint = PackageTreeNodeFactory.newJoint(childNode);
 				children.put(childPackageNameSnippet, childJoint);
 			}
 			
 			// Add new package recursively
-			childJoint.addJoint(nodes, newNode, packageNames, addExtraTreeNodes);
+			childJoint.addJoint(nodes, newNode, packageNames);
 		}
 	}
 

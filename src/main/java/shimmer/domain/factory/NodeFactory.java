@@ -19,8 +19,8 @@ public class NodeFactory {
 			concreteClassCount, efferentsCount, afferentsCount);
 	}
 	
-	public static Node newTreeNode(String name) {
-		return new Node(name, NodeType.TREE_NODE);
+	public static Node newDirectoryNode(String name) {
+		return new Node(name, NodeType.DIRECTORY);
 	}
 
 	public static Node newLibraryPackageNode(String name, int efferentsCount, int afferentsCount) {

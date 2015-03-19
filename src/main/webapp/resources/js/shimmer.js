@@ -3,11 +3,12 @@ var Shimmer = {
 	width: 800,
 	height: 650,
 	enableHeatmap: true,
-	heatmapUpdateInterval: 100,
+	heatmapUpdateInterval: 1000,
 	heatmapTimeout: 0,
 	
 	networkContainer: undefined,
 	data: undefined,
+	nodesMap: undefined,
 	network: undefined,
 	
 	heatmapContainer: undefined,
@@ -54,97 +55,36 @@ var Shimmer = {
 	 * Reloads network data.
 	 */
 	reloadData: function() {
-		Shimmer.network.setData(Shimmer.data);
-	},
-	
-	/**
-	 * Filters data to perform JSF logic.
-	 */
-	filterData: function() {
-		var nodesMap = {};
-		var nodes = [];
-		var edges = [];
-		
-		for (var i = 0; i < Shimmer.data.nodes.length; i++) {
+		Shimmer.nodesMap = {};
+		for (var i in Shimmer.data.nodes) {
 			var node = Shimmer.data.nodes[i];
-			nodesMap[node.id] = node;
-			var nodeType = node.shimmerProperties.nodeType;
-			if (nodeType === "LIBRARY_PACKAGE" && !Shimmer.enableLibraryPackages) {
-				continue;
-			}
-			nodes.push(node);
+			Shimmer.nodesMap[node.id] = node;
 		}
-		
-		for (var i = 0; i < Shimmer.data.edges.length; i++) {
-			var edge = Shimmer.data.edges[i];
-			var nodeFrom = nodesMap[edge.from];
-			var nodeTo = nodesMap[edge.to];
-			var nodeFromType = nodeFrom.shimmerProperties.nodeType;
-			var nodeToType = nodeTo.shimmerProperties.nodeType;
-			
-			if ((nodeFromType === "LIBRARY_PACKAGE" || nodeToType === "LIBRARY_PACKAGE")
-					&& !Shimmer.enableLibraryPackages) {
-				continue;
-			}
-			edges.push(edge);
-		}
-		
-		Shimmer.network.setData({nodes: nodes, edges: edges});
-	},
-	
-	toggleLibraryPackages: function() {
-		Shimmer.enableLibraryPackages = !Shimmer.enableLibraryPackages;
-		Shimmer.reloadData();
-	},
-	
-	/**
-	 * Finds node X param.
-	 * @param i - node index
-	 * @returns node X param
-	 */
-	getNodeX: function(i) {
-		var canvasScaledXCenter = Shimmer.network.getScale() * Shimmer.network.getCenterCoordinates().x;
-		var nodeScaledXDelta = Shimmer.width / 2 + Shimmer.network.getScale() * Shimmer.network.nodes[i].x;
-		
-		return Math.floor(nodeScaledXDelta - canvasScaledXCenter);
-	},
-	
-	/**
-	 * Finds node Y param.
-	 * @param i - node index
-	 * @returns node Y param
-	 */
-	getNodeY: function(i) {
-		var canvasScaledYCenter = Shimmer.network.getScale() * Shimmer.network.getCenterCoordinates().y;
-		var nodeScaledYDelta = Shimmer.height / 2 + Shimmer.network.getScale() * Shimmer.network.nodes[i].y;
-		
-		return Math.floor(nodeScaledYDelta - canvasScaledYCenter);
+		Shimmer.network.setData(Shimmer.data);
 	},
 	
 	/**
 	 * Updates heatmap image.
 	 */
 	updateHeatmap: function () {
-		var i;
-		var nodesCount = Shimmer.data.nodes.length;
-		var nodeX, nodeY;
-
 		if (!Shimmer.enableHeatmap) {
 			// Not updating heatmap when it's disabled
 			return;
 		}
+
+		var canvasScaledXCenter = (Shimmer.width / 2) - (Shimmer.network.getScale() * Shimmer.network.getCenterCoordinates().x);
+		var canvasScaledYCenter = (Shimmer.height / 2) - (Shimmer.network.getScale() * Shimmer.network.getCenterCoordinates().y);
+		var radius = Shimmer.network.getScale() * 100;
 		
 		Shimmer.heatmap.setData({min: 0, max:30, data: []});
-		for (i = 0; i < nodesCount; i++) {
-			nodeX = Shimmer.getNodeX(i);
-			nodeY = Shimmer.getNodeY(i);
+		for (var i in Shimmer.network.nodes) {
+			var node = Shimmer.network.nodes[i];
 			Shimmer.heatmap.addData({
-				x: nodeX, 
-				y: nodeY, 
+				x: Math.floor(canvasScaledXCenter + Shimmer.network.getScale() * node.x), 
+				y: Math.floor(canvasScaledYCenter + Shimmer.network.getScale() * node.y),
 				// Heat Value is stored in data
-				// TODO: get by node.id not by index
-				value: Shimmer.data.nodes[i].heatValue, 
-				radius: Shimmer.network.getScale() * 100
+				value: Shimmer.nodesMap[node.id].heatValue, 
+				radius: radius
 			});
 		}
 	},
@@ -209,10 +149,10 @@ var Shimmer = {
 	 * @param color - color to change
 	 */
 	changeEdgesColor: function(color) {
-		var nodesCount = Shimmer.data.nodes.length;
-		for (var i = 0; i < nodesCount; i++) {
-			var oldBackgroundColor = Shimmer.data.nodes[i].color.background;
-			Shimmer.data.nodes[i].color = {background: oldBackgroundColor, border: color};
+		for (var i in Shimmer.data.nodes) {
+			var node = Shimmer.data.nodes[i];
+			var oldBackgroundColor = node.color.background;
+			node.color = {background: oldBackgroundColor, border: color};
 		}
 		Shimmer.reloadData();
 		Shimmer.updateHeatmap();
@@ -231,7 +171,7 @@ var Shimmer = {
 			return;
 		}
 		
-		var node = nodes[event.nodes[0]];
+		var node = Shimmer.nodesMap[event.nodes[0]];
 		var metaData = node.shimmerProperties;
 		$("#shimmerInfo .packageName").text(node.label);
 		$("#bugReport .packageName").text(node.label);
@@ -285,123 +225,63 @@ var Shimmer = {
 		}
 	},
 	
-	getRandom: function(from, to) {
-		return Math.floor((Math.random() * to) + from);
-	},
-	
-	getRandomColor: function() {
-		if (Shimer.getRandom(1, 100) < 15) {
-			return 'red';
-		} else if (Shimmer.getRandom(1, 100) > 85) {
-			return 'green';
-		} else {
-			return 'lightgray';
-		}
-	}
-	
 };
 
 /**
- * Funkcje główne portalu
+ * Main portal functions
  */
 var ShimmerWeb = {
-		
-	/**
-	 * Ustawia aktywną stronę w nawigacji.
-	 * @param id - id strony
-	 */
-    setActivePage: function (id) {
-        $(".navbar ul.nav li").each(function () {
-            var link = $(this).children("a")[0];
-            if (link && link.id.endsWith('navigation-' + id)) {
-                $(this).addClass('active');
-            } else {
-                $(this).removeClass('active');
-            }
-        });
-    },
-    
-    /**
-     * Podświetla aktywną zakładkę w głównej nawigacji
-     * @param id - id elementu nawigacji
-     */
-    setActiveTab: function (id) {
-        $(".nav-tabs > li").each(function () {
-            var node = $(this);
-            if (node.length > 0 && node.attr("id") == 'tab-' + id) {
-                $(this).addClass('active');
-            } else {
-                $(this).removeClass('active');
-            }
-        });
-    },
 
     /**
-     * Podświetla pola z błędami
+     * Highlights errors
      */
     highlightFieldsWithErrors: function () {
         $(".ui-message-error").parents("div.control-group").addClass("error");
     },
     
     /**
-     * Przewija stronę na górę
+     * Scrolls page to top.
      */
     scrollToTop: function () {
     	window.scrollTo(0, 0);
     },
     
     /**
-     * Pokazuje element
-     * @param id - id elementu
+     * Shows element
+     * @param id - element HTML id
      */
     show: function (id) {
     	$('#' + id).show(500);
     },
 
     /**
-     * Pokazuje element jsf
-     * @param id - id elementu
+     * Shows JSF element
+     * @param id - element id
      */
     componentShow: function (id) {
     	$('[id$=' + id + ']').show(500);
     },
     
     /**
-     * Chowa element
-     * @param id - id elementu
+     * Hides element
+     * @param id - element HTML id
      */
     hide: function (id) {
     	$('#' + id).hide(500);
     },
     
     /**
-     * Chowa element jsf
-     * @param id - id elementu
+     * Hides JSF element
+     * @param id - element id
      */
     componentHide: function (id) {
     	$('[id$=' + id + ']').hide(500);
     },
     
     /**
-     * Pokazuje element
-     * @param id - id elementu
-     */
-    showAndHide: function (id) {
-    	$('#' + id).show(500);
-    },
-    
-    /**
-     * Chowa element
-     * @param id - id elementu
-     */
-    hideTableRow: function (id, rowNumber) {
-    	$("[id$=" + id + "] [data-ri=" + rowNumber + "]").hide(500);
-    },
-    
-    /**
-     * Pokazuje lub chowa element
-     * @param id - id elementu
-     * @param show - czy pokazać?
+     * Shows or hides element
+     * @param id - element id
+     * @param show - show or hide?
      */
     toggle: function (id, show) {
     	if (show) {
@@ -514,9 +394,9 @@ var ShimmerWeb = {
 ShimmerUtils = {
 
 	/**
-	 * Ucina końcówkę długiej liczby zmiennoprzecinkowej i zwraca napis.
-	 * @param f - liczba
-	 * @returns
+	 * Cuts the part of long float number.
+	 * @param f - number
+	 * @returns text
 	 */
 	formatFloat: function (f) {
 		var result = f.toString();
@@ -541,9 +421,9 @@ ShimmerUtils = {
 };
 
 /**
- * Czy napis kończy się danym sufiksem?
- * @param suffix - sufiks do weryfikacji
- * @returns {Boolean} tak / nie
+ * Does the String end with a given suffix?
+ * @param suffix - sufiks to check
+ * @returns {Boolean} yes / no
  */
 String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;

@@ -84,6 +84,14 @@ public class Node {
 		return getName();
 	}
 	
+	public boolean isLibraryPackage() {
+		return nodeType.equals(NodeType.LIBRARY_PACKAGE);
+	}
+	
+	public boolean isDirectory() {
+		return nodeType.equals(NodeType.DIRECTORY);
+	}
+	
 	// ************************************************************************
 	// GETTERS / SETTERS
 	

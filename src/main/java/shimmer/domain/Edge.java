@@ -29,6 +29,33 @@ public class Edge {
 	}
 	
 	// ************************************************************************
+	// METHODS
+	
+	/**
+	 * Is this an edge with a library package?
+	 * @return true / false
+	 */
+	public boolean hasLibrary() {
+		return nodeFrom.isLibraryPackage() || nodeTo.isLibraryPackage();
+	}
+	
+	/**
+	 * Is this an edges with a directory node?
+	 * @return true / false
+	 */
+	public boolean hasDirectory() {
+		return nodeFrom.isDirectory() || nodeTo.isDirectory();
+	}
+	
+	public boolean isDependencyEdge() {
+		return edgeType.equals(EdgeType.DEPENDENCY_EDGE);
+	}
+	
+	public boolean isPackageEdge() {
+		return edgeType.equals(EdgeType.PACKAGE_EDGE);
+	}
+	
+	// ************************************************************************
 	// GETTERS / SETTERS
 	
 	public Node getNodeFrom() {

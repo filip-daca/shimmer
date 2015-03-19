@@ -28,7 +28,7 @@ public class SimulationProperties {
 	/**
 	 * Visualize extra package tree nodes?
 	 */
-	private boolean fullPackageTree;
+	private boolean directoryNodes;
 	
 	/**
 	 * Visualize included library packages?
@@ -53,7 +53,7 @@ public class SimulationProperties {
 		this.nodeHeatMetric = Metric.DISTANCE_FROM_MAIN_SEQUENCE;
 		this.packageTreeEdges = true;
 		this.dependenciesEdges = false;
-		this.fullPackageTree = false;
+		this.directoryNodes = false;
 		this.libraryPackages = true;
 		this.constellation = true;
 		this.dependenciesWeighted = true;
@@ -102,12 +102,12 @@ public class SimulationProperties {
 		this.packageTreeEdges = packageTreeEdges;
 	}
 	
-	public boolean isFullPackageTree() {
-		return fullPackageTree;
+	public boolean isDirectoryNodes() {
+		return directoryNodes;
 	}
 	
-	public void setFullPackageTree(boolean fullPackageTree) {
-		this.fullPackageTree = fullPackageTree;
+	public void setDirectoryNodes(boolean directoryNodes) {
+		this.directoryNodes = directoryNodes;
 	}
 	
 	public boolean isLibraryPackages() {

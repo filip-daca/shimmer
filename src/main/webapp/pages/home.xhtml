@@ -26,17 +26,6 @@
 						onstart="ShimmerWeb.show('calculatingStatus');">
 					<i class="glyphicon glyphicon-ok"></i>
 				</p:commandLink>
-	    		
-	    		<!-- Load saved graph start button -->
-	    		<p:fileUpload fileUploadListener="#{simulationController.loadGraph}" mode="advanced" dragDropSupport="false"
-           			update="@([id$=dataScript])" sizeLimit="1000000" label="Upload analysed project graph" allowTypes="/(\.|\/)(json)$/"
-           			onstart="ShimmerWeb.show('calculatingStatus');" global="true" auto="true" styleClass="margin-top" />
-           			
-           		<!-- Save graph -->
-           		<p:commandButton value="Save analysed project" ajax="false" styleClass="save-graph-button"
-           				onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
-			        <p:fileDownload value="#{simulationController.saveGraph}" />
-			    </p:commandButton>
 				
 				<!-- Save graph -->
            		<p:commandButton value="Save analysed project" ajax="false" styleClass="save-graph-button"
@@ -118,8 +107,8 @@
 								</div>
 								
 								<div>
-									<p:outputLabel value="Full package tree: "/>
-									<p:inputSwitch value="#{simulationController.properties.fullPackageTree}"
+									<p:outputLabel value="Directory nodes: "/>
+									<p:inputSwitch value="#{simulationController.properties.directoryNodes}"
 											disabled="#{simulationController.propertiesReadonly}">
 										<ui:include src="/resources/snippets/visualisationChangeAjax.xhtml" />
 									</p:inputSwitch>
@@ -182,8 +171,6 @@
 			Shimmer.constellationSwitch = $('input[id$=constellationModeSwitch]');
 			Shimmer.createNetwork();
 			Shimmer.createHeatmap();
-			
-			Shimmer.updateHeatmap();
 		  
 			// Assign listeners
 			Shimmer.network.on('viewChanged', Shimmer.updateHeatmap);
@@ -199,15 +186,10 @@
 			<ui:fragment rendered="#{simulationController.visualizationReady}">
 				<script type="text/javascript">
 				/* <![CDATA[ */
-				
-					// Nodes and edges
-					var nodes = #{simulationController.nodesJSON}
-					var edges = #{simulationController.edgesJSON}
-
 					
 					Shimmer.data = {
-						nodes: nodes,
-						edges: edges
+						nodes: #{simulationController.nodesJSON},
+						edges: #{simulationController.edgesJSON}
 					};
 					
 					// Reloading data after update

@@ -106,9 +106,7 @@ public class SimulationController implements Serializable {
 //	        		String gitRepositoryPath = jGitService.cloneRepository(properties.getGitUrl());
 //	        		properties.setDirectoryPath(gitRepositoryPath);
 	        	}
-	    		graph = jDependService.generateGraph(properties.getDirectoryPath(), 
-	    			properties.isPackageTreeEdges(), properties.isDependenciesEdges(),
-	    			properties.isFullPackageTree(), properties.isLibraryPackages());
+	    		graph = jDependService.generateGraph(properties.getDirectoryPath());
 	    		setLoadindProgress(30);
 	    		findbugsService.applyAnalysis(graph, properties.getDirectoryPath());
 	    		setLoadindProgress(60);
@@ -127,6 +125,14 @@ public class SimulationController implements Serializable {
 	    propertiesReadonly = false;
 	}
 	
+	/**
+	 * Regenerates JSON elements of graph after properties change.
+	 */
+	public void changeProperties() {	    
+	    edgesJSON = graphService.generateEdgesJSON(graph, properties);
+	    nodesJSON = graphService.generateNodesJSON(graph, properties);
+	}
+	
 	public void loadGraph(FileUploadEvent event) {
 		JSONObject shimmerJSON = fileService.loadGraph(event.getFile());
 		if (shimmerJSON == null) {
@@ -137,7 +143,7 @@ public class SimulationController implements Serializable {
 			nodesJSON = shimmerJSON.get("nodes").toString();
 			properties.setDependenciesEdges(shimmerJSON.getBoolean("dependenciesEdges"));
 			properties.setDependenciesWeighted(shimmerJSON.getBoolean("dependenciesWeighted"));
-			properties.setFullPackageTree(shimmerJSON.getBoolean("fullPackageTree"));
+			properties.setDirectoryNodes(shimmerJSON.getBoolean("directoryNodes"));
 			properties.setLibraryPackages(shimmerJSON.getBoolean("libraryPackages"));
 			properties.setNodeColorMetric(Metric.valueOf(shimmerJSON.getString("nodeColorMetric")));
 			properties.setNodeSizeMetric(Metric.valueOf(shimmerJSON.getString("nodeSizeMetric")));

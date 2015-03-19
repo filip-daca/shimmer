@@ -55,6 +55,26 @@ public class GraphServiceImpl implements GraphService {
 		try {
 			JSONArray edgesArrayJSON = new JSONArray();
 			for (Edge edge : graph.getEdges()) {
+				// Skipping dependency edges
+				if (edge.isDependencyEdge() && !properties.isDependenciesEdges()) {
+					continue;
+				}
+				
+				// Skipping package tree edges
+				if (edge.isPackageEdge() && !properties.isPackageTreeEdges()) {
+					continue;
+				}
+				
+				// Skipping library edges
+				if (edge.hasLibrary() && !properties.isLibraryPackages()) {
+					continue;
+				}
+				
+				// Skipping directory edges
+				if (edge.hasDirectory() && !properties.isDirectoryNodes()) {
+					continue;
+				}
+				
 				JSONObject edgeJSON = new JSONObject();
 				edgeJSON.put("type", edge.getEdgeType());
 				edgeJSON.put("from", edge.getNodeFrom().getId());
@@ -76,6 +96,16 @@ public class GraphServiceImpl implements GraphService {
 		try {	
 			JSONArray nodesArrayJSON = new JSONArray();
 			for (Node node : graph.getNodes()) {
+				// Skipping library packages
+				if (node.isLibraryPackage() && !properties.isLibraryPackages()) {
+					continue;
+				}
+				
+				// Skipping directories
+				if (node.isDirectory() && !properties.isDirectoryNodes()) {
+					continue;
+				}
+				
 				JSONObject nodeJSON = nodeToJSON(node, properties);
 				nodesArrayJSON.put(nodeJSON);
 			}
@@ -96,7 +126,7 @@ public class GraphServiceImpl implements GraphService {
 			shimmerJSON.put("libraryPackages", properties.isLibraryPackages());
 			shimmerJSON.put("dependenciesEdges", properties.isDependenciesEdges());
 			shimmerJSON.put("dependenciesWeighted", properties.isDependenciesWeighted());
-			shimmerJSON.put("fullPackageTree", properties.isFullPackageTree());
+			shimmerJSON.put("directoryNodes", properties.isDirectoryNodes());
 			shimmerJSON.put("nodeSizeMetric", properties.getNodeSizeMetric());
 			shimmerJSON.put("nodeColorMetric", properties.getNodeColorMetric());
 			shimmerJSON.put("nodeHeatMetric", properties.getNodeHeatMetric());
@@ -210,7 +240,7 @@ public class GraphServiceImpl implements GraphService {
 		case LIBRARY_PACKAGE:
 			return "purple";
 			
-		case TREE_NODE:
+		case DIRECTORY:
 			return "blue";
 			
 		default:
@@ -273,7 +303,7 @@ public class GraphServiceImpl implements GraphService {
 	}
 	
 	private String getNodeShape(Node node) {
-		if (node.getNodeType() == NodeType.TREE_NODE) {
+		if (node.isDirectory()) {
 			return "square";
 		} else {
 			return "dot";

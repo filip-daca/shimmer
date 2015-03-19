@@ -7,6 +7,6 @@ package shimmer.enums;
  */
 public enum NodeType {
 	ANALYSED_PACKAGE, 
-	TREE_NODE,
+	DIRECTORY,
 	LIBRARY_PACKAGE;
 }
