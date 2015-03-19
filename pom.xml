@@ -275,9 +275,9 @@
 		
 		<!-- Findbugs -->
 		<dependency>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>findbugs-maven-plugin</artifactId>
-			<version>3.0.0</version>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>findbugs</artifactId>
+			<version>3.0.1</version>
 		</dependency>
 		
 		<!-- JSON parser -->

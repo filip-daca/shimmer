@@ -55,7 +55,7 @@ public class FindbugsServiceImpl implements FindbugsService {
 			try {
 				parseAnalysisResults(analysisFile, graph);
 			} catch (ParserConfigurationException | SAXException | IOException e) {
-				System.err.println("Findbugs found some errors: " + e.getMessage());
+				e.printStackTrace();
 			} finally {
 				analysisFile.delete();
 			}
@@ -148,7 +148,7 @@ public class FindbugsServiceImpl implements FindbugsService {
 		try {
 			FindBugs2.main(command.toString().split("\\s+"));
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println("Findbugs found some errors: " + e.getMessage());
 		}
 	}
 
