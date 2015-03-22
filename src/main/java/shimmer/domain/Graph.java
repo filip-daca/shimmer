@@ -1,10 +1,12 @@
 package shimmer.domain;
 
 import java.util.Collection;
+import java.util.Date;
 
 import shimmer.domain.collections.Edges;
 import shimmer.domain.collections.Nodes;
 import shimmer.domain.factory.EdgeFactory;
+import shimmer.domain.helper.NamesHelper;
 
 /**
  * Class representing a Shimmer graph.
@@ -100,9 +102,44 @@ public class Graph {
 		packageNode.setTotalSize(totalSize);
 		packageNode.setLargestClassSize(largestClassSize);
 	}
+	
+	/**
+	 * Does this file path represent a package analysed in shimmer?
+	 * @param path - path to file
+	 * @return yes / no
+	 */
+	public boolean isFileRepresented(String path) {
+		return getNodeFromFilePath(path) != null;
+	}
+	
+	/**
+	 * Applies jGit commit information.
+	 * @param path - path to commited file
+	 * @param date - date of commit
+	 * @param author - author of commit
+	 */
+	public void noticeCommit(String path, Date date, String author) {
+		Node analysedPackage = getNodeFromFilePath(path);
+		analysedPackage.addAuthor(author);
+		analysedPackage.noticeCommit(date);
+	}
 
 	// ************************************************************************
 	// PRIVATE METHODS
+	
+	/**
+	 * Tries to find a package represented by the given file path.
+	 * @param path - path to file
+	 * @return node or null
+	 */
+	private Node getNodeFromFilePath(String path) {
+		for (String potentialPackageName : NamesHelper.packageNamesFromFilePath(path)) {
+			if (nodes.get(potentialPackageName) != null) {
+				return nodes.get(potentialPackageName);
+			}
+		}
+		return null;
+	}
 	
 	// ************************************************************************
 	// GETTERS / SETTERS
@@ -127,5 +164,4 @@ public class Graph {
 	public Collection<Node> getNodes() {
 		return nodes.getCollection();
 	}
-	
 }

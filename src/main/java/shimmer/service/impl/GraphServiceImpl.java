@@ -2,6 +2,7 @@ package shimmer.service.impl;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Named;
 
@@ -156,24 +157,36 @@ public class GraphServiceImpl implements GraphService {
 		JSONObject shimmerPropertiesJSON = new JSONObject();
 		shimmerPropertiesJSON.put("nodeType", node.getNodeType());
 		shimmerPropertiesJSON.put("nodeTypeText", NamesHelper.enumToNiceString(node.getNodeType()));
-		shimmerPropertiesJSON.put("classCount", node.getClassCount());
-		shimmerPropertiesJSON.put("totalSize", node.getTotalSize());
-		shimmerPropertiesJSON.put("averageSize", node.getAverageSize());
-		shimmerPropertiesJSON.put("largestClassSize", node.getLargestClassSize());
-		shimmerPropertiesJSON.put("concreteClassesCount", node.getConcreteClassesCount());
-		shimmerPropertiesJSON.put("abstractClassesCount", node.getAbstractClassesCount());
-		shimmerPropertiesJSON.put("abstractness", node.getAbstractness());
-		shimmerPropertiesJSON.put("efferentsCount", node.getEfferentsCount());
-		shimmerPropertiesJSON.put("afferentsCount", node.getAfferentsCount());
-		shimmerPropertiesJSON.put("instability", node.getInstability());
-		shimmerPropertiesJSON.put("distanceFromMainSequence", node.getDistanceFromMainSequence());
-		shimmerPropertiesJSON.put("totalBugs", node.getTotalBugs());
 		
 		if (node.getNodeType() == NodeType.ANALYSED_PACKAGE) {
+			shimmerPropertiesJSON.put("classCount", node.getClassCount());
+			shimmerPropertiesJSON.put("totalSize", node.getTotalSize());
+			shimmerPropertiesJSON.put("averageSize", node.getAverageSize());
+			shimmerPropertiesJSON.put("largestClassSize", node.getLargestClassSize());
+			shimmerPropertiesJSON.put("concreteClassesCount", node.getConcreteClassesCount());
+			shimmerPropertiesJSON.put("abstractClassesCount", node.getAbstractClassesCount());
+			shimmerPropertiesJSON.put("abstractness", node.getAbstractness());
+			shimmerPropertiesJSON.put("efferentsCount", node.getEfferentsCount());
+			shimmerPropertiesJSON.put("afferentsCount", node.getAfferentsCount());
+			shimmerPropertiesJSON.put("instability", node.getInstability());
+			shimmerPropertiesJSON.put("distanceFromMainSequence", node.getDistanceFromMainSequence());
+			shimmerPropertiesJSON.put("totalBugs", node.getTotalBugs());
 			shimmerPropertiesJSON.put("bugs", bugsToJSON(node.getBugs()));
+			shimmerPropertiesJSON.put("commitsCount", node.getCommitsCount());
+			shimmerPropertiesJSON.put("lastCommitDate", node.getLastCommitDate());
+			shimmerPropertiesJSON.put("authorsCount", node.getAuthors().size());
+			shimmerPropertiesJSON.put("authors", authorsToJSON(node.getAuthors()));
 		}
 		
 		return shimmerPropertiesJSON;
+	}
+
+	private JSONArray authorsToJSON(Set<String> authors) {
+		JSONArray authorsArrayJSON = new JSONArray();
+		for (String author : authors) {
+			authorsArrayJSON.put(author);
+		}
+		return authorsArrayJSON;
 	}
 
 	private JSONArray bugsToJSON(List<Bug> bugs) throws JSONException {

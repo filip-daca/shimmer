@@ -198,6 +198,9 @@ var Shimmer = {
 			$("#shimmerInfo .abstractness").text(ShimmerUtils.formatFloat(metaData.abstractness));
 			$("#shimmerInfo .efferentsCount").text(metaData.efferentsCount);
 			$("#shimmerInfo .afferentsCount").text(metaData.afferentsCount);
+			$("#shimmerInfo .commitsCount").text(metaData.commitsCount);
+			$("#shimmerInfo .authorsCount").text(metaData.authorsCount);
+			$("#shimmerInfo .lastCommitDate").text(metaData.lastCommitDate);
 			$("#shimmerInfo .instability").text(ShimmerUtils.formatFloat(metaData.instability));
 			
 			var $distanceFromMainSequence = $("#shimmerInfo .distanceFromMainSequence");

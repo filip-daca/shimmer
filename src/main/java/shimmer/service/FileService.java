@@ -1,5 +1,8 @@
 package shimmer.service;
 
+import java.io.File;
+import java.util.List;
+
 import org.primefaces.json.JSONObject;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -24,5 +27,26 @@ public interface FileService {
 	 * @return shimmer JSON object
 	 */
 	JSONObject loadGraph(UploadedFile file);
+
+	/**
+	 * Prepares a directory path - creates all directories or removes
+	 * content when its occupied.
+	 * @param path - path to prepare
+	 * @return file handler
+	 */
+	File prepareDirectory(String path);
+
+	/**
+	 * Deletes directory and all contents.
+	 * @param path - path to delete
+	 */
+	void delete(String path);
+
+	/**
+	 * Lists all *.classFiles
+	 * @param directory - directory to search
+	 * @return list of all .class files in all subdirectories
+	 */
+	List<File> listClassFiles(File directory);
 
 }

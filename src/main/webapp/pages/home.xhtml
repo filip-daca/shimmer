@@ -27,6 +27,10 @@
 					<i class="glyphicon glyphicon-ok"></i>
 				</p:commandLink>
 				
+				<!-- Project git url -->
+	    		<p:outputLabel value="Project git clone url:" styleClass="wide-label" />
+	    		<p:inputText value="#{simulationController.properties.gitUrl}" size="100" />
+				
 				<!-- Save graph -->
            		<p:commandButton value="Save analysed project" ajax="false" styleClass="save-graph-button"
            				icon="ui-icon-arrowthick-1-s">

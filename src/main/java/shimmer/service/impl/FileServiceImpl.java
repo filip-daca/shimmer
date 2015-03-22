@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -75,6 +77,38 @@ public class FileServiceImpl implements FileService {
 		}
 	}
 	
+	@Override
+	public File prepareDirectory(String path) {
+		File directory = new File(path);
+		delete(directory);
+		directory.mkdirs();
+		return directory;
+	}
+	
+	@Override
+	public void delete(String path) {
+		File directory = new File(path);
+		delete(directory);
+	}
+	
+	@Override
+	public List<File> listClassFiles(File f) {
+		List<File> files = new ArrayList<File>();
+		if (f.exists()) {
+			if (f.isDirectory()) {
+				for (File ff : f.listFiles()) {
+					if (!ff.getName().startsWith(".")) {
+						files.addAll(listClassFiles(ff));
+					}
+				}
+			}
+			if (f.getName().endsWith(".java")) {
+				files.add(f);
+			}
+		}
+		return files;
+	}
+
 	// ************************************************************************
 	// HELPER METHORS	
 	
@@ -110,5 +144,21 @@ public class FileServiceImpl implements FileService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Deletes directory with all contents
+	 * @param f - directory or file handler
+	 */
+	private void delete(File f) {
+		if (!f.exists()) {
+			return;
+		}
+		if (f.isDirectory()) {
+			for (File ff : f.listFiles()) {
+				delete(ff);
+			}
+		}
+		f.delete();
 	}
 }

@@ -102,15 +102,13 @@ public class SimulationController implements Serializable {
 		graphGenerationThread = new Thread() {
 	        public void run() {
 	        	setLoadindProgress(5);
-	        	if (StringUtils.hasText(properties.getGitUrl())) {
-//	        		String gitRepositoryPath = jGitService.cloneRepository(properties.getGitUrl());
-//	        		properties.setDirectoryPath(gitRepositoryPath);
-	        	}
 	    		graph = jDependService.generateGraph(properties.getDirectoryPath());
 	    		setLoadindProgress(30);
-	    		findbugsService.applyAnalysis(graph, properties.getDirectoryPath());
+	    		//findbugsService.applyAnalysis(graph, properties.getDirectoryPath());
 	    		setLoadindProgress(60);
-	    		jGitService.applyHistoricalAnalysis(graph, properties.getGitUrl());
+	    		if (StringUtils.hasText(properties.getGitUrl())) {
+	    			jGitService.applyHistoricalAnalysis(graph, properties.getGitUrl());
+	    		}
 	    		setLoadindProgress(80);
 	    		metricsService.calculateMetrics(graph);
 	    		setLoadindProgress(90);

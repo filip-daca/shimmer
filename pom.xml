@@ -48,6 +48,12 @@
 		<omnifaces.version>1.7</omnifaces.version>
 		<!-- Joda Time -->
 		<joda-time.version>2.3</joda-time.version>
+		<!-- Findbugs -->
+		<findbugs.version>3.0.1</findbugs.version>
+		<!-- JSON parser -->
+		<json-simple.version>1.1.1</json-simple.version>
+		<!-- Jgit -->
+		<jgit.version>3.7.0.201502260915-r</jgit.version>
 	</properties>
 
 	<build>
@@ -277,21 +283,21 @@
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>findbugs</artifactId>
-			<version>3.0.1</version>
+			<version>${findbugs.version}</version>
 		</dependency>
 		
 		<!-- JSON parser -->
 		<dependency>
 		    <groupId>com.googlecode.json-simple</groupId>
 		    <artifactId>json-simple</artifactId>
-		    <version>1.1.1</version>
+		    <version>${json-simple.version}</version>
 		</dependency>
 		
 		<!-- JGit -->
 		<dependency>
 			<groupId>org.eclipse.jgit</groupId>
 			<artifactId>org.eclipse.jgit</artifactId>
-			<version>3.7.0.201502260915-r</version>
+			<version>${jgit.version}</version>
 		</dependency>
             
 	</dependencies>

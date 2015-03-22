@@ -1,7 +1,10 @@
 package shimmer.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import shimmer.enums.NodeType;
 
@@ -36,6 +39,11 @@ public class Node {
 	private float distanceFromMainSequence;
 	private float averageSize;
 	
+	// Historical metric
+	private int commitsCount;
+	private Date lastCommitDate;
+	private Set<String> authors;
+	
 	// Bugs
 	private List<Bug> bugs;
 	private int totalBugs;
@@ -47,6 +55,7 @@ public class Node {
 	public Node() {
 		this.edges = new ArrayList<Edge>();
 		this.bugs = new ArrayList<Bug>();
+		this.authors = new HashSet<String>();
 		this.priorityBugs = new int[6];
 	}
 	
@@ -90,6 +99,17 @@ public class Node {
 	
 	public boolean isDirectory() {
 		return nodeType.equals(NodeType.DIRECTORY);
+	}
+	
+	public void addAuthor(String author) {
+		authors.add(author);
+	}
+	
+	public void noticeCommit(Date date) {
+		commitsCount++;
+		if (lastCommitDate.before(date)) {
+			lastCommitDate = date;
+		}
 	}
 	
 	// ************************************************************************
@@ -201,5 +221,17 @@ public class Node {
 	
 	public void setLargestClassSize(int largestClassSize) {
 		this.largestClassSize = largestClassSize;
+	}
+	
+	public Date getLastCommitDate() {
+		return lastCommitDate;
+	}
+	
+	public int getCommitsCount() {
+		return commitsCount;
+	}
+	
+	public Set<String> getAuthors() {
+		return authors;
 	}
 }

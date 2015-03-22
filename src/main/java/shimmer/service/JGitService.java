@@ -15,6 +15,4 @@ public interface JGitService {
 	 */
 	void applyHistoricalAnalysis(Graph graph, String gitUrl);
 
-	String cloneRepository(String gitUrl);
-
 }
