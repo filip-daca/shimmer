@@ -11,14 +11,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.diff.DiffConfig;
+import org.eclipse.jgit.api.LogCommand;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
-import org.eclipse.jgit.revwalk.FollowFilter;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.omnifaces.util.Messages;
 
 import shimmer.domain.Graph;
@@ -28,7 +25,6 @@ import shimmer.service.JGitService;
 @Named
 public class JGitServiceImpl implements JGitService {
 
-	
 	// ************************************************************************
 	// STATIC FIELDS
 		
@@ -56,8 +52,6 @@ public class JGitServiceImpl implements JGitService {
 		}
 	}
 	
-	
-	
 	// ************************************************************************
 	// HELPER METHORS	
 	
@@ -65,7 +59,8 @@ public class JGitServiceImpl implements JGitService {
 		File workTree = new File(repositoryPath);
 		Repository repository;
 		try {
-			repository = new RepositoryBuilder().setGitDir(workTree).build();
+			repository = new RepositoryBuilder().setGitDir(workTree).readEnvironment()
+			        .findGitDir().build();
 		} catch (IOException e) {
 			e.printStackTrace();
 			Messages.addGlobalError("Could not build cloned remote repository");
@@ -80,30 +75,29 @@ public class JGitServiceImpl implements JGitService {
 				continue;
 			}
 			
-			String filePath = file.getPath();
-			DiffConfig diffConfig = repository.getConfig().get(DiffConfig.KEY);
-			FollowFilter filter = FollowFilter.create(filePath, diffConfig);
-
-			RevWalk revWalk = new RevWalk(repository);
+			String filePath = file.getPath().substring(workTree.getParent().length() + 1).replace('\\', '/');
+			
+			Git git = new Git(repository);
+			LogCommand logCommand = null;
 			try {
-				ObjectId headId = repository.resolve(Constants.HEAD);
-				RevCommit headCommit = revWalk.parseCommit(headId);
-				revWalk.markStart(headCommit);
+				logCommand = git.log()
+				        .add(git.getRepository().resolve(Constants.HEAD))
+				        .addPath(filePath);
+				
+				for (RevCommit commit : logCommand.call()) {
+					graph.noticeCommit(file.getPath(), new Date(commit.getCommitTime() * 1000), 
+							commit.getAuthorIdent().getName());
+				}
+			
 			} catch (Exception e) {
 				e.printStackTrace();
 				Messages.addGlobalError("Could not analyse history of file " + file.getName());
 				continue;
 			}
-			revWalk.setTreeFilter(filter);
-
-			for (RevCommit commit: revWalk) {
-				graph.noticeCommit(file.getPath(), new Date(commit.getCommitTime() * 1000), 
-						commit.getAuthorIdent().getName());
-			    System.out.println("Czas commitu (sekundy od 1970): " + commit.getCommitTime());
-			    System.out.println("Wiadomość: " + commit.getFullMessage());
-			    System.out.println("Autor: " + commit.getAuthorIdent().getName());
-			}
+			
 		}
+		
+		repository.close();
 	}
 
 

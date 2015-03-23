@@ -107,7 +107,7 @@ public class Node {
 	
 	public void noticeCommit(Date date) {
 		commitsCount++;
-		if (lastCommitDate.before(date)) {
+		if (lastCommitDate == null || lastCommitDate.before(date)) {
 			lastCommitDate = date;
 		}
 	}

@@ -1,11 +1,11 @@
 package shimmer.service.impl;
 
-import java.awt.Color;
 import java.util.List;
 import java.util.Set;
 
 import javax.inject.Named;
 
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
@@ -16,7 +16,7 @@ import shimmer.domain.Edge;
 import shimmer.domain.Graph;
 import shimmer.domain.Node;
 import shimmer.domain.SimulationProperties;
-import shimmer.domain.helper.ColorsHelper;
+import shimmer.domain.helper.MetricsHelper;
 import shimmer.domain.helper.NamesHelper;
 import shimmer.enums.NodeType;
 import shimmer.service.GraphService;
@@ -34,19 +34,6 @@ public class GraphServiceImpl implements GraphService {
 	
 	private static final int MINIMAL_LENGTH = 10;
 	private static final int MAXIMAL_LENGTH = 200;
-	
-	private static final int MINIMAL_RADIUS = 7;
-	private static final int MAXIMAL_RADIUS = 30;
-	
-	private static final int MINIMAL_HEAT = 0;
-	private static final int MAXIMAL_HEAT = 70;
-	
-	private static final int TOO_LARGE_PACKAGE = 50;
-	private static final int TOO_MANY_BUGS = 5;
-	private static final int TOO_LARGE_CLASS = 200;
-	
-	private static final float GOOD_METRIC = 0.1F;
-	private static final float BAD_METRIC = 0.9F;
 	
 	// ************************************************************************
 	// IMPLEMENTATIONS
@@ -145,9 +132,9 @@ public class GraphServiceImpl implements GraphService {
 		JSONObject nodeJSON = new JSONObject();
 		nodeJSON.put("id", node.getId());
 		nodeJSON.put("label", node.getName());
-		nodeJSON.put("radius", getNodeSize(node, properties));
+		nodeJSON.put("radius", MetricsHelper.getNodeSize(node, properties.getNodeSizeMetric()));
 		nodeJSON.put("color", getNodeColorJSON(node, properties));
-		nodeJSON.put("heatValue", getNodeHeat(node, properties));
+		nodeJSON.put("heatValue", MetricsHelper.getNodeHeat(node, properties.getNodeHeatMetric()));
 		nodeJSON.put("shape", getNodeShape(node));
 		nodeJSON.put("shimmerProperties", getNodeShimmerPropertiesJSON(node));
 		return nodeJSON;
@@ -173,7 +160,7 @@ public class GraphServiceImpl implements GraphService {
 			shimmerPropertiesJSON.put("totalBugs", node.getTotalBugs());
 			shimmerPropertiesJSON.put("bugs", bugsToJSON(node.getBugs()));
 			shimmerPropertiesJSON.put("commitsCount", node.getCommitsCount());
-			shimmerPropertiesJSON.put("lastCommitDate", node.getLastCommitDate());
+			shimmerPropertiesJSON.put("lastCommitDate", DateFormatUtils.format(node.getLastCommitDate(), "dd-MM-yyyy hh:mm"));
 			shimmerPropertiesJSON.put("authorsCount", node.getAuthors().size());
 			shimmerPropertiesJSON.put("authors", authorsToJSON(node.getAuthors()));
 		}
@@ -204,31 +191,6 @@ public class GraphServiceImpl implements GraphService {
 		return bugsArrayJSON;
 	}
 
-	private int getNodeHeat(Node node, SimulationProperties properties) {
-		if (properties.getNodeHeatMetric() == null || node.getNodeType() != NodeType.ANALYSED_PACKAGE) {
-			return 0;
-		}
-		switch (properties.getNodeHeatMetric()) {
-		case DISTANCE_FROM_MAIN_SEQUENCE:
-			return floatMetricToNumber(node.getDistanceFromMainSequence(), MINIMAL_HEAT, MAXIMAL_HEAT);
-			
-		case ABSTRACTNESS:
-			return floatMetricToNumber(node.getAbstractness(), MINIMAL_HEAT, MAXIMAL_HEAT);
-			
-		case INSTABILITY:
-			return floatMetricToNumber(node.getInstability(), MINIMAL_HEAT, MAXIMAL_HEAT);
-			
-		case CLASS_COUNT:
-			return node.getClassCount();
-			
-		case AVERAGE_SIZE:
-			return floatMetricToNumber(node.getAverageSize(), MINIMAL_HEAT, MAXIMAL_HEAT);
-			
-		default:
-			return 0;
-		}
-	}
-
 	private JSONObject getNodeColorJSON(Node node, SimulationProperties properties) throws JSONException {
 		JSONObject colorJSON = new JSONObject();
 		if (properties.getNodeColorMetric() == null) {
@@ -236,9 +198,9 @@ public class GraphServiceImpl implements GraphService {
 		}
 		
 		if (properties.isConstellation()) {
-			colorJSON.put("border", "transparent");
+			colorJSON.put("border", MetricsHelper.CONSTELLATION_COLOR);
 		} else {
-			colorJSON.put("border", "black");
+			colorJSON.put("border", MetricsHelper.GRAPH_COLOR);
 		}
 		colorJSON.put("background", getNodeColor(node, properties));
 		
@@ -248,108 +210,25 @@ public class GraphServiceImpl implements GraphService {
 	private String getNodeColor(Node node, SimulationProperties properties) {
 		switch (node.getNodeType()) {
 		case ANALYSED_PACKAGE:
-			return getAnalysedPackageColor(node, properties);
+			return MetricsHelper.getAnalysedPackageColor(node, properties.getNodeColorMetric());
 
 		case LIBRARY_PACKAGE:
-			return "purple";
+			return MetricsHelper.LIBRARY_COLOR;
 			
 		case DIRECTORY:
-			return "blue";
+			return MetricsHelper.DIRECTORY_COLOR;
 			
 		default:
-			return "lightgray";
-		}
-	}
-
-	private String getAnalysedPackageColor(Node node, SimulationProperties properties) {
-		switch (properties.getNodeColorMetric()) {
-		case DISTANCE_FROM_MAIN_SEQUENCE:
-			return metricToColor(0, 1, node.getDistanceFromMainSequence());
-			
-		case ABSTRACTNESS:
-			// TODO: color of abstractness
-			return floatMetricToColor(node.getAbstractness());
-			
-		case INSTABILITY:
-			// TODO: color of instability
-			return floatMetricToColor(node.getInstability());
-			
-		case CLASS_COUNT:
-			return metricToColor(5, TOO_LARGE_PACKAGE, node.getClassCount());
-		
-		case AVERAGE_SIZE:
-			return metricToColor(30, TOO_LARGE_CLASS, node.getClassCount());
-			
-		case LARGEST_CLASS_SIZE:
-			return metricToColor(30, TOO_LARGE_CLASS, node.getLargestClassSize());
-		
-		case TOTAL_BUGS:
-			return metricToColor(0, TOO_MANY_BUGS, node.getTotalBugs());
-		
-		default:
-			return "lightgray";
-		}
-	}
-
-	private int getNodeSize(Node node, SimulationProperties properties) {
-		if (properties.getNodeSizeMetric() == null) {
-			return 0;
-		}
-		
-		switch (properties.getNodeSizeMetric()) {
-			
-		case CLASS_COUNT:
-			return (int) Math.min((MINIMAL_RADIUS + node.getClassCount() / 1.5), MAXIMAL_RADIUS);
-		
-		case AVERAGE_SIZE:
-			return (int) Math.min((MINIMAL_RADIUS + node.getAverageSize() / 10), MAXIMAL_RADIUS);
-			
-		case LARGEST_CLASS_SIZE:
-			return (int) Math.min((MINIMAL_RADIUS + node.getLargestClassSize() / 10), MAXIMAL_RADIUS);
-			
-		case TOTAL_BUGS:
-			return (int) Math.min((MINIMAL_RADIUS + node.getTotalBugs() * 2), MAXIMAL_RADIUS);
-			
-		default:
-			return MINIMAL_RADIUS;
+			return MetricsHelper.DEFAULT_COLOR;
 		}
 	}
 	
 	private String getNodeShape(Node node) {
 		if (node.isDirectory()) {
-			return "square";
+			return MetricsHelper.DIRECTORY_SHAPE;
 		} else {
-			return "dot";
+			return MetricsHelper.DEFAULT_SHAPE;
 		}
-	}
-	
-	private int floatMetricToNumber(float metric, int min, int max) {
-		metric = min + metric * (max - min);
-		return Math.round(metric);
-	}
-	
-	private String floatMetricToColor(float metric) {
-		Color result;
-		if (metric > BAD_METRIC) {
-			result = Color.RED;
-		} else if (metric > GOOD_METRIC) {
-			result = Color.LIGHT_GRAY;
-		} else {
-			result = Color.GREEN;
-		}
-		return String.format("#%02x%02x%02x", result.getRed(), 
-				result.getGreen(), result.getBlue());
-	}
-	
-	private String metricToColor(float best, float worst, float value) {
-		Color result;
-		if (best < worst) {
-			result = ColorsHelper.colorTransition(Color.GREEN, Color.RED, best, worst, value);
-		} else {
-			result = ColorsHelper.colorTransition(Color.RED, Color.GREEN, worst, best, value);
-		}
-		return String.format("#%02x%02x%02x", result.getRed(), 
-				result.getGreen(), result.getBlue());
 	}
 
 	private int calculateLength(Edge edge) {
