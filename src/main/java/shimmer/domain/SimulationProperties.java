@@ -40,6 +40,9 @@ public class SimulationProperties {
 	 */
 	private boolean dependenciesWeighted;
 	
+	private boolean jGitRequired;
+	private boolean findbugsRequired;
+	
 	private boolean constellation;
 	
 	// ************************************************************************
@@ -57,6 +60,8 @@ public class SimulationProperties {
 		this.libraryPackages = true;
 		this.constellation = true;
 		this.dependenciesWeighted = true;
+		this.findbugsRequired = true;
+		this.jGitRequired = true;
 	}
 	
 	// ************************************************************************
@@ -148,5 +153,21 @@ public class SimulationProperties {
 	
 	public void setGitUrl(String gitUrl) {
 		this.gitUrl = gitUrl;
+	}
+	
+	public boolean isFindbugsRequired() {
+		return findbugsRequired;
+	}
+	
+	public void setFindbugsRequired(boolean findbugsRequired) {
+		this.findbugsRequired = findbugsRequired;
+	}
+	
+	public boolean isjGitRequired() {
+		return jGitRequired;
+	}
+	
+	public void setjGitRequired(boolean jGitRequired) {
+		this.jGitRequired = jGitRequired;
 	}
 }

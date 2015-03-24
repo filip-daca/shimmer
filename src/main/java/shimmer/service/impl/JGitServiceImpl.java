@@ -85,7 +85,7 @@ public class JGitServiceImpl implements JGitService {
 				        .addPath(filePath);
 				
 				for (RevCommit commit : logCommand.call()) {
-					graph.noticeCommit(file.getPath(), new Date(commit.getCommitTime() * 1000), 
+					graph.noticeCommit(file.getPath(), new Date((long) commit.getCommitTime() * 1000L), 
 							commit.getAuthorIdent().getName());
 				}
 			

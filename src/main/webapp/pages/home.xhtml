@@ -30,7 +30,64 @@
 				<!-- Project git url -->
 	    		<p:outputLabel value="Project git clone url:" styleClass="wide-label" />
 	    		<p:inputText value="#{simulationController.properties.gitUrl}" size="100" />
-				
+	    		
+	    		<!-- Metric options -->
+	    		<div class="right">
+		    		<div id="metricOptions" class="margin-top btn btn-info btn-sm"><i class="glyphicon glyphicon-cog"></i>Metric options</div>
+		    		<p:overlayPanel for="@([id=metricOptions])">
+		    			
+		    			<!-- 
+		    				public static final int MINIMAL_RADIUS = 7;
+							public static final int MAXIMAL_RADIUS = 30;
+							
+							public static final int BIG_ENOUGH_PACKAGE = 5;
+							public static final int TOO_LARGE_PACKAGE = 50;
+							
+							public static final int BIG_ENOUGH_CLASS = 40;
+							public static final int TOO_LARGE_CLASS = 200;
+							
+							public static final int TOO_MANY_BUGS = 5;
+							
+							public static final int MANY_COMMITS = 100;
+	    				 -->
+	    				 
+	    				<div>
+							<p:outputLabel for="" value="Recent commit age in days"/>
+						    <h:panelGrid columns="1" style="margin-bottom: 10px">
+						        <h:outputText id="commitAge" value="Between #{simulationController.metricsProperties.newCommitDays} and #{simulationController.metricsProperties.oldCommitDays}" />
+						        <p:slider for="commitAgeMin,commitAgeMax" display="displayRange" style="width: 400px" range="true" 
+						        	displayTemplate="Between {min} and {max}" minValue="0" maxValue="356" />
+						    </h:panelGrid>
+						    <h:inputHidden id="commitAgeMin" value="#{simulationController.metricsProperties.newCommitDays}" />
+						    <h:inputHidden id="commitAgeMax" value="#{simulationController.metricsProperties.oldCommitDays}" />
+						</div>
+		    			
+		    			<div>
+							<p:outputLabel for="commitAge" value="Recent commit age in days"/>
+						    <h:panelGrid columns="1" style="margin-bottom: 10px">
+						        <h:outputText id="commitAge" value="Between #{simulationController.metricsProperties.newCommitDays} and #{simulationController.metricsProperties.oldCommitDays}" />
+						        <p:slider for="commitAgeMin,commitAgeMax" display="displayRange" style="width: 400px" range="true" 
+						        	displayTemplate="Between {min} and {max}" minValue="0" maxValue="356" />
+						    </h:panelGrid>
+						    <h:inputHidden id="commitAgeMin" value="#{simulationController.metricsProperties.newCommitDays}" />
+						    <h:inputHidden id="commitAgeMax" value="#{simulationController.metricsProperties.oldCommitDays}" />
+						</div>
+		    			
+		    			<p:commandLink listener="#{simulationController.changeProperties}"
+								process="@form" update="@([id$=dataScript])"
+								onstart="ShimmerWeb.show('calculatingStatus');"
+								styleClass="btn btn-success btn-sm">
+		    				<i class="glyphicon glyphicon-refresh"></i>
+		    			</p:commandLink>
+		    		</p:overlayPanel>
+	    		</div>
+	    		
+	    		<!-- Modules switches -->
+	    		<p:outputLabel value="Findbugs: " styleClass="margin-top" />
+	    		<p:inputSwitch value="#{simulationController.properties.findbugsRequired}" styleClass="margin-left margin-right" />
+	    		<p:outputLabel value="JGit: " styleClass="margin-left margin-top" />
+	    		<p:inputSwitch value="#{simulationController.properties.jGitRequired}" styleClass="margin-left margin-right" />
+
 				<!-- Save graph -->
            		<p:commandButton value="Save analysed project" ajax="false" styleClass="save-graph-button"
            				icon="ui-icon-arrowthick-1-s">

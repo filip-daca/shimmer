@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import shimmer.domain.Node;
-import shimmer.domain.SimulationProperties;
 import shimmer.enums.Metric;
 import shimmer.enums.NodeType;
 
@@ -151,6 +150,10 @@ public class MetricsHelper {
 	// PRIVATE METHODS
 
 	private static int metricToHeat(float min, float max, float val) {
+		if (min > max) {
+			val = min + max - val;
+		}
+		
 		if (val <= min) {
 			return MINIMAL_HEAT;
 		} else if (val >= max) {
@@ -168,9 +171,9 @@ public class MetricsHelper {
 	private static String metricToColor(float best, float worst, Color color1,
 			Color defaultColor, Color color2, float val1, float val2) {
 		if (val1 > val2) {
-			return metricToColor(best, worst, defaultColor, color1, val1 - val2);
+			return metricToColor(best, worst, defaultColor, color1, (float) Math.sqrt(val1 * val1 - val2 * val2));
 		} else {
-			return metricToColor(best, worst, defaultColor, color2, val2 - val1);
+			return metricToColor(best, worst, defaultColor, color2, (float) Math.sqrt(val2 * val2 - val1 * val1));
 		}
 	}
 	

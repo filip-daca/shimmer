@@ -59,14 +59,6 @@
 	bottom: 10px;
 }
 
-.save-graph-button {
-	position: relative;
-	left: 280px;
-	top: 41px;
-	margin-bottom: -20px;
-	margin-top: -20px;
-}
-
 /* Fields ------------------------------------------------------------------ */
 
 #shimmerPanel label,
@@ -178,8 +170,10 @@ body.basic-template {
 
 .save-graph-button {
 	position: relative;
-	left: 290px;
-	bottom: 63px;
+	left: 20px;
+  	top: 46px;
+	margin-bottom: -20px;
+	margin-top: -20px;
 }
 
 /* --------------------------------------------------------------------------

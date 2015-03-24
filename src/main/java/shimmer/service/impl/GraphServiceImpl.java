@@ -160,7 +160,11 @@ public class GraphServiceImpl implements GraphService {
 			shimmerPropertiesJSON.put("totalBugs", node.getTotalBugs());
 			shimmerPropertiesJSON.put("bugs", bugsToJSON(node.getBugs()));
 			shimmerPropertiesJSON.put("commitsCount", node.getCommitsCount());
-			shimmerPropertiesJSON.put("lastCommitDate", DateFormatUtils.format(node.getLastCommitDate(), "dd-MM-yyyy hh:mm"));
+			String lastCommitDate = "NA";
+			if (node.getLastCommitDate() != null) {
+				lastCommitDate = DateFormatUtils.format(node.getLastCommitDate(), "dd-MM-yyyy hh:mm");
+			}
+			shimmerPropertiesJSON.put("lastCommitDate", lastCommitDate);
 			shimmerPropertiesJSON.put("authorsCount", node.getAuthors().size());
 			shimmerPropertiesJSON.put("authors", authorsToJSON(node.getAuthors()));
 		}

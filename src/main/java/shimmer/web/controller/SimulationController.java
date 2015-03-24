@@ -104,9 +104,11 @@ public class SimulationController implements Serializable {
 	        	setLoadindProgress(5);
 	    		graph = jDependService.generateGraph(properties.getDirectoryPath());
 	    		setLoadindProgress(30);
-	    		//findbugsService.applyAnalysis(graph, properties.getDirectoryPath());
+	    		if (properties.isFindbugsRequired()) {
+	    			findbugsService.applyAnalysis(graph, properties.getDirectoryPath());
+	    		}
 	    		setLoadindProgress(60);
-	    		if (StringUtils.hasText(properties.getGitUrl())) {
+	    		if (properties.isjGitRequired() && StringUtils.hasText(properties.getGitUrl())) {
 	    			jGitService.applyHistoricalAnalysis(graph, properties.getGitUrl());
 	    		}
 	    		setLoadindProgress(80);
