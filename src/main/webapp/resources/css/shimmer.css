@@ -45,6 +45,11 @@
 	/* height: 1100px; */
 }
 
+div.metricsProperties {
+	position: absolute;
+	right: 200px;
+}
+
 .bug {
 	border: 1px solid red;
 	border-radius: 5px;

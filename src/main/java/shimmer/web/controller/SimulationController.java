@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.util.StringUtils;
 
 import shimmer.domain.Graph;
+import shimmer.domain.MetricProperties;
 import shimmer.domain.SimulationProperties;
 import shimmer.enums.Metric;
 import shimmer.service.FileService;
@@ -65,7 +66,9 @@ public class SimulationController implements Serializable {
 	private volatile boolean visualizationReady = false;
 	private boolean propertiesReadonly = false;
 	
-	private SimulationProperties properties;
+	private SimulationProperties simulationProperties;
+	private MetricProperties metricProperties;
+	
 	private volatile Graph graph;
 	private volatile String edgesJSON;
 	private volatile String nodesJSON;
@@ -83,7 +86,8 @@ public class SimulationController implements Serializable {
 	@PostConstruct
 	public void initialize() {
 		// Create default properties
-		properties = new SimulationProperties();
+		simulationProperties = new SimulationProperties();
+		metricProperties = new MetricProperties();
 		initialized = true;
 	}
 	
@@ -102,21 +106,21 @@ public class SimulationController implements Serializable {
 		graphGenerationThread = new Thread() {
 	        public void run() {
 	        	setLoadindProgress(5);
-	    		graph = jDependService.generateGraph(properties.getDirectoryPath());
+	    		graph = jDependService.generateGraph(simulationProperties.getDirectoryPath());
 	    		setLoadindProgress(30);
-	    		if (properties.isFindbugsRequired()) {
-	    			findbugsService.applyAnalysis(graph, properties.getDirectoryPath());
+	    		if (simulationProperties.isFindbugsRequired()) {
+	    			findbugsService.applyAnalysis(graph, simulationProperties.getDirectoryPath());
 	    		}
 	    		setLoadindProgress(60);
-	    		if (properties.isjGitRequired() && StringUtils.hasText(properties.getGitUrl())) {
-	    			jGitService.applyHistoricalAnalysis(graph, properties.getGitUrl());
+	    		if (simulationProperties.isjGitRequired() && StringUtils.hasText(simulationProperties.getGitUrl())) {
+	    			jGitService.applyHistoricalAnalysis(graph, simulationProperties.getGitUrl());
 	    		}
 	    		setLoadindProgress(80);
 	    		metricsService.calculateMetrics(graph);
 	    		setLoadindProgress(90);
-	    		edgesJSON = graphService.generateEdgesJSON(graph, properties);
+	    		edgesJSON = graphService.generateEdgesJSON(graph, simulationProperties);
 	    		setLoadindProgress(95);
-	    		nodesJSON = graphService.generateNodesJSON(graph, properties);
+	    		nodesJSON = graphService.generateNodesJSON(graph, simulationProperties, metricProperties);
 	    		setLoadindProgress(100);
 	    		setVisualizationReady(true);
 	        }
@@ -129,8 +133,8 @@ public class SimulationController implements Serializable {
 	 * Regenerates JSON elements of graph after properties change.
 	 */
 	public void changeProperties() {	    
-	    edgesJSON = graphService.generateEdgesJSON(graph, properties);
-	    nodesJSON = graphService.generateNodesJSON(graph, properties);
+	    edgesJSON = graphService.generateEdgesJSON(graph, simulationProperties);
+	    nodesJSON = graphService.generateNodesJSON(graph, simulationProperties, metricProperties);
 	}
 	
 	public void loadGraph(FileUploadEvent event) {
@@ -141,13 +145,13 @@ public class SimulationController implements Serializable {
 		try {
 			edgesJSON = shimmerJSON.get("edges").toString();
 			nodesJSON = shimmerJSON.get("nodes").toString();
-			properties.setDependenciesEdges(shimmerJSON.getBoolean("dependenciesEdges"));
-			properties.setDependenciesWeighted(shimmerJSON.getBoolean("dependenciesWeighted"));
-			properties.setDirectoryNodes(shimmerJSON.getBoolean("directoryNodes"));
-			properties.setLibraryPackages(shimmerJSON.getBoolean("libraryPackages"));
-			properties.setNodeColorMetric(Metric.valueOf(shimmerJSON.getString("nodeColorMetric")));
-			properties.setNodeSizeMetric(Metric.valueOf(shimmerJSON.getString("nodeSizeMetric")));
-			properties.setNodeHeatMetric(Metric.valueOf(shimmerJSON.getString("nodeHeatMetric")));
+			simulationProperties.setDependenciesEdges(shimmerJSON.getBoolean("dependenciesEdges"));
+			simulationProperties.setDependenciesWeighted(shimmerJSON.getBoolean("dependenciesWeighted"));
+			simulationProperties.setDirectoryNodes(shimmerJSON.getBoolean("directoryNodes"));
+			simulationProperties.setLibraryPackages(shimmerJSON.getBoolean("libraryPackages"));
+			simulationProperties.setNodeColorMetric(Metric.valueOf(shimmerJSON.getString("nodeColorMetric")));
+			simulationProperties.setNodeSizeMetric(Metric.valueOf(shimmerJSON.getString("nodeSizeMetric")));
+			simulationProperties.setNodeHeatMetric(Metric.valueOf(shimmerJSON.getString("nodeHeatMetric")));
 			setVisualizationReady(true);
 			propertiesReadonly = true;
 		} catch (Exception e) {
@@ -157,7 +161,7 @@ public class SimulationController implements Serializable {
     }
 	
 	public StreamedContent getSaveGraph() {
-		JSONObject shimmerJSON = graphService.generateShimmerJSON(nodesJSON, edgesJSON, properties);
+		JSONObject shimmerJSON = graphService.generateShimmerJSON(nodesJSON, edgesJSON, simulationProperties);
 		return fileService.saveGraph(shimmerJSON);
 	}
 	
@@ -197,9 +201,13 @@ public class SimulationController implements Serializable {
 		return graph.getNodesCount();
 	}
 	
-	public SimulationProperties getProperties() {
+	public SimulationProperties getSimulationProperties() {
 		considerInitialization();
-		return properties;
+		return simulationProperties;
+	}
+	
+	public MetricProperties getMetricProperties() {
+		return metricProperties;
 	}
 	
 	public synchronized int getLoadingProgress() {

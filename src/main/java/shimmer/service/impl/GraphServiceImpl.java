@@ -14,6 +14,7 @@ import org.primefaces.json.JSONObject;
 import shimmer.domain.Bug;
 import shimmer.domain.Edge;
 import shimmer.domain.Graph;
+import shimmer.domain.MetricProperties;
 import shimmer.domain.Node;
 import shimmer.domain.SimulationProperties;
 import shimmer.domain.helper.MetricsHelper;
@@ -80,21 +81,22 @@ public class GraphServiceImpl implements GraphService {
 	}
 
 	@Override
-	public String generateNodesJSON(Graph graph, SimulationProperties properties) {
+	public String generateNodesJSON(Graph graph, SimulationProperties simulationProperties, 
+				MetricProperties metricProperties) {
 		try {	
 			JSONArray nodesArrayJSON = new JSONArray();
 			for (Node node : graph.getNodes()) {
 				// Skipping library packages
-				if (node.isLibraryPackage() && !properties.isLibraryPackages()) {
+				if (node.isLibraryPackage() && !simulationProperties.isLibraryPackages()) {
 					continue;
 				}
 				
 				// Skipping directories
-				if (node.isDirectory() && !properties.isDirectoryNodes()) {
+				if (node.isDirectory() && !simulationProperties.isDirectoryNodes()) {
 					continue;
 				}
 				
-				JSONObject nodeJSON = nodeToJSON(node, properties);
+				JSONObject nodeJSON = nodeToJSON(node, simulationProperties, metricProperties);
 				nodesArrayJSON.put(nodeJSON);
 			}
 			return nodesArrayJSON.toString(4);
@@ -128,13 +130,14 @@ public class GraphServiceImpl implements GraphService {
 	// ************************************************************************
 	// PRIVATE METHODS
 
-	private JSONObject nodeToJSON(Node node, SimulationProperties properties) throws JSONException {
+	private JSONObject nodeToJSON(Node node, SimulationProperties simulationProperties, 
+			MetricProperties metricProperties) throws JSONException {
 		JSONObject nodeJSON = new JSONObject();
 		nodeJSON.put("id", node.getId());
 		nodeJSON.put("label", node.getName());
-		nodeJSON.put("radius", MetricsHelper.getNodeSize(node, properties.getNodeSizeMetric()));
-		nodeJSON.put("color", getNodeColorJSON(node, properties));
-		nodeJSON.put("heatValue", MetricsHelper.getNodeHeat(node, properties.getNodeHeatMetric()));
+		nodeJSON.put("radius", MetricsHelper.getNodeSize(node, simulationProperties.getNodeSizeMetric(), metricProperties));
+		nodeJSON.put("color", getNodeColorJSON(node, simulationProperties, metricProperties));
+		nodeJSON.put("heatValue", MetricsHelper.getNodeHeat(node, simulationProperties.getNodeHeatMetric(), metricProperties));
 		nodeJSON.put("shape", getNodeShape(node));
 		nodeJSON.put("shimmerProperties", getNodeShimmerPropertiesJSON(node));
 		return nodeJSON;
@@ -195,7 +198,8 @@ public class GraphServiceImpl implements GraphService {
 		return bugsArrayJSON;
 	}
 
-	private JSONObject getNodeColorJSON(Node node, SimulationProperties properties) throws JSONException {
+	private JSONObject getNodeColorJSON(Node node, SimulationProperties properties, 
+				MetricProperties metricProperties) throws JSONException {
 		JSONObject colorJSON = new JSONObject();
 		if (properties.getNodeColorMetric() == null) {
 			return colorJSON;
@@ -206,15 +210,15 @@ public class GraphServiceImpl implements GraphService {
 		} else {
 			colorJSON.put("border", MetricsHelper.GRAPH_COLOR);
 		}
-		colorJSON.put("background", getNodeColor(node, properties));
+		colorJSON.put("background", getNodeColor(node, properties, metricProperties));
 		
 		return colorJSON;
 	}
 	
-	private String getNodeColor(Node node, SimulationProperties properties) {
+	private String getNodeColor(Node node, SimulationProperties properties, MetricProperties metricProperties) {
 		switch (node.getNodeType()) {
 		case ANALYSED_PACKAGE:
-			return MetricsHelper.getAnalysedPackageColor(node, properties.getNodeColorMetric());
+			return MetricsHelper.getAnalysedPackageColor(node, properties.getNodeColorMetric(), metricProperties);
 
 		case LIBRARY_PACKAGE:
 			return MetricsHelper.LIBRARY_COLOR;

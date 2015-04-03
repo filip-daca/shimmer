@@ -9,6 +9,9 @@ import shimmer.enums.Metric;
  */
 public class SimulationProperties {
 
+	// ************************************************************************
+	// FIELDS
+	
 	private String directoryPath;
 	private String gitUrl;
 	private Metric nodeSizeMetric;

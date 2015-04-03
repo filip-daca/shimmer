@@ -3,6 +3,7 @@ package shimmer.service;
 import org.primefaces.json.JSONObject;
 
 import shimmer.domain.Graph;
+import shimmer.domain.MetricProperties;
 import shimmer.domain.SimulationProperties;
 
 /**
@@ -25,10 +26,12 @@ public interface GraphService {
 	 * Outputs graph nodes in JSON format.
 	 * 
 	 * @param graph - project graph
-	 * @param properties - simulation properties
+	 * @param simulationProperties - simulation properties
+	 * @param metricProperties - metric calibrations
 	 * @return nodes in JSON format
 	 */
-	String generateNodesJSON(Graph graph, SimulationProperties properties);
+	String generateNodesJSON(Graph graph, SimulationProperties simulationProperties,
+			MetricProperties metricProperties);
 	/**
 	 * Outputs shimmer serialized data in JSON format. 
 	 * 

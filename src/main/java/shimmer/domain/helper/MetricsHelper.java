@@ -6,6 +6,7 @@ import java.util.Date;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import shimmer.domain.MetricProperties;
 import shimmer.domain.Node;
 import shimmer.enums.Metric;
 import shimmer.enums.NodeType;
@@ -32,22 +33,6 @@ public class MetricsHelper {
 	public static final String DIRECTORY_SHAPE = "square";
 	public static final String DEFAULT_SHAPE = "dot";
 	
-	public static final int MINIMAL_RADIUS = 7;
-	public static final int MAXIMAL_RADIUS = 30;
-	
-	public static final int BIG_ENOUGH_PACKAGE = 5;
-	public static final int TOO_LARGE_PACKAGE = 50;
-	
-	public static final int BIG_ENOUGH_CLASS = 40;
-	public static final int TOO_LARGE_CLASS = 200;
-	
-	public static final int TOO_MANY_BUGS = 5;
-	
-	public static final int MANY_COMMITS = 100;
-	
-	public static final int OLD_COMMIT_DAYS = 30;
-	public static final int NEW_COMMIT_DAYS = 7;
-	
 	// ************************************************************************
 	// IMPLEMENTATIONS
 	
@@ -55,9 +40,10 @@ public class MetricsHelper {
 	 * Returns node heat.
 	 * @param node - shimmer node
 	 * @param heatMetric - metric to use
+	 * @param properties - calibration properties
 	 * @return heat value
 	 */
-	public static int getNodeHeat(Node node, Metric heatMetric) {
+	public static int getNodeHeat(Node node, Metric heatMetric, MetricProperties properties) {
 		
 		if (heatMetric == null || node.getNodeType() != NodeType.ANALYSED_PACKAGE) {
 			return 0;
@@ -74,16 +60,16 @@ public class MetricsHelper {
 				return metricToHeat(0, 1, node.getInstability());
 				
 			case CLASS_COUNT:
-				return metricToHeat(BIG_ENOUGH_PACKAGE, TOO_LARGE_PACKAGE, node.getClassCount());
+				return metricToHeat(properties.getBigEnoughPackage(), properties.getTooBigPackage(), node.getClassCount());
 				
 			case AVERAGE_SIZE:
-				return metricToHeat(BIG_ENOUGH_CLASS, TOO_LARGE_CLASS, node.getAverageSize());
+				return metricToHeat(properties.getBigEnoughClass(), properties.getTooBigClass(), node.getAverageSize());
 				
 			case OFTEN_CHANGED:
-				return metricToHeat(0, MANY_COMMITS, node.getCommitsCount());
+				return metricToHeat(0, properties.getManyCommits(), node.getCommitsCount());
 				
 			case RECENTLY_CHANGED:
-				return metricToHeat(OLD_COMMIT_DAYS, NEW_COMMIT_DAYS, 
+				return metricToHeat(properties.getOldCommitDays(), properties.getNewCommitDays(), 
 						Days.daysBetween(new DateTime(node.getLastCommitDate()), new DateTime(new Date())).getDays());
 				
 			default:
@@ -91,7 +77,7 @@ public class MetricsHelper {
 		}
 	}
 	
-	public static String getAnalysedPackageColor(Node node, Metric colorMetric) {
+	public static String getAnalysedPackageColor(Node node, Metric colorMetric, MetricProperties properties) {
 		switch (colorMetric) {
 			case DISTANCE_FROM_MAIN_SEQUENCE:
 				return metricToColor(0, 1, node.getDistanceFromMainSequence());
@@ -106,43 +92,46 @@ public class MetricsHelper {
 				return metricToColor(0, 1, Color.CYAN, Color.LIGHT_GRAY, Color.YELLOW, node.getInstability(), node.getAbstractness());
 				
 			case CLASS_COUNT:
-				return metricToColor(BIG_ENOUGH_PACKAGE, TOO_LARGE_PACKAGE, node.getClassCount());
+				return metricToColor(properties.getBigEnoughPackage(), properties.getTooBigPackage(), node.getClassCount());
 			
 			case AVERAGE_SIZE:
-				return metricToColor(BIG_ENOUGH_CLASS, TOO_LARGE_CLASS, node.getAverageSize());
+				return metricToColor(properties.getBigEnoughClass(), properties.getTooBigClass(), node.getAverageSize());
 				
 			case LARGEST_CLASS_SIZE:
-				return metricToColor(BIG_ENOUGH_CLASS, TOO_LARGE_CLASS, node.getLargestClassSize());
+				return metricToColor(properties.getBigEnoughClass(), properties.getTooBigClass(), node.getLargestClassSize());
 			
 			case TOTAL_BUGS:
-				return metricToColor(0, TOO_MANY_BUGS, node.getTotalBugs());
+				return metricToColor(0, properties.getTooManyBugs(), node.getTotalBugs());
 			
 			default:
 				return DEFAULT_COLOR;
 			}
 	}
 	
-	public static int getNodeSize(Node node, Metric sizeMetric) {
+	public static int getNodeSize(Node node, Metric sizeMetric, MetricProperties metricProperties) {
 		if (sizeMetric == null) {
 			return 0;
 		}
 		
+		int minimalRadius = metricProperties.getMinimalRadius();
+		int maximalRadius = metricProperties.getMaximalRadius();
+		
 		switch (sizeMetric) {
 			
 			case CLASS_COUNT:
-				return (int) Math.min((MINIMAL_RADIUS + node.getClassCount() / 1.5), MAXIMAL_RADIUS);
+				return (int) Math.min((minimalRadius + node.getClassCount() / 1.5), maximalRadius);
 			
 			case AVERAGE_SIZE:
-				return (int) Math.min((MINIMAL_RADIUS + node.getAverageSize() / 10), MAXIMAL_RADIUS);
+				return (int) Math.min((minimalRadius + node.getAverageSize() / 10), maximalRadius);
 				
 			case LARGEST_CLASS_SIZE:
-				return (int) Math.min((MINIMAL_RADIUS + node.getLargestClassSize() / 10), MAXIMAL_RADIUS);
+				return (int) Math.min((minimalRadius + node.getLargestClassSize() / 10), maximalRadius);
 				
 			case TOTAL_BUGS:
-				return (int) Math.min((MINIMAL_RADIUS + node.getTotalBugs() * 2), MAXIMAL_RADIUS);
+				return (int) Math.min((minimalRadius + node.getTotalBugs() * 2), maximalRadius);
 				
 			default:
-				return MINIMAL_RADIUS;
+				return minimalRadius;
 		}
 	}
 	
@@ -152,6 +141,9 @@ public class MetricsHelper {
 	private static int metricToHeat(float min, float max, float val) {
 		if (min > max) {
 			val = min + max - val;
+			float temp = min;
+			min = max;
+			max = temp;
 		}
 		
 		if (val <= min) {

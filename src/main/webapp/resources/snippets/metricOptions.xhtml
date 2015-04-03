@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<!-- This snippet displays Shimmer Metric options -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	
+	<div id="metricOptions" class="margin-top btn btn-info btn-sm"><i class="glyphicon glyphicon-cog"></i>Metric options</div>
+	
+	<p:overlayPanel for="@([id=metricOptions])" styleClass="metricsProperties">
+		 
+		<div>
+			<p:outputLabel for="nodeRadius" value="Node radius span"/>
+			<h:panelGrid columns="1" style="margin-bottom: 10px">
+				<h:outputText id="nodeRadius" value="Between #{simulationController.metricProperties.minimalRadius} and #{simulationController.metricProperties.maximalRadius}" />
+				<p:slider for="minimalRadius,commitAgeMax" display="nodeRadius" style="width: 400px" range="true" 
+				    	displayTemplate="Between {min} and {max}" minValue="0" maxValue="70" />
+			</h:panelGrid>
+			<h:inputHidden id="minimalRadius" value="#{simulationController.metricProperties.minimalRadius}" />
+			<h:inputHidden id="maximalRadius" value="#{simulationController.metricProperties.maximalRadius}" />
+		</div>
+		
+		<div>
+			<p:outputLabel for="commitAge" value="Recent commit age in days"/>
+			<h:panelGrid columns="1" style="margin-bottom: 10px">
+				<h:outputText id="commitAge" value="Between #{simulationController.metricProperties.newCommitDays} and #{simulationController.metricProperties.oldCommitDays}" />
+				<p:slider for="commitAgeMin,commitAgeMax" display="commitAge" style="width: 400px" range="true" 
+				    	displayTemplate="Between {min} and {max}" minValue="0" maxValue="356" />
+			</h:panelGrid>
+			<h:inputHidden id="commitAgeMin" value="#{simulationController.metricProperties.newCommitDays}" />
+			<h:inputHidden id="commitAgeMax" value="#{simulationController.metricProperties.oldCommitDays}" />
+		</div>
+		
+		<div>
+			<p:outputLabel for="manyCommits" value="Many commits threshold"/>
+			<h:panelGrid columns="1" style="margin-bottom: 10px">
+		        <h:outputText id="manyCommits" value="#{simulationController.metricProperties.manyCommits}" />
+		        <h:inputHidden id="manyCommitsValue" value="#{simulationController.metricProperties.manyCommits}" />
+		        <p:slider for="manyCommitsValue" display="manyCommits" style="width: 200px" displayTemplate="{value}" minValue="0" maxValue="500" />
+	        </h:panelGrid>
+		</div>
+		
+		<div>
+			<p:outputLabel for="tooManyBugs" value="Too many bugs threshold"/>
+			<h:panelGrid columns="1" style="margin-bottom: 10px">
+		        <h:outputText id="tooManyBugs" value="#{simulationController.metricProperties.tooManyBugs}" />
+		        <h:inputHidden id="tooManyBugsValue" value="#{simulationController.metricProperties.tooManyBugs}" />
+		        <p:slider for="tooManyBugsValue" display="tooManyBugs" style="width: 200px" displayTemplate="{value}" minValue="1" maxValue="50" />
+	        </h:panelGrid>
+		</div>
+		
+		<div>
+			<p:outputLabel for="packageSize" value="Package size span"/>
+			<h:panelGrid columns="1" style="margin-bottom: 10px">
+				<h:outputText id="packageSize" value="Between #{simulationController.metricProperties.bigEnoughPackage} and #{simulationController.metricProperties.tooBigPackage}" />
+				<p:slider for="minimalPackageSize,maximalPackageSize" display="packageSize" style="width: 400px" range="true" 
+				    	displayTemplate="Between {min} and {max}" minValue="0" maxValue="200" />
+			</h:panelGrid>
+			<h:inputHidden id="minimalPackageSize" value="#{simulationController.metricProperties.bigEnoughPackage}" />
+			<h:inputHidden id="maximalPackageSize" value="#{simulationController.metricProperties.tooBigPackage}" />
+		</div>
+		
+		<div>
+			<p:outputLabel for="classSize" value="Class size span"/>
+			<h:panelGrid columns="1" style="margin-bottom: 10px">
+				<h:outputText id="classSize" value="Between #{simulationController.metricProperties.bigEnoughClass} and #{simulationController.metricProperties.tooBigClass}" />
+				<p:slider for="minimalClassSize,maximalClassSize" display="packageSize" style="width: 400px" range="true" 
+				    	displayTemplate="Between {min} and {max}" minValue="0" maxValue="700" />
+			</h:panelGrid>
+			<h:inputHidden id="minimalClassSize" value="#{simulationController.metricProperties.bigEnoughClass}" />
+			<h:inputHidden id="maximalClassSize" value="#{simulationController.metricProperties.tooBigClass}" />
+		</div>
+			
+		<p:commandLink action="#{simulationController.changeProperties()}"
+			process="@form" update="@([id$=dataScript])"
+			onstart="ShimmerWeb.show('calculatingStatus');"
+			styleClass="btn btn-success btn-sm">
+			<i class="glyphicon glyphicon-refresh"></i>
+		</p:commandLink>
+		
+	</p:overlayPanel>
+</html>
