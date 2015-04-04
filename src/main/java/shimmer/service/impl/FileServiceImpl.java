@@ -6,16 +6,14 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.json.simple.parser.JSONParser;
 import org.omnifaces.util.Messages;
 import org.primefaces.json.JSONObject;
 import org.primefaces.model.DefaultStreamedContent;
@@ -62,13 +60,11 @@ public class FileServiceImpl implements FileService {
 		}
 	}	
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject loadGraph(UploadedFile file) {
-		JSONParser parser = new JSONParser();
 		try {
-			Object parsedObj = parser.parse(new InputStreamReader(file.getInputstream()));
-			JSONObject jsonObject = new JSONObject((Map<Object, Object>) parsedObj);
+			String jsonString = new String(file.getContents(), StandardCharsets.UTF_8);
+			JSONObject jsonObject = new JSONObject(jsonString);
 			return jsonObject;
 		} catch (Exception e) {
 			e.printStackTrace();

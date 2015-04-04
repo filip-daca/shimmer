@@ -67,7 +67,7 @@
 			<p:outputLabel for="classSize" value="Class size span"/>
 			<h:panelGrid columns="1" style="margin-bottom: 10px">
 				<h:outputText id="classSize" value="Between #{simulationController.metricProperties.bigEnoughClass} and #{simulationController.metricProperties.tooBigClass}" />
-				<p:slider for="minimalClassSize,maximalClassSize" display="packageSize" style="width: 400px" range="true" 
+				<p:slider for="minimalClassSize,maximalClassSize" display="classSize" style="width: 400px" range="true" 
 				    	displayTemplate="Between {min} and {max}" minValue="0" maxValue="700" />
 			</h:panelGrid>
 			<h:inputHidden id="minimalClassSize" value="#{simulationController.metricProperties.bigEnoughClass}" />

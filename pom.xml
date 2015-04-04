@@ -50,8 +50,6 @@
 		<joda-time.version>2.3</joda-time.version>
 		<!-- Findbugs -->
 		<findbugs.version>3.0.1</findbugs.version>
-		<!-- JSON parser -->
-		<json-simple.version>1.1.1</json-simple.version>
 		<!-- Jgit -->
 		<jgit.version>3.7.0.201502260915-r</jgit.version>
 	</properties>
@@ -284,13 +282,6 @@
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>findbugs</artifactId>
 			<version>${findbugs.version}</version>
-		</dependency>
-		
-		<!-- JSON parser -->
-		<dependency>
-		    <groupId>com.googlecode.json-simple</groupId>
-		    <artifactId>json-simple</artifactId>
-		    <version>${json-simple.version}</version>
 		</dependency>
 		
 		<!-- JGit -->

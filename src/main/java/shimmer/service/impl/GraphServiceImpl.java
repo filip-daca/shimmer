@@ -107,10 +107,12 @@ public class GraphServiceImpl implements GraphService {
 	}
 	
 	@Override
-	public JSONObject generateShimmerJSON(String nodesJSON,
-			String edgesJSON, SimulationProperties properties) {
+	public JSONObject generateShimmerJSON(String nodesJSONString,
+			String edgesJSONString, SimulationProperties properties) {
 		JSONObject shimmerJSON = new JSONObject();
 		try {
+			JSONArray edgesJSON = new JSONArray(edgesJSONString);
+			JSONArray nodesJSON = new JSONArray(nodesJSONString);
 			shimmerJSON.put("edges", edgesJSON);
 			shimmerJSON.put("nodes", nodesJSON);
 			shimmerJSON.put("libraryPackages", properties.isLibraryPackages());
