@@ -129,6 +129,25 @@ var Shimmer = {
 	},
 	
 	/**
+	 * Toggles heatmap freeze for efficient calculations.
+	 */
+	toggleHeatmapFreeze: function() {
+		Shimmer.enableHeatmap = !Shimmer.enableHeatmap;
+		$("#freeze").text("");
+		if (Shimmer.enableHeatmap) {
+			$("#freeze").append("<i class='glyphicon glyphicon-pause'></i>");
+			$("#freeze").append(" Freeze");
+			$("#freeze").removeClass("btn-warning");
+			$("#freeze").addClass("btn-info");
+		} else {
+			$("#freeze").append("<i class='glyphicon glyphicon-play'></i>");
+			$("#freeze").append(" Unfreeze");
+			$("#freeze").removeClass("btn-info");
+			$("#freeze").addClass("btn-warning");
+		}
+	},
+	
+	/**
 	 * Applies constellation colors.
 	 */
 	changeColorsToConstellation: function() {
