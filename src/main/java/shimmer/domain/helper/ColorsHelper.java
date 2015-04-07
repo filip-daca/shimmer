@@ -4,7 +4,7 @@ import java.awt.Color;
 
 /**
  * Helps with color transitions and conversions.
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class ColorsHelper {
 	

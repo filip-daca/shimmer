@@ -9,7 +9,7 @@ import org.primefaces.model.UploadedFile;
 
 /**
  * Simple service to handle file operations.
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public interface FileService {
 

@@ -13,7 +13,7 @@ import shimmer.enums.NodeType;
 
 /**
  * Helps counting metrics.
- * @author filip.daca@javatech.com.pl
+ * @author Filip Daca
  */
 public class MetricsHelper {
 	
