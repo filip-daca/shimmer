@@ -3,6 +3,7 @@ package shimmer.web.controller;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -85,12 +86,13 @@ public class SimulationController implements Serializable {
 	
 	@PostConstruct
 	public void initialize() {
+		FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		// Create default properties
 		simulationProperties = new SimulationProperties();
 		metricProperties = new MetricProperties();
 		initialized = true;
 	}
-	
+
 	/**
 	 * Generates graph and JSON elements from properties
 	 */
@@ -112,8 +114,12 @@ public class SimulationController implements Serializable {
 	    			findbugsService.applyAnalysis(graph, simulationProperties.getDirectoryPath());
 	    		}
 	    		setLoadindProgress(60);
-	    		if (simulationProperties.isjGitRequired() && StringUtils.hasText(simulationProperties.getGitUrl())) {
-	    			jGitService.applyHistoricalAnalysis(graph, simulationProperties.getGitUrl());
+	    		if (simulationProperties.isjGitRequired()) {
+	    			if (StringUtils.hasText(simulationProperties.getGitUrl())) {
+	    				jGitService.cloneAndAnalyse(graph, simulationProperties.getGitUrl());
+	    			} else if (StringUtils.hasText(simulationProperties.getRepositoryPath())) {
+	    				jGitService.analyse(graph, simulationProperties.getRepositoryPath());
+	    			}
 	    		}
 	    		setLoadindProgress(80);
 	    		metricsService.calculateMetrics(graph);

@@ -45,17 +45,15 @@ public class JGitServiceImpl implements JGitService {
 	// IMPLEMENTATIONS
 
 	@Override
-	public void applyHistoricalAnalysis(Graph graph, String gitUrl) {
+	public void cloneAndAnalyse(Graph graph, String gitUrl) {
 		String repositoryPath = cloneRepository(gitUrl);
 		if (repositoryPath != null) {
-			analyse(repositoryPath, graph);
+			analyse(graph, repositoryPath);
 		}
 	}
 	
-	// ************************************************************************
-	// HELPER METHORS	
-	
-	private void analyse(String repositoryPath, Graph graph) {
+	@Override
+	public void analyse(Graph graph, String repositoryPath) {
 		File workTree = new File(repositoryPath);
 		Repository repository;
 		try {
@@ -81,6 +79,7 @@ public class JGitServiceImpl implements JGitService {
 			LogCommand logCommand = null;
 			try {
 				logCommand = git.log()
+						.setMaxCount(500)
 				        .add(git.getRepository().resolve(Constants.HEAD))
 				        .addPath(filePath);
 				
@@ -99,8 +98,9 @@ public class JGitServiceImpl implements JGitService {
 		
 		repository.close();
 	}
-
-
+	
+	// ************************************************************************
+	// HELPER METHORS	
 
 	private String cloneRepository(String gitUrl) {
 		String localRepositoryPath = fileProperties.getProperty("fileSystem.temp") + TEMPORARY_REPOSITORY;

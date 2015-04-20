@@ -14,6 +14,8 @@ public class SimulationProperties {
 	
 	private String directoryPath;
 	private String gitUrl;
+	private String repositoryPath;
+	
 	private Metric nodeSizeMetric;
 	private Metric nodeColorMetric;
 	private Metric nodeHeatMetric;
@@ -54,6 +56,7 @@ public class SimulationProperties {
 	public SimulationProperties() {
 		this.directoryPath = "C:\\Users\\9470m\\git\\shimmer\\target\\classes";
 		this.gitUrl = "https://github.com/filip-daca/shimmer.git";
+		this.repositoryPath = "";
 		this.nodeSizeMetric = Metric.CLASS_COUNT;
 		this.nodeColorMetric = Metric.TOTAL_BUGS;
 		this.nodeHeatMetric = Metric.DISTANCE_FROM_MAIN_SEQUENCE;
@@ -172,5 +175,13 @@ public class SimulationProperties {
 	
 	public void setjGitRequired(boolean jGitRequired) {
 		this.jGitRequired = jGitRequired;
+	}
+	
+	public String getRepositoryPath() {
+		return repositoryPath;
+	}
+	
+	public void setRepositoryPath(String repositoryPath) {
+		this.repositoryPath = repositoryPath;
 	}
 }

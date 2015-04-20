@@ -13,8 +13,8 @@
     		<h2>Shimmering constellations</h2>
     		<h:form id="basicSettingsForm">
     			<!-- Project path -->
-	    		<p:outputLabel value="Project *.class files path:" styleClass="wide-label" />
-	    		<p:inputText value="#{simulationController.simulationProperties.directoryPath}" size="100" />
+	    		<p:outputLabel value="Project *.class files path:" styleClass="wide-label" for="projectPath" />
+	    		<p:inputText id="projectPath" value="#{simulationController.simulationProperties.directoryPath}" size="100" />
 	    		
 	    		<!-- Analysis start button -->
 	    		<p:commandLink styleClass="btn btn-primary btn-sm margin-left" 
@@ -26,11 +26,15 @@
 						onstart="ShimmerWeb.show('calculatingStatus');">
 					<i class="glyphicon glyphicon-ok"></i>
 				</p:commandLink>
+					    		
+	    		<!-- Project repository path -->
+	    		<p:outputLabel value="Git repository path:" styleClass="wide-label" for="repositoryPath" />
+	    		<p:inputText id="repositoryPath" value="#{simulationController.simulationProperties.repositoryPath}" size="100" />
 				
 				<!-- Project git url -->
-	    		<p:outputLabel value="Project git clone url:" styleClass="wide-label" />
-	    		<p:inputText value="#{simulationController.simulationProperties.gitUrl}" size="100" />
-	    		
+	    		<p:outputLabel value="Project git clone url:" styleClass="wide-label" for="gitUrl" />
+	    		<p:inputText id="gitUrl" value="#{simulationController.simulationProperties.gitUrl}" size="100" />
+
 	    		<!-- Metric options -->
 	    		<div class="right">
     				<ui:include src="/resources/snippets/metricOptions.xhtml" />
@@ -50,7 +54,7 @@
 	    		
 	    		<!-- Load saved graph start button -->
 	    		<p:fileUpload fileUploadListener="#{simulationController.loadGraph}" mode="advanced" dragDropSupport="false"
-           			update="@([id$=dataScript],[id$=extraSettingsForm])" sizeLimit="1000000" label="Upload analysed project graph" allowTypes="/(\.|\/)(json)$/"
+           			update="@([id$=dataScript],[id$=extraSettingsForm])" sizeLimit="10000000" label="Upload analysed project graph" allowTypes="/(\.|\/)(json)$/"
            			onstart="ShimmerWeb.show('calculatingStatus');" global="true" auto="true" styleClass="margin-top" />
 				
 				<!-- Analysis progress bar -->
