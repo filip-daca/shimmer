@@ -7,6 +7,7 @@ var Shimmer = {
 	enableHeatmap: true,
 	heatmapUpdateInterval: 1000,
 	heatmapTimeout: 0,
+	heatmapStatus: "RUNNING",
 	
 	networkContainer: undefined,
 	data: undefined,
@@ -63,6 +64,13 @@ var Shimmer = {
 			Shimmer.nodesMap[node.id] = node;
 		}
 		Shimmer.network.setData(Shimmer.data);
+	},
+	
+	/**
+	 * Removes data from heatmap.
+	 */
+	clearHeatmap: function () {
+		Shimmer.heatmap.setData({min: 0, max: 0, data: []});
 	},
 	
 	/**
@@ -134,18 +142,32 @@ var Shimmer = {
 	 * Toggles heatmap freeze for efficient calculations.
 	 */
 	toggleHeatmapFreeze: function() {
-		Shimmer.enableHeatmap = !Shimmer.enableHeatmap;
 		$("#freeze").text("");
-		if (Shimmer.enableHeatmap) {
+		if (Shimmer.heatmapStatus == "RUNNING") {
+			$("#freeze").append("<i class='glyphicon glyphicon-stop'></i>");
+			$("#freeze").append(" Hide");
+			$("#freeze").removeClass("btn-info");
+			$("#freeze").addClass("btn-danger");
+			
+			Shimmer.enableHeatmap = false;
+			Shimmer.heatmapStatus = "FREEZE";
+		} else if (Shimmer.heatmapStatus == "FREEZE") {
+			$("#freeze").append("<i class='glyphicon glyphicon-play'></i>");
+			$("#freeze").append(" Unfreeze");
+			$("#freeze").removeClass("btn-danger");
+			$("#freeze").addClass("btn-warning");
+			
+			Shimmer.clearHeatmap();
+			Shimmer.heatmapStatus = "HIDDEN";
+		} else if (Shimmer.heatmapStatus == "HIDDEN") {
 			$("#freeze").append("<i class='glyphicon glyphicon-pause'></i>");
 			$("#freeze").append(" Freeze");
 			$("#freeze").removeClass("btn-warning");
 			$("#freeze").addClass("btn-info");
-		} else {
-			$("#freeze").append("<i class='glyphicon glyphicon-play'></i>");
-			$("#freeze").append(" Unfreeze");
-			$("#freeze").removeClass("btn-info");
-			$("#freeze").addClass("btn-warning");
+			
+			Shimmer.enableHeatmap = true;
+			Shimmer.heatmapStatus = "RUNNING";
+			Shimmer.updateHeatmap();
 		}
 	},
 	

@@ -24,7 +24,7 @@ public class MetricsHelper {
 	public static final int MAXIMAL_HEAT = 70;
 	
 	public static final String DEFAULT_COLOR = "lightgray";
-	public static final String LIBRARY_COLOR = "purple";
+	public static final String LIBRARY_COLOR = "lightgray";
 	public static final String DIRECTORY_COLOR = "blue";
 	
 	public static final String CONSTELLATION_COLOR = "transparent";

@@ -217,6 +217,7 @@ public class SimulationController implements Serializable {
 	}
 	
 	public synchronized int getLoadingProgress() {
+		setLoadindProgress(loadingProgress + 1); 
 		return loadingProgress;
 	}
 	
