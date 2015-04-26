@@ -70,7 +70,7 @@ public class JDependServiceImpl implements JDependService {
         }
         
         // Adding package tree edges
-    	graph.generateTreeEdges();
+    	graph.generateTreeEdges(graph.getNodes());
         
         // Adding dependencies edges
     	for (JavaPackage javaPackage : packageList) {

@@ -6,6 +6,7 @@ import java.util.Date;
 import shimmer.domain.collections.Edges;
 import shimmer.domain.collections.Nodes;
 import shimmer.domain.factory.EdgeFactory;
+import shimmer.domain.factory.NodeFactory;
 import shimmer.domain.helper.NamesHelper;
 
 /**
@@ -18,9 +19,6 @@ public class Graph {
 	// ************************************************************************
 	// FIELDS
 	
-	// Package structure - only used when package tree is needed
-	private PackageTreeNode packageRoot;
-	
 	// Collection of Nodes
 	private Nodes nodes;
 	
@@ -31,7 +29,6 @@ public class Graph {
 	// CONSTRUCTORS
 	
 	public Graph() {
-		this.packageRoot = new PackageTreeNode(null);
 		this.nodes = new Nodes();
 		this.edges = new Edges();
 	}
@@ -45,19 +42,44 @@ public class Graph {
 	 * @param analysedPackageNode - package node to add
 	 */
 	public void addAnalysedPackageNode(Node analysedPackageNode) {
-		
-		// Adding new node to data collections
 		nodes.add(analysedPackageNode);
-		
-		packageRoot.addJoint(nodes, analysedPackageNode, analysedPackageNode.getName());
 	}
 	
 	/**
 	 * Generates edges of a package tree.
+	 * Creates directory nodes.
 	 */
-	public void generateTreeEdges() {
-		for (PackageTreeNode packageTreeNode : packageRoot.getChildren().values()) {
-			packageTreeNode.generateEdges(edges);
+	public void generateTreeEdges(Collection<Node> nodesToCompute) {
+		Nodes directoryNodes = new Nodes();
+		
+		for (Node node : nodesToCompute) {
+			String parentName = NamesHelper.getParentName(node.getName());
+			
+			// Should it have a parent?
+			if (parentName != null) {
+				Node parentNode = nodes.get(parentName);
+				
+				// Try to get a previously added direcroty node
+				if (parentNode == null) {
+					parentNode = directoryNodes.get(parentName);
+				}
+				
+				// Need to create a new directory node
+				if (parentNode == null) {
+					parentNode = NodeFactory.newDirectoryNode(parentName);
+					directoryNodes.add(parentNode);
+				}
+				
+				edges.add(EdgeFactory.newPackageTreeEdge(parentNode, node));
+			}
+		}
+		
+		if (directoryNodes.count() > 0) {
+			// Add all created directory nodes
+			nodes.addAll(directoryNodes.getCollection());
+			
+			// Recursively compute directory parents
+			generateTreeEdges(directoryNodes.getCollection());
 		}
 	}
 	
@@ -79,7 +101,7 @@ public class Graph {
 	 * @param className - name of class
 	 */
 	public void addBug(Bug bug, String className) {
-		String packageName = className.substring(0, className.lastIndexOf('.'));
+		String packageName = NamesHelper.getParentName(className);
 		Node packageNode = nodes.get(packageName);
 		packageNode.getBugs().add(bug);
 	}

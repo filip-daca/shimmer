@@ -39,5 +39,13 @@ public class NamesHelper {
 		}
 		return packageNames;
 	}
+
+	public static String getParentName(String packageName) {
+		if (!packageName.contains(".")) {
+			return null;
+		} else {
+			return packageName.substring(0, packageName.lastIndexOf("."));
+		}
+	}
 	
 }

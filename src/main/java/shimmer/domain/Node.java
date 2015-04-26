@@ -21,7 +21,6 @@ public class Node {
 	// Basic fields
 	private int id;
 	private String name;
-	private List<Edge> edges;
 	private NodeType nodeType;
 	
 	// Package specific fields
@@ -53,7 +52,6 @@ public class Node {
 	// CONSTRUCTORS
 	
 	public Node() {
-		this.edges = new ArrayList<Edge>();
 		this.bugs = new ArrayList<Bug>();
 		this.authors = new HashSet<String>();
 		this.priorityBugs = new int[6];
@@ -114,10 +112,6 @@ public class Node {
 	
 	// ************************************************************************
 	// GETTERS / SETTERS
-	
-	public List<Edge> getEdges() {
-		return edges;
-	}
 	
 	public int getId() {
 		return id;

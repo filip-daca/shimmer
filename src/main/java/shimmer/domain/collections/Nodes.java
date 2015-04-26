@@ -35,5 +35,11 @@ public class Nodes {
 	public Node get(String name) {
 		return nodesByName.get(name);
 	}
+
+	public void addAll(Collection<Node> collection) {
+		for (Node node : collection) {
+			add(node);
+		}
+	}
 	
 }
