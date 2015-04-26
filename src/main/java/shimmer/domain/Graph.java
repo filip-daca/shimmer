@@ -21,10 +21,10 @@ public class Graph {
 	// Package structure - only used when package tree is needed
 	private PackageTreeNode packageRoot;
 	
-	// Map with nodes (id -> node)
+	// Collection of Nodes
 	private Nodes nodes;
 	
-	// Set with edges
+	// Collection of Edges
 	private Edges edges;
 	
 	// ************************************************************************
