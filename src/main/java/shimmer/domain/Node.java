@@ -22,6 +22,7 @@ public class Node {
 	private int id;
 	private String name;
 	private NodeType nodeType;
+	private boolean directoryToLibrary;
 	
 	// Package specific fields
 	private int totalSize;
@@ -55,6 +56,7 @@ public class Node {
 		this.bugs = new ArrayList<Bug>();
 		this.authors = new HashSet<String>();
 		this.priorityBugs = new int[6];
+		this.directoryToLibrary = false;
 	}
 	
 	public Node(String name) {
@@ -65,6 +67,12 @@ public class Node {
 	public Node(String name, NodeType type) {
 		this(name);
 		this.nodeType = type;
+	}
+	
+	public Node(String name, NodeType type, boolean directoryToLibrary) {
+		this(name);
+		this.nodeType = type;
+		this.directoryToLibrary = directoryToLibrary;
 	}
 	
 	public Node(String name, int classCount, int abstractClassesCount,
@@ -227,5 +235,9 @@ public class Node {
 	
 	public Set<String> getAuthors() {
 		return authors;
+	}
+	
+	public boolean isDirectoryToLibrary() {
+		return directoryToLibrary;
 	}
 }

@@ -87,7 +87,8 @@ public class GraphServiceImpl implements GraphService {
 			JSONArray nodesArrayJSON = new JSONArray();
 			for (Node node : graph.getNodes()) {
 				// Skipping library packages
-				if (node.isLibraryPackage() && !simulationProperties.isLibraryPackages()) {
+				if ((node.isLibraryPackage() || node.isDirectoryToLibrary()) 
+						&& !simulationProperties.isLibraryPackages()) {
 					continue;
 				}
 				

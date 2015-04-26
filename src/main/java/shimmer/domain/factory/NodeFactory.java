@@ -20,10 +20,16 @@ public class NodeFactory {
 	}
 	
 	public static Node newDirectoryNode(String name) {
-		return new Node(name, NodeType.DIRECTORY);
+		return new Node(name, NodeType.DIRECTORY, false);
+	}
+	
+	public static Node newDirectoryToLibraryNode(String name) {
+		return new Node(name, NodeType.DIRECTORY, true);
 	}
 
 	public static Node newLibraryPackageNode(String name, int efferentsCount, int afferentsCount) {
 		return new Node(name, efferentsCount, afferentsCount);
 	}
+
+	
 }

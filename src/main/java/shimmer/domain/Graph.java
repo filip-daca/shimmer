@@ -66,7 +66,11 @@ public class Graph {
 				
 				// Need to create a new directory node
 				if (parentNode == null) {
-					parentNode = NodeFactory.newDirectoryNode(parentName);
+					if (node.isLibraryPackage() || node.isDirectoryToLibrary()) {
+						parentNode = NodeFactory.newDirectoryToLibraryNode(parentName);
+					} else {
+						parentNode = NodeFactory.newDirectoryNode(parentName);
+					}
 					directoryNodes.add(parentNode);
 				}
 				
