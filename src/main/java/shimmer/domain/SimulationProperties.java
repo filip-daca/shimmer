@@ -48,6 +48,8 @@ public class SimulationProperties {
 	private boolean jGitRequired;
 	private boolean findbugsRequired;
 	
+	private boolean findbugsHighPriority;
+	
 	private boolean constellation;
 	
 	// ************************************************************************
@@ -68,6 +70,7 @@ public class SimulationProperties {
 		this.dependenciesWeighted = true;
 		this.findbugsRequired = true;
 		this.jGitRequired = true;
+		this.findbugsHighPriority = true;
 	}
 	
 	// ************************************************************************
@@ -183,5 +186,13 @@ public class SimulationProperties {
 	
 	public void setRepositoryPath(String repositoryPath) {
 		this.repositoryPath = repositoryPath;
+	}
+	
+	public boolean isFindbugsHighPriority() {
+		return findbugsHighPriority;
+	}
+	
+	public void setFindbugsHighPriority(boolean findbugsHighPriority) {
+		this.findbugsHighPriority = findbugsHighPriority;
 	}
 }

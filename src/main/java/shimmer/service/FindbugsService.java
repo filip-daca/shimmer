@@ -14,8 +14,9 @@ public interface FindbugsService {
 	 * 
 	 * @param findbugsReportFilename - file name of Findbugs report
 	 * @param directoryPath - path to project
+	 * @param highPriority - run high priority analysis?
 	 * @return project graph
 	 */
-	void applyAnalysis(Graph graph, String directoryPath);
+	void applyAnalysis(Graph graph, String directoryPath, boolean highPriority);
 
 }

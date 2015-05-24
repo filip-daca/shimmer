@@ -46,9 +46,9 @@ public class FindbugsServiceImpl implements FindbugsService {
 	// IMPLEMENTATIONS
 	
 	@Override
-	public void applyAnalysis(Graph graph, String directoryPath) {
+	public void applyAnalysis(Graph graph, String directoryPath, boolean highPriority) {
 		String analysisFilePath = fileProperties.getProperty("fileSystem.temp") + TEMPORARY_ANALYSIS_FILE;
-		runAnalysis(analysisFilePath, directoryPath);
+		runAnalysis(analysisFilePath, directoryPath, highPriority);
 		
 		File analysisFile = new File(analysisFilePath);
 		if (analysisFile.exists()) {
@@ -137,9 +137,14 @@ public class FindbugsServiceImpl implements FindbugsService {
 	 * @param analysisFilePath - output file
 	 * @param projectPath - input files
 	 */
-	private void runAnalysis(String analysisFilePath, String projectPath) {
+	private void runAnalysis(String analysisFilePath, String projectPath, boolean highPriority) {
 		StringBuilder command = new StringBuilder();
-		command.append("-effort:min -relaxed -nested:false -xml ");
+		if (highPriority) {
+			command.append("-effort:max ");
+		} else {
+			command.append("-effort:min -relaxed ");
+		}
+		command.append("-nested:false -xml ");
 		command.append("-output ");
 		command.append(analysisFilePath);
 		command.append(" ");

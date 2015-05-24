@@ -48,6 +48,8 @@ public class Graph {
 	/**
 	 * Generates edges of a package tree.
 	 * Creates directory nodes.
+	 * 
+	 * @param nodesToCompute - collection of nodes to create edges to
 	 */
 	public void generateTreeEdges(Collection<Node> nodesToCompute) {
 		Nodes directoryNodes = new Nodes();

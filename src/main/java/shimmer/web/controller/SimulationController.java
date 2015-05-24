@@ -111,7 +111,8 @@ public class SimulationController implements Serializable {
 	    		graph = jDependService.generateGraph(simulationProperties.getDirectoryPath());
 	    		setLoadindProgress(30);
 	    		if (simulationProperties.isFindbugsRequired()) {
-	    			findbugsService.applyAnalysis(graph, simulationProperties.getDirectoryPath());
+	    			findbugsService.applyAnalysis(graph, simulationProperties.getDirectoryPath(),
+	    					simulationProperties.isFindbugsHighPriority());
 	    		}
 	    		setLoadindProgress(60);
 	    		if (simulationProperties.isjGitRequired()) {
