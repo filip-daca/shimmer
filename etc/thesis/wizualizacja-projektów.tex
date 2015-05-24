@@ -106,7 +106,15 @@ W pracach opublikowanych na konferencji VISSOFT 2011 nie znalaz³em ¿adnego artyk
 
 \section{Graf}
 
+W swojej pracy ......... proponuj¹ standardow¹ metodê wizualizacji kodu w postaci grafu. 
+
 %TODO
+
+\subsection{Podsumowanie grafu}
+
+Metoda zaproponowana przez autorów jest prosta w interpretacji i zrozumia³a dla u¿ytkownika. Za pomoc¹ grafu mo¿na w ³atwy sposób wizualizowaæ poszczególne cechy projektu nanosz¹c kolory na wybrane wierzcho³ki / krawêdzie.
+
+Przyk³ady zaprezentowane przez autorów by³yby bardziej czytelne, gdyby wyraŸnie zaznaczyæ wierzcho³ki grafu.
 
 \section{Konstelacja}
 
@@ -185,7 +193,7 @@ Wybrane elementy metod wizualizacji postanowi³em zaimplementowaæ w narzêdziu ope
 
 W tym rozdziale opiszê budowê oraz dzia³anie aplikacji Shimmering Constellations, która ³¹czy techniki wizualizacji grafowej i konstelacyjnej z wykorzystaniem mapy termicznej.
 
-\section{Architektura aplikacji}
+\section{Architektura aplikacji}\label{r:architektura}
 \subsection{Zr¹b i technologia}
 
 Technologia, która wyda³a mi siê odpowiednia dla mojego rowi¹zania to Java EE. Argumenty, które przyczyni³y siê do podjêcia tej decyzji to dostêpnoœæ szerokiej gamy bibliotek analizy kodu Ÿród³oweo, rozbudowane narzêdzia wizualizacyjne dzia³aj¹ce w œrodowisku przegl¹darki internetowej (vis.js), oraz uniwersalnoœæ i skalowalnoœæ architektury. Stworzone przeze mnie narzêdzie ma charakter aplikacji webowej opartej na frameworku Spring, wykorzystuj¹cej biblioteki JSF PrimeFaces. Œrodowiskiem uruchomieniowym aplikacji jest serwer JBoss 7, ale nie jest to wymogiem koniecznym - przy niewielkim nak³adzie pracy mo¿liwe jest uruchomienie Shimmer na dowolnym œrodowisku aplikacji webowych JEE. Przy u¿yciu narzêdzia automatyzuj¹cego Maven, mo¿liwe jest proste dodawanie zewnêtrznych bibliotek do projektu.
@@ -225,7 +233,7 @@ Biblioteki JGit równie¿ zosta³y dodane do projektu jako zale¿noœæ projektowa pro
 
 Dziêki informacjom pozyzkiwanym przez JGit, Shimmer potrafi wyliczyæ podstawowe metryki historyczne - wskazaæ ostatnio modyfikowane elementy projektu, czêsto zmieniane pakiety, oraz podaæ liczbê ich autorów.
 
-\section{Model}
+\section{Model}\label{r:model}
 \subsection{Model logiczny}
 
 Przyjêty przeze mnie model analizowanego projektu ma strukturê grafu nieskierowanego, w którym wyró¿niamy kilka rodzajów wierzcho³ków oraz krawêdzi
@@ -246,7 +254,7 @@ Przyjêty przeze mnie model analizowanego projektu ma strukturê grafu nieskierowa
 \item Krawêdzie zale¿noœci miêdzy pakietami - Dependency edges - odzwierciedlaj¹ logiczne powi¹zania ³¹cz¹ce pakiety. Tego typu krawêdziami powi¹zane s¹ pakiety, których klasy korzystaj¹ z siebie nawzajem. Przyk³adowo, jeœli jakaœ klasa pakietu “shimmer.service” polega na innej klasie z pakietu “shimmer.service.impl”, pakiety po³¹czone bêd¹ tak¹ krawêdzi¹. Tego typu krawêdzie powinny równie¿ przechowywaæ wartoœæ mierz¹c¹ si³ê reprezentowanej zale¿noœci.
 \end{itemize}
 
-\subsection{Implementacja}
+\subsection{Implementacja}\label{r:implementacja}
 
 Implementuj¹c opisany w tym rozdziale model grafu stara³em siê zadbaæ o zachowanie dobrych praktyk projektowych oraz wydajny dostêp do poszczególnych wierzcho³ków. Ze wzglêdu na krokowy charakter analizy w Shimmer (ka¿dy modu³ wykonuje swoj¹ analizê jeden po drugim), dostêp do poszczególnych wierzcho³ków oraz krawêdzi powinien odbywaæ siê w czasie sta³ym. 
 
@@ -265,11 +273,11 @@ Do konstruowania poszczególnych wierzcho³ków i krawêdzi wykorzysta³em wzorzec pr
 
 Taki sposób implementacji modelu jest ³atwo rozszerzalny i pozwala na proste rozbudowanie funkcjonalnoœci Shimmer w przysz³oœci, np. zwiêkszenie granularnoœci przez dodanie wierzcho³ków klasowych do modelu.
 
-\section{Przebieg analizy}
+\section{Przebieg analizy}\label{r:analiza}
 
 Analiza projektu rozpoczyna siê w momencie, gdy u¿ytkownik zdefiniuje œcie¿kê prowadz¹c¹ do plików skompilowanych projektu i u¿yje przycisku potwierdzenia. Przed uruchomieniem wszystkich mechanizmów, u¿ytkownik mo¿e równie¿ podaæ adres zdalnego repozytorium git lub œcie¿kê do sklonowanego repozytorium na dysku. 
 
-\subsection{Analiza JDepend - tworzenie struktury programu}
+\subsection{Analiza JDepend - tworzenie struktury programu}\label{r:jdepend}
 
 Pierwszym krokiem analizy Shimmer jest uruchomienie analizatora JDepend na wskazanych plikach Ÿród³owych, b¹dŸ skompresowanych archiwach jar (analiza przez serwis JDepend mo¿e odbywaæ siê na obu rodzajach plików). Analizator JDepend bada klasy analizowanego projektu i wyniki swojego dzia³ania przedstawia w postaci posortowanej kolekcji danych dla poszczególnych pakietów. Obiekt przechowuj¹cy wyniki analizy dla konkretnego pakietu, posiada istotne cechy takie jak: nazwa pakietu, liczba klas konkretnych, liczba klas abstrakcyjnych, zbiór pakietów zale¿nych (afferent couplings oraz efferent couplings).
 
@@ -440,7 +448,7 @@ Na tym etapie brane pod uwagê s¹ równie¿ ustawienia kalibracyjne wizualizacji. P
 
 Obiekty powsta³e w wyniku serializacji (krawêdzie i wierzcho³ki w postaci JSON) stanowi¹ dane wejœciowymi dla narzêdzi wizualizacyjnych, ale zawieraj¹ równie¿ dodatkowe metadane, z których korzysta widok aplikacji Shimmer: informacje o wartoœciach wszystkich metryk, identyfikatory wykrytych usterek, kategorie wierzcho³ków.
 
-\section{Wizualizacja}
+\section{Wizualizacja}\label{r:wizualizacja}
 \subsection{Podstawa wizualizacji - graf}
 
 Podstaw¹ do wizualizacji w Shimmering Constellation jest wizualizacja grafowa. Biblioteka, która odpowiada za wizualizowanie grafu to VisJs. Narzêdzie pozwala na dynamiczn¹ wizualizacjê grafu w oparciu o model dystrybucji cz¹steczek Barnes-Hut.
@@ -657,9 +665,17 @@ TODO
 % ROZDZIA£ PODSUOWANIE
 \chapter{Podsumowanie pracy}\label{r:podsumowanie}
 
-% todo
-TODO
+W pracy opisano narzêdzie do wizualizacji projektów informatycznych, którego kod udostêpniono na zasadach Open Source. Program Shimmering Constelletion ³¹czy w sobie techniki wizualizacji konstelacyjnej oraz grafowej ze zintegrowan¹ map¹ termiczn¹. Wizualizacja kodu w programie pozwala nie tylko w sposób czytelny zobrazowaæ dany projekt, ale uwzglêdnia te¿ zachodz¹ce w nim zmiany i umo¿liwia analizê jakoœci. Skutecznoœæ wykorzystanych metod w poszczególnych obszarach zastosowañ potwierdzi³y przeprowadzone badania preferencji u¿ytkowników.
 
+\section{Perspektywy dalszego rozwoju oprogramowania}
+
+Oprogramowanie Shimmering Constellations powsta³o z myœl¹ o mo¿liwoœci przysz³ego rozbudowywania jego funkcjonalnoœci. Architektura i implementacja (patrz rozdzia³ \ref{r:architektura} oraz \ref{r:implementacja}) aplikacji by³y tworzone zgodnie ze sztuk¹ prgamatycznego programowania, aby umo¿liwiæ dalszy rozwój systemu i zapewniæ jego wysok¹ skalowalnoœæ. Obecnie przewidziano nastêpuj¹ce mo¿liwoœci rozwoju narzêdzia:
+
+\paragraph{Zwiêkszenie granularnoœci:} Korzystnym krokiem w rozwoju systemu by³oby zwiêkszenie granularnoœci wizualizacji. Obecnie kod obrazowany przez Shimmer przedstawiany jest na poziomie pakietów i na tym stopniu liczona jest wiêkszoœæ dostarczanych metryk. Rozbudowanie aplikacji o analizê na poziomie poszczególnych klas wymaga³oby jedynie niewielkich zmian w analizatorze JDepend (rozdzia³ \ref{r:jdepend}) i modelu projektu (rozdzia³ \ref{r:model}). Biblioteka wizualizacyjna visJs pozwala na automatyczn¹ obs³ugê klastrownia wierzcho³ków - dziêki temu wierzcho³ki reprezentuj¹ce klasy mog³yby ³¹czyæ siê w wierzcho³ki klastrowe reprezentuj¹ce poszczególne pakiety (stan obecny). Takie rozbudowanie zwiêkszy³oby dok³adnoœæ narzêdzie Shimmer.
+
+\paragraph{Uruchomienie aplikacji www:} Dobrym wykorzystaniem narzêdzia Shimmer mog³oby by byæ uruchomienie go w postaci us³ugi online na serwerach uczelni w celach naukowych. Uczestnicy kursu In¿ynieria Oprogramowania mogliby przy u¿yciu opisanego programu analizowaæ wybrane projekty informatyczne, a wyniki analiz zbierane w bazie danych pozwoli³yby badaæ studentom i pracownikom instytutu projekty Open Source. Taka modyfikacja, dziêki architekturze opartej na aplikacji www (patrz rozdzia³ \ref{r:architektura}), wymaga³aby jedynie integracji z wybran¹ baz¹ danych. 
+
+\paragraph{Dodanie nowych metryk i modu³ów:} Oczywistym rozszerzeniem dla aplikacji Shimmer jest implementacja nowych metryk i modu³ów analizuj¹cych kod projektu. Chc¹c wzbogaciæ program o mo¿liwoœæ wizualizacji dodatkowej metryki, nale¿y dodaæ odpowiedni analizator do g³ównego procesu programu (rozdzia³ \ref{r:analiza}), rozbudowaæ model o nowe w³aœciwoœci (rozdzia³ \ref{r:model}) i zadbaæ o odpowiednie obrazowanie nowej cechy (rozdzia³ \ref{r:wizualizacja}). 
 
 
 \chapter{Teoria fetorów $\sigma$-$\rho$}\label{r:fifak}
