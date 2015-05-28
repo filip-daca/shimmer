@@ -507,21 +507,13 @@ Obiekty powsta³e w wyniku serializacji (krawêdzie i wierzcho³ki w postaci JSON) 
 \section{Wizualizacja}\label{r:wizualizacja}
 \subsection{Podstawa wizualizacji - graf}
 
-%TODO
-\paragraph{TODO:}
-\textit{Zacytujê / dodam referencjê odnoœnie VisJS}
-
-Podstaw¹ do wizualizacji w Shimmering Constellation jest wizualizacja grafowa. Biblioteka, która odpowiada za wizualizowanie grafu to VisJs. Narzêdzie pozwala na dynamiczn¹ wizualizacjê grafu w oparciu o model dystrybucji cz¹steczek Barnes-Hut.
+Podstaw¹ do wizualizacji w Shimmering Constellation jest wizualizacja grafowa. Biblioteka, która odpowiada za wizualizowanie grafu to Vis.js \cite{bib_visjs}. Narzêdzie pozwala na dynamiczn¹ wizualizacjê grafu w oparciu o model dystrybucji cz¹steczek Barnes-Hut.
 
 VisJs pobiera wynik analizy w postaci list wierzcho³ków i krawêdzi w formacie JSON i wyœwietla graf projektu z odpowiednimi parametrami. Prezentowana wizualizacja jest równowa¿ona w czasie rzeczywistym i pozwala u¿ytkownikowi na dowolne manipulowanie grafem - skalowanie, przesuwanie, przemieszczanie wierzcho³ków.
 
 \subsection{Wizualizacja zaawansowana - mapa termiczna}
 
-%TODO
-\paragraph{TODO:}
-\textit{Zacytujê / dodam referencjê odnoœnie HeatmapsJS}
-
-Dope³niaj¹cym elementem wizualizacji jest mapa termiczna, która wyœwietlana jest w tle wizualizowanego grafu. Generowaniem mapy termicznej zajmuje siê biblioteka Heatmap.js. Mapa termiczna oddaje temperaturê poszczególnych wierzcho³ków.
+Dope³niaj¹cym elementem wizualizacji jest mapa termiczna, która wyœwietlana jest w tle wizualizowanego grafu. Generowaniem mapy termicznej zajmuje siê biblioteka heatmap.js \cite{bib_heatmapsjs}. Mapa termiczna oddaje temperaturê poszczególnych wierzcho³ków.
 
 Ze wzglêdu na dynamiczny charakter prezentacji grafu, mapa termiczna jest odœwie¿ana z ustalon¹ czêstotliwoœci¹ za ka¿dym razem, gdy graf zmienia swoje po³o¿enie, jest równowa¿ony, lub skalowany. Dziêki temu mapa termiczna adaptuje zmiany, którym ulega graf i jest w stanie dostosowaæ siê do jego dynamicznego charakteru.
 
@@ -776,7 +768,7 @@ Za³¹czona paczka zawiera kod programu Shimmering Constellations napisany w jêzyk
 \begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Bibliografia}
 
-\bibitem[Erd2011]{bib_graph} Erdemir, U.; Tekin, U.; Buzluca, F., \textit{E-Quality: A graph based object oriented software quality visualization tool} Visualizing Software for Understanding and Analysis (VISSOFT), 2011 6th IEEE International Workshop on , vol., no., pp.1,8, 29-30 Sept. 2011
+\bibitem[Erd11]{bib_graph} Erdemir, U.; Tekin, U.; Buzluca, F., \textit{E-Quality: A graph based object oriented software quality visualization tool} Visualizing Software for Understanding and Analysis (VISSOFT), 2011 6th IEEE International Workshop on , vol., no., pp.1,8, 29-30 Sept. 2011
 
 \bibitem[Deng11]{bib_const} Fang Deng; DiGiuseppe, N.; Jones, J.A., \textit{Constellation visualization: Augmenting program dependence with dynamic information}, Visualizing Software for Understanding and Analysis (VISSOFT), 2011 6th IEEE International Workshop on , vol., no., pp.1,8, 29-30 Sept. 2011
 
@@ -791,9 +783,9 @@ Conference on Software Engineering, ICSE ’02, pages 467–477, New York, NY, USA, 
 
 \bibitem[???3]{bib_findbugs} Tutaj muszê podaæ pracê o FindBugs
 
-\bibitem[???4]{bib_findbugs} Tutaj muszê podaæ pracê / adres URL dokumentacji (???) o VisJs
+\bibitem[Jon10]{bib_visjs} J. Jong; A. Mulder, \textit{Vis.js}, Almende B.V. 2010 - 2015, \url{http://visjs.org/} 
 
-\bibitem[???5]{bib_findbugs} Tutaj muszê podaæ pracê / adres URL dokumentacji (???) o HeatmapsJS
+\bibitem[Wie14]{bib_heatmapsjs} P. Wied, \textit{heatmap.js}, 2014 - 2015, \url{http://www.patrick-wied.at/static/heatmapjs/}
 
 \end{thebibliography}
 
