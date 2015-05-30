@@ -89,7 +89,7 @@ Przegl¹daj¹c stosowane metody wizualizacji kodu stara³em siê zwracaæ uwagê na tr
 
 W pracach opublikowanych na konferencji VISSOFT nie znalaz³em ¿adnego artyku³u, który uwzglêdnia³ wszystkie trzy z wy¿ej wymienionych aspektów, jednak uda³o mi siê znaleŸæ kilka prac, które w ciekawy sposób poruszaj¹ czêœæ z nich, a pomys³y z tych prac zebrane w jedn¹ ca³oœæ mog³yby z³o¿yæ siê na przydatne narzêdzie wspieraj¹ce sztukê in¿ynierii oprogramowania.
 
-\section{Graf}
+\section{Graf}\label{s:motivation-graph}
 
 W swojej pracy \cite{b:graph} U. Erdemir, U. Tekin i F. Buzluca proponuj¹ standardow¹ metodê wizualizacji kodu w postaci grafu. Stworzone przez nich narzêdzie wydobywa metryki jakoœciowe z kodu Ÿród³owego analizowanego oprogramowania i 
 
@@ -114,7 +114,7 @@ Metoda zaproponowana przez autorów jest prosta w interpretacji i zrozumia³a dla 
 \textit{Wspomnê ¿e praca nie porusza wszystkich trzech interesuj¹cych mnie aspektów - brak analizy zmian projektu}
 % Przyk³ady zaprezentowane przez autorów by³yby bardziej czytelne, gdyby wyraŸnie zaznaczyæ wierzcho³ki grafu.
 
-\section{Konstelacja}
+\section{Konstelacja}\label{s:motivation-constellation}
 
 Ciekaw¹ metod¹ zaproponowan¹ przez F. Deng, N. DiGgiuseppe i J. A. Jones \cite{b:constellation} jest konstelacja. Ten sposób wizualizacji zosta³ opracowany w celu ³atwego wykrywania konkretnych fragmentów kodu oraz wizualnej separacji elementów nieinteresuj¹cych od istotnych (przyk³adowo klas wadliwych od prawid³owych).
 
@@ -151,7 +151,7 @@ Autorzy pracy przeprowadzili badania, które potwierdzi³y skutecznoœæ metody kons
 
 Wizualizacja konstelacyjna jest metod¹, która dobrze nadaje siê wielu zastosowañ in¿ynierii oprogramowania i mo¿na j¹ przeprowadziæ uzupe³niaj¹c graf wizualizowanego projektu o odpowiednie metadane. Skutecznoœæ metody potwierdzono badaniami, w których wykazano, ¿e programiœci potrzebuj¹ mniej czasu na identyfikacjê usterek w kodzie, kiedy pos³uguj¹ siê konstelacj¹, w porównaniu do mapy dokumentu.
 
-\section{Mapa termiczna}
+\section{Mapa termiczna}\label{s:motivation-heatmap}
 
 Praca autorstwa O. Benomar, H. Sahraoui, P. Poulin \cite{b:heatmaps} przedstawia kilka interesuj¹cych zastosowañ mapy termicznej w wizualizacji projektów. W swojej pracy autorzy opisuj¹ metodê wizualizacji kodu w postaci miast i budynków, a wykorzystana w tle mapa termiczna s³u¿y do oznaczania dynamiki projektu. Istotnym zamys³em autorów by³o dok³adne opisanie rozwi¹zañ graficznych u¿ytych przy integracji mapy z g³ówn¹ wizualizacj¹.
 
@@ -325,6 +325,21 @@ Zaproponowany w tym rozdziale model oprogramowania pozwala wyznaczyæ listê krokó
 \item Przygotowanie modelu do wizualizacji - zmapowanie elementów modelu i ich atrybutów na konkretne obiekty graficzne wed³ug wybranej metody wizualizacji.
 \end{enumerate}
 
+\section{Wizualizacja modelu - realizacja za³o¿eñ}
+
+Przy pomocy zaproponowanego modelu opartego na grafie, jesteœmy w stanie w bezpoœredni sposób przeprowadziæ wizualizacjê kodu projektu w postaci grafowej [dzia³ \ref{s:motivation-graph}]. Poprzez odpowiedni¹ modyfikacjê œrodków wyrazu takich jak rozmiar, kolor, kszta³t wierzcho³ków oraz d³ugoœæ krawêdzi mo¿emy wyraziæ wartoœci wybranych metryk. Dziêki temu wzbogacimy wizualizacjê o informacje jakoœciowe. Dobór metryk i manipulacja elementami graficznymi pozwala nam na rozszerzenie wizualizacji grafowej i utworzenie na jej podstawie wizualizacji konstelacyjnej [dzia³ \ref{s:motivation-constellation}. Informacje historyczne o danym projekcie s¹ podstaw¹ do wykorzystania mapy termicznej [dzia³ \ref{s:motivation-heatmap}].
+
+\subsection{Œrodki wyrazu}
+Wybrane metody wizualizacji pozwalaj¹ nam na manipulacjê nastêpuj¹cymi atrybutami:
+
+\begin{description}
+\item[Rozmiar wierzcho³ka (iloœæ)] - pos³uguj¹c siê tym parametrem, mo¿emy w naturalny sposób odzwierciedlaæ iloœciow¹ charakterystykê kodu. U¿ytkownik jest w stanie ³atwo skojarzyæ wielkoœæ wierzcho³ka z liczb¹ klas w pakiecie lub ca³kowit¹ liczb¹ linii kodu.
+\item[Kolor wierzcho³ka (jakoœæ)] - pozwala zobrazowaæ jakoœæ wizualizowanego kodu, zw³aszcza zestawiaj¹c kolory ze skali od czerwonego do zielonego. Osoba ogl¹daj¹ca wizualizacjê mo¿e rozpoznaæ czerwone wierzcho³ki jako pakiety niskiej jakoœci, a zielone wysokiej. Oprócz jakoœci, kolor mo¿e równie¿ oddawaæ charakterystykê badanego elementu. Przyk³adowo wierzcho³ki pakietów bibliotecznych mog¹ byæ wyró¿nione od pozosta³ych przez sta³y kolor szary, a wierzcho³ki katalogowe kolor niebieski.
+\item[Temperatura wierzcho³ka (aktywnoœæ)] - stanowi pomocniczy sposób wyrazu i mo¿e s³u¿yæ do obrazowania cech szczególnych kodu, które podlegaj¹ stopniowaniu. Dobrym zastosowaniem tego parametru jest zobrazowanie staystyk historycznych danego pakietu - u¿ytkownik mo¿e rozpoznaæ wierzcho³ki gor¹ce jako “aktywne”, a ch³odne jako stabilne, niezmienne. 
+\item[D³ugoœæ krawêdzi (zale¿noœæ)] - pozwala w ³atwy sposób zobrazowaæ si³ê powi¹zania miêdzy poszczególnymi elementami. Wierzcho³ki znajduj¹ce siê blisko siebie w znormalizowanym grafie, s¹ od siebie silnie zale¿ne, a wierzcho³ki oddalone nie maj¹ mocnych powi¹zañ.
+\end{description}
+
+
 % ------------------------------------------------------------------------------
 % ROZDZIA£ APLIKACJA
 % ------------------------------------------------------------------------------
@@ -432,32 +447,34 @@ Parametry przekazywane analizatorowi Findbugs ró¿ni¹ siê w zale¿noœci od ustawie
 \item \texttt{xml} - tworzy plik wynikowy w postaci tekstu xml - ten parametr równie¿ pozostaje sta³y
 \end{itemize}
 
-Generowany przez Findbugs plik xml jest tworzony w katalogu tymczasowym, nastêpnie analizowany przez parser DOM. Report zawiera miêdzy innymi elementy reprezentuj¹ce wykryte usterki (element \texttt{BugInstance}) oraz statystyki konkretnych pakietów (\texttt{PackageStats}) i klas (\texttt{ClassStats}). Shimmering Constellations parsuj¹c raport tworzy obiekty b³êdów i dodaje je do odpowiednich pakietów z grafu. Ka¿dy b³¹d posiada pe³n¹ nazwê klasy, w której zosta³ wykryty i na jej podstawie odnajdywany jest pakiet w grafie projektu. Ponadto obiekt reprezentuj¹cy b³¹d posiada atrybuty nadane przez Findbugs:
+Generowany przez Findbugs plik xml jest tworzony w katalogu tymczasowym, nastêpnie analizowany przez parser DOM. Report zawiera miêdzy innymi elementy reprezentuj¹ce wykryte usterki (element \texttt{BugInstance}). Shimmering Constellations parsuj¹c raport tworzy obiekty b³êdów i dodaje je do odpowiednich pakietów z grafu. Obiekt reprezentuj¹cy b³¹d posiada atrybuty nadane przez Findbugs, zgodne z przyjêtym modelem potencjalnej usterki [dzia³ \ref{s:model-bugs}]:
 
 \begin{itemize}
-\item kategoria b³êdu - etykieta kategoryzuj¹ca rozpoznan¹ usterkê np. \textit{Bad practice}
-\item typ b³êdu - identyfikator okreœlaj¹cy konkretny typ b³êdu rozpoznawanego przez Findbugs - na jego podstawie mo¿liwe jest pozyskanie dok³adniejszego opisu usterki w katalogu autorów Findbugs
-\item ranga b³êdu - wartoœæ w przedziale 1-20 stwierdza poziom zagro¿enia usterki, gdzie 1 oznacza b³êdy najpowa¿niejsze, a 20 najdrobniejsze usterki
-\item priorytet - ustalony przez Findbugs na podstawie rangi dla ³atwiejszego grupowania b³êdów: 
+\item \textbf{Nazwa klasy} - nazwa klasy, w której znaleziono potencjaln¹ usterkê - na jej podstawie Shimmering Constellations przypisuje usterki do pakietów
+\item \textbf{Kategoria b³êdu} - etykieta kategoryzuj¹ca rozpoznan¹ usterkê np. \textit{Bad practice}
+\item \textbf{Typ b³êdu} - identyfikator okreœlaj¹cy konkretny typ b³êdu rozpoznawanego przez Findbugs - na jego podstawie mo¿liwe jest pozyskanie dok³adniejszego opisu usterki w katalogu autorów Findbugs i naprawienie usterki
+\item \textbf{Ranga b³êdu} - wartoœæ w przedziale 1-20 stwierdza poziom zagro¿enia usterki, gdzie 1 oznacza b³êdy najpowa¿niejsze, a 20 najdrobniejsze usterki
+\item \textbf{Priorytet b³êdu} - ustalony przez Findbugs na podstawie rangi dla ³atwiejszego grupowania b³êdów: 
 	\begin{itemize}
 	\item scariest (ranga 1-4), 
 	\item scary (ranga 5-9), 
 	\item troubling (ranga 10-14), 
 	\item of concern (ranga 15-20)
 	\end{itemize}
-\item pewnoœæ (confidence) - wartoœæ w przedziale 1-5 stwierdza stopieñ przekonania o poprawnoœci raportu, gdzie 1 oznacza b³¹d, którego pewnoœæ jest najmniejsza
+\item \textbf{Pewnoœæ} - wartoœæ w przedziale 1-5 stwierdza stopieñ przekonania o poprawnoœci raportu, gdzie 1 oznacza b³¹d, którego pewnoœæ jest najmniejsza
 \end{itemize}
 
-%TODO napisaæ, ¿e ka¿dy pakiet ma klasy, ka¿da klasa ma swój rozmiar. Ja sumujê rozmiar i znajdujê najwiêksz¹ klasê w pakiecie.
-Dodatkowe informacje, które Findbugs umieszcza w elementach statystyk pakietowych to przede wszystkim ³¹czna liczba usterek ka¿dego z 4 priorytetów oraz wartoœci metryk dotycz¹cych rozmiaru klas w pakiecie. Aby policzyæ rozmiar danej klasy, zliczane s¹ istotne elementy wp³ywaj¹ce na jej rozmiar - pola, metody, linie instrukcji. Pomijane s¹ fragmenty, które nie wp³ywaj¹ na si³ê wyrazu, np. komentarze i bia³e znaki (NCSS - \textit{Non Commenting Source Statements}). Suma rozmiarów zliczana jest podczas przetwarzania wyników analizy dla klas wewn¹trz pakietów (\texttt{ClassStats}).
+Dodatkowe informacje, które Findbugs umieszcza w swoim raporcie, to statystyki pakietowe (elementy \texttt{PackageStats}). W obrêbie danego pakietu Findbugs podaje ³¹czn¹ liczbê potencjalnych usterek dla ka¿dego z 4 priorytetów b³êdów oraz listê statystyk klasowych (elementy \texttt{ClassStats}). Wa¿n¹ informacj¹ podan¹ dla ka¿dej klasy jest jej rozmiar - na jego podstawie Shimmering Constellations znajduje wartoœci metryk pakietowych, które opieraj¹ siê na rozmiarze klas - \textit{Total Size}, \textit{Largest Class Size} [dzia³ \ref{s:model-metrics}].
 
-Informacje, które nie s¹ zawarte w pliku wynikowym, to s³owna nazwa typu b³êdu i tekstowy opis usterki - jedyn¹ informacj¹ o typie b³êdu jest jego skrótowy identyfikator. Normaln¹ procedur¹ podczas korzystania z Findbugs jest u¿ywanie dostarczonego œrodowiska GUI, gdzie za³¹czone s¹ treœci opisów poszczególnych b³êdów, b¹dŸ pos³ugiwanie siê indeksem rozpoznawanych b³êdów, zamieszczonym na stronie projektu - wyszukuj¹c opisy wed³ug skrótowego identyfikatora. Aby poprawiæ jakoœæ i wygodê korzystania z Shimmering Constellations, przygotowa³em prosty parser aktualnego indeksu b³êdów i wczyta³em zawarte w nim dane do s³ownika. Dziêki temu znaj¹c identyfikator typu b³êdu, na etapie wizualizacji mo¿liwe jest wyœwietlenie pe³nego tekstowego raportu o b³êdach, ³¹cznie z tekstowymi opisami usterek.
+Aby policzyæ rozmiar danej klasy, Findbugs zlicza istotne konstrukcje wp³ywaj¹ce na jej rozmiar - pola, metody, linie instrukcji. Pomijane s¹ fragmenty, które nie wp³ywaj¹ na si³ê wyrazu, np. komentarze i bia³e znaki (NCSS - \textit{Non Commenting Source Statements}).
+
+Informacje, które nie s¹ zawarte w pliku wynikowym raportu, to s³owna nazwa typu b³êdu i tekstowy opis usterki - jedyn¹ informacj¹ o typie b³êdu jest jego skrótowy identyfikator. Normaln¹ procedur¹ podczas korzystania z Findbugs jest u¿ywanie dostarczonego œrodowiska GUI, gdzie za³¹czone s¹ treœci opisów poszczególnych b³êdów, b¹dŸ pos³ugiwanie siê indeksem rozpoznawanych b³êdów, zamieszczonym na stronie projektu - wyszukuj¹c opisy wed³ug skrótowego identyfikatora. Aby poprawiæ jakoœæ i wygodê korzystania z Shimmering Constellations, przygotowa³em prosty parser aktualnego indeksu b³êdów i wczyta³em zawarte w nim dane do s³ownika. Dziêki temu znaj¹c identyfikator typu b³êdu, na etapie wizualizacji mo¿liwe jest wyœwietlenie pe³nego tekstowego raportu o b³êdach, ³¹cznie z tekstowymi opisami usterek.
 
 Analiza Findbugs nie jest niezbêdnym krokiem wymaganym do wizualizacji projektu, dlatego ze wzglêdu na czasoch³onnoœæ tej czynnoœci mo¿liwe jest jej pominiêcie na ¿yczenie u¿ytkownika. Wyniki pozyskiwane w tym kroku pozwalaj¹ narzêdziu Shimmering Constellations wskazaæ najbardziej podejrzane pakiety i przedstawiæ czytelny raport usterek [dzia³ \ref{s:model-bugs}] dla ka¿dego z nich.
 
 \subsection{Analiza JGit - dodanie informacji historycznych projektu}
-%TODO tutaj by³y jakieœ w¹tpliwoœci co do s³owa POWINNO
-Kolejnym krokiem analizy jest wydobycie metryk historycznych z repozytorium projektu. Aby by³o to mo¿liwe, repozytorium badanego projektu powinno znaleŸæ siê na lokalnym dysku dostêpnym dla œrodowiska aplikacji Shimmering Constelletions (JGit nie pozwala na ³atwe pozyskanie wymaganych informacji pos³uguj¹c siê jedynie zdalnym repozytorium). W zwi¹zku z tym, jeœli u¿ytkownik poda³ adres internetowy repozytorium zdalnego, jest ono klonowane przez bibliotekê JGit. Czasoch³onnoœæ tej operacji sk³oni³a mnie do umo¿liwienia rêcznego sklonowania repozytorium zdalnego przed rozpoczêciem analizy i przekazania analizatorowi œcie¿ki do gotowego repozytorium lokalnego.
+Kolejnym krokiem analizy jest wydobycie metryk historycznych z repozytorium projektu. Warunkiem koniecznym do przeprowadzenia tego kroku jest posiadanie kopii reporytorium badanego projektu na dysku dostêpnym dla œrodowiska aplikacji Shimmering Constellations (JGit nie pozwala na ³atwe pozyskanie wymaganych informacji pos³uguj¹c siê jedynie zdalnym repozytorium). 
+U¿ytkownik przed uruchomieniem analizy definiuje œcie¿kê dyskow¹ do repozytorium lokalnego. Jeœli u¿ytkownik nie posiada kopii repozytorium na swoim komputerze, mo¿liwe jest podanie adresu url repozytorium zdalnego, które zostanie automatycznie sklonowane do katalogu tymczasowego przez bibliotekê JGit. Ze wzglêdu na czasoch³onnoœæ klonowania, sugerowan¹ metod¹ jest przygotowanie repozytorium lokalnego przed analiz¹.
 
 Maj¹c dostêp do repozytorium lokalnego, analizator przegl¹da wszystkie pliki podlegaj¹ce systemowi kontroli wersji i stara siê znaleŸæ w grafie projektu odpowiadaj¹ce im pakiety. Dopasowanie odbywa siê na zasadzie analizy œcie¿ki i nazwy pliku w repozytorium. Przyk³adowo plik znajduj¹cy siê pod œcie¿k¹: \verb+src\main\java\shimmer\service\GraphService.java+  zostanie dopasowany do pakietu \texttt{shimmer.service}. Jeœli dla danego pliku dopasowanie istnieje, narzêdzie JGit przegl¹da kontrybucje zmieniaj¹ce dany plik (liczba kontrybucji jest ograniczona do 500 wstecz) i dla danego pakietu w grafie aktualizuje liczbê wszystkich kontrybucji, datê ostatniej zmiany oraz liczbê autorów.
 
@@ -468,7 +485,6 @@ W tym kroku, na podstawie stworzonego grafu projektu, wyliczane s¹ wartoœci wszy
 
 \begin{table}[t]
 \centering
-\label{t:metrics-source}
 	\begin{tabular}{rl}
 	\hline 
 	Metryka & Sposób pozyskiwania \\
@@ -491,10 +507,11 @@ W tym kroku, na podstawie stworzonego grafu projektu, wyliczane s¹ wartoœci wszy
 	\hline
 	\end{tabular} 
 \caption{Podzia³ obs³ugiwanych metryk ze wzglêdu na Ÿród³o ich pozyskiwania}
+\label{t:metrics-source}
 \end{table}
 
 \subsection{Serializacja}
-Przeanalizowane dane serializowane s¹ do formatu JSON, który jest wymagany przez biblioteki wizualizacji grafów - tablice wierzcho³ków i krawêdzi. 
+Przeanalizowane dane serializowane s¹ do formatu JSON, który jest wymagany przez biblioteki wizualizacji grafów [dzia³ \ref{s:software-visualization}] - tablice wierzcho³ków i krawêdzi. 
 
 Podczas serializacji wierzcho³ków i krawêdzi konieczne jest prze³o¿enie wartoœci metryk na odpowiednie atrybuty wizualizowanych obiektów. W zale¿noœci od ustawieñ u¿ytkownika oraz wartoœci wybranych metryk ustalane s¹:
 
@@ -511,14 +528,14 @@ Na tym etapie brane pod uwagê s¹ równie¿ ustawienia kalibracyjne wizualizacji. P
 
 Obiekty powsta³e w wyniku serializacji (krawêdzie i wierzcho³ki w postaci JSON) stanowi¹ dane wejœciowymi dla narzêdzi wizualizacyjnych, ale zawieraj¹ równie¿ dodatkowe metadane, z których korzysta widok aplikacji Shimmering Constellations: informacje o wartoœciach wszystkich metryk, identyfikatory wykrytych usterek, kategorie wierzcho³ków.
 
-\section{Wizualizacja}\label{r:wizualizacja}
-\subsection{Podstawa wizualizacji - graf}
+\section{Realizacja wizualizacji}\label{s:software-visualization}
+\subsection{Vis.js - graf}
 
 Podstaw¹ do wizualizacji w Shimmering Constellation jest wizualizacja grafowa. Biblioteka, która odpowiada za wizualizowanie grafu to Vis.js \cite{b:visjs}. Narzêdzie pozwala na dynamiczn¹ wizualizacjê grafu w oparciu o model dystrybucji cz¹steczek Barnes-Hut.
 
 VisJs pobiera wynik analizy w postaci list wierzcho³ków i krawêdzi w formacie JSON i wyœwietla graf projektu z odpowiednimi parametrami. Prezentowana wizualizacja jest równowa¿ona w czasie rzeczywistym i pozwala u¿ytkownikowi na dowolne manipulowanie grafem - skalowanie, przesuwanie, przemieszczanie wierzcho³ków.
 
-\subsection{Wizualizacja zaawansowana - mapa termiczna}
+\subsection{Heatmaps.js - mapa termiczna}
 
 Dope³niaj¹cym elementem wizualizacji jest mapa termiczna, która wyœwietlana jest w tle wizualizowanego grafu. Generowaniem mapy termicznej zajmuje siê biblioteka heatmap.js \cite{b:heatmapsmapsjs}. Mapa termiczna oddaje temperaturê poszczególnych wierzcho³ków.
 
@@ -528,20 +545,10 @@ Ze wzglêdu na z³o¿onoœæ obliczeniow¹ odœwie¿ania mapy termicznej, u¿ytkownik mo¿
 
 \subsection{Sugerowane sposoby wizualizacji metryk}
 
-Narzêdzie Shimmering Constellations pozwala u¿ytkownikowi na samodzielny wybór sposobu obrazowania poszczególnych metryk. Jenak niektóre z metryk, ze wzglêdu na swój charakter, w oczywisty sposób s¹ lepiej wyra¿ane za pomoc¹ konkretnych œrodków:
-
-\begin{description}
-\item[Rozmiar wierzcho³ka (iloœæ)] - pos³uguj¹c siê tym parametrem, mo¿emy w naturalny sposób odzwierciedlaæ iloœciow¹ charakterystykê kodu. U¿ytkownik jest w stanie ³atwo skojarzyæ wielkoœæ wierzcho³ka z liczb¹ klas w pakiecie lub ca³kowit¹ liczb¹ linii kodu.
-\item[Kolor wierzcho³ka (jakoœæ)] - pozwala dokonaæ jakoœciowej analizy kodu, zw³aszcza zestawiaj¹c kolory ze skali od czerwonego do zielonego. Osoba ogl¹daj¹ca wizualizacjê mo¿e rozpoznaæ czerwone wierzcho³ki jako pakiety niskiej jakoœci, a zielone wysokiej. Oprócz jakoœci, w narzêdziu Shimmering Constellations kolor mo¿e równie¿ oddawaæ charakterystykê badanego elementu. Przyk³adowo wierzcho³ki biblioteczne maj¹ zawsze kolor szary, a wierzcho³ki katalogowe kolor niebieski.
-\item[Temperatura wierzcho³ka (aktywnoœæ)] - stanowi pomocniczy sposób wyrazu i mo¿e s³u¿yæ do obrazowania cech szczególnych kodu, które podlegaj¹ stopniowaniu. Dobrym zastosowaniem tego parametru jest zobrazowanie czêstoœci zmian danego elementu - u¿ytkownik mo¿e rozpoznaæ wierzcho³ki gor¹ce jako “aktywne”, a ch³odne jako stabilne, niezmienne. 
-\item[D³ugoœæ krawêdzi (zale¿noœæ)] - pozwala w ³atwy sposób zobrazowaæ si³ê powi¹zania miêdzy poszczególnymi elementami. Wierzcho³ki znajduj¹ce siê blisko siebie w znormalizowanym grafie, s¹ od siebie silnie zale¿ne, a wierzcho³ki oddalone nie maj¹ mocnych powi¹zañ.
-\end{description}
-
-Sugerowane sposoby wizualizacji metryk przedstawiono w tabeli \ref{t:metrics-visualization}
+Narzêdzie Shimmering Constellations pozwala u¿ytkownikowi na samodzielny wybór sposobu obrazowania poszczególnych metryk. Jenak niektóre z metryk, ze wzglêdu na swój charakter, w oczywisty sposób s¹ lepiej wyra¿ane za pomoc¹ konkretnych œrodków. Sugerowane sposoby wizualizacji metryk przedstawiono w tabeli \ref{t:metrics-visualization}
 
 \begin{table}[t]
 \centering
-\label{t:metrics-visualization}
 	\begin{tabular}{rl}
 	\hline 
 	Metryka & Sugerowany sposób obrazowania\\
@@ -564,9 +571,12 @@ Sugerowane sposoby wizualizacji metryk przedstawiono w tabeli \ref{t:metrics-vis
 	\hline
 	\end{tabular} 
 \caption{Zestawienie sugerowanych sposobów wizualizacji poszczególnych metryk}
+\label{t:metrics-visualization}
 \end{table}
 
 \section{Funkcjonalnoœæ}
+
+Ten dzia³ przedstawia zestawienie kluczowych funkcjonalnoœci dostarczanych przez stworzone oprogramowanie.
 
 \subsection{Dwie metody wizualizacji}
 
@@ -580,7 +590,7 @@ Wizualizacja grafowa jest podstawow¹ metod¹ pozwalaj¹c¹ w jawny sposób przedstaw
 \caption{Projekt jUnit wizualizowany w postaci grafu}
 \end{figure}
 
-Wizualizacja konstelacyjna opiera siê na za³o¿eniach przestawionych w pracy \cite{bib_cons}. Podstaw¹ do jej stworzenia jest graf projektu, jednak krawêdzie s¹ niewidoczne, a zale¿noœci miêdzy pakietami s¹ obrazowane przez odleg³oœci miêdzy wierzcho³kami. W tym widoku szczególne zastosowanie odnajduje mapa termiczna, która wzbogaca si³ê jego wyrazu o dodatkowy parametr - temperaturê wierzcho³ków.
+Wizualizacja konstelacyjna opiera siê na za³o¿eniach przestawionych w pracy \cite{b:constellation}. Podstaw¹ do jej stworzenia jest graf projektu, jednak krawêdzie s¹ niewidoczne, a zale¿noœci miêdzy pakietami s¹ obrazowane przez odleg³oœci miêdzy wierzcho³kami. W tym widoku szczególne zastosowanie odnajduje mapa termiczna, która wzbogaca si³ê jego wyrazu o dodatkowy parametr - temperaturê wierzcho³ków.
 
 \begin{figure}[H]
 \centering
@@ -745,7 +755,7 @@ Oprogramowanie Shimmering Constellations powsta³o z myœl¹ o mo¿liwoœci przysz³eg
 
 \paragraph{Uruchomienie aplikacji www:} Dobrym wykorzystaniem narzêdzia Shimmering Constellations mog³oby by byæ uruchomienie go w postaci us³ugi online na serwerach uczelni w celach naukowych. Uczestnicy kursu In¿ynieria Oprogramowania mogliby przy u¿yciu opisanego programu analizowaæ wybrane projekty informatyczne, a wyniki analiz zbierane w bazie danych pozwoli³yby badaæ studentom i pracownikom instytutu projekty Open Source. Taka modyfikacja, dziêki architekturze opartej na aplikacji www [patrz rozdzia³ \ref{r:architektura}], wymaga³aby jedynie integracji z wybran¹ baz¹ danych. 
 
-\paragraph{Dodanie nowych metryk i modu³ów:} Oczywistym rozszerzeniem dla aplikacji Shimmering Constellations jest implementacja nowych metryk i modu³ów analizuj¹cych kod projektu. Chc¹c wzbogaciæ program o mo¿liwoœæ wizualizacji dodatkowej metryki, nale¿y dodaæ odpowiedni analizator do g³ównego procesu programu [rozdzia³ \ref{s:software-analysis}], rozbudowaæ model o nowe w³aœciwoœci [rozdzia³ \ref{c:model}] i zadbaæ o odpowiednie obrazowanie nowej cechy [rozdzia³ \ref{r:wizualizacja}].
+\paragraph{Dodanie nowych metryk i modu³ów:} Oczywistym rozszerzeniem dla aplikacji Shimmering Constellations jest implementacja nowych metryk i modu³ów analizuj¹cych kod projektu. Chc¹c wzbogaciæ program o mo¿liwoœæ wizualizacji dodatkowej metryki, nale¿y dodaæ odpowiedni analizator do g³ównego procesu programu [rozdzia³ \ref{s:software-analysis}], rozbudowaæ model o nowe w³aœciwoœci [rozdzia³ \ref{c:model}] i zadbaæ o odpowiednie obrazowanie nowej cechy [rozdzia³ \ref{s:software-visualization}].
 
 
 % ------------------------------------------------------------------------------
