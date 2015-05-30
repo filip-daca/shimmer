@@ -55,6 +55,7 @@ Mo¿liwoœæ przejrzystej wizualizacji repozytorium du¿ego projektu informatycznego
 
 % ------------------------------------------------------------------------------
 % ROZDZIA£ WSTÊP
+% ------------------------------------------------------------------------------
 \chapter*{Wprowadzenie}
 \addcontentsline{toc}{chapter}{Wprowadzenie}
 
@@ -64,6 +65,7 @@ Mo¿liwoœæ przejrzystej wizualizacji repozytorium du¿ego projektu informatycznego
 
 % ------------------------------------------------------------------------------
 % ROZDZIA£ MOTYWACJA
+% ------------------------------------------------------------------------------
 \chapter{Motywacja}\label{r:motywacja}
 
 % TODO
@@ -72,6 +74,7 @@ Mo¿liwoœæ przejrzystej wizualizacji repozytorium du¿ego projektu informatycznego
 
 % ------------------------------------------------------------------------------
 % ROZDZIA£ METODY
+% ------------------------------------------------------------------------------
 \chapter{Stosowane metody wizualizacji}\label{r:metody}
 
 Jako Ÿród³o prac dotycz¹cych wspó³czesnych metod wizualizacji kodu przyj¹³em konferencjê naukow¹ Visualizing Software for Understanding and Analysis -  VISSOFT 2011.
@@ -88,7 +91,7 @@ W pracach opublikowanych na konferencji VISSOFT nie znalaz³em ¿adnego artyku³u, 
 
 \section{Graf}
 
-W swojej pracy \cite{bib_graph} U. Erdemir, U. Tekin i F. Buzluca proponuj¹ standardow¹ metodê wizualizacji kodu w postaci grafu. Stworzone przez nich narzêdzie wydobywa metryki jakoœciowe z kodu Ÿród³owego analizowanego oprogramowania i 
+W swojej pracy \cite{b:graph} U. Erdemir, U. Tekin i F. Buzluca proponuj¹ standardow¹ metodê wizualizacji kodu w postaci grafu. Stworzone przez nich narzêdzie wydobywa metryki jakoœciowe z kodu Ÿród³owego analizowanego oprogramowania i 
 
 %TODO
 \paragraph{TODO:}
@@ -113,7 +116,7 @@ Metoda zaproponowana przez autorów jest prosta w interpretacji i zrozumia³a dla 
 
 \section{Konstelacja}
 
-Ciekaw¹ metod¹ zaproponowan¹ przez F. Deng, N. DiGgiuseppe i J. A. Jones \cite{bib_const} jest konstelacja. Ten sposób wizualizacji zosta³ opracowany w celu ³atwego wykrywania konkretnych fragmentów kodu oraz wizualnej separacji elementów nieinteresuj¹cych od istotnych (przyk³adowo klas wadliwych od prawid³owych).
+Ciekaw¹ metod¹ zaproponowan¹ przez F. Deng, N. DiGgiuseppe i J. A. Jones \cite{b:constellation} jest konstelacja. Ten sposób wizualizacji zosta³ opracowany w celu ³atwego wykrywania konkretnych fragmentów kodu oraz wizualnej separacji elementów nieinteresuj¹cych od istotnych (przyk³adowo klas wadliwych od prawid³owych).
 
 \subsection{Zasada budowy wizualizacji konstelacyjnej}
 
@@ -126,7 +129,7 @@ Dla lepszej skalowalnoœci uk³adu i interpretacji u¿ytkownika, w grafie zale¿noœc
 Dla lepszej rozszerzalnoœæ interpretacyjnej, wierzcho³ki powinny byæ wizualizowane jako pojedynczy punkt.
 
 \paragraph{Kolorowanie wierzcho³ków na podstawie meta-danych:}
-Dla obrazowania konkretnego problemu, wierzcho³ki powinny zostaæ pokolorowane wed³ug wybranych meta-danych. Przyk³adowo, jeœli interesuje nas jakoœæ wizualizowanego kodu, mo¿emy pos³ugiwaæ siê informacj¹ o jakoœci / liczbie usterek danego wierzcho³ka. Autorzy w swoich przyk³adach u¿yli informacji o podejrzanych instrukcjach pochodz¹cych z narzêdzia Tarantula rozwijanego w ramach prac nad detekcj¹ usterek \cite{bib_taran}
+Dla obrazowania konkretnego problemu, wierzcho³ki powinny zostaæ pokolorowane wed³ug wybranych meta-danych. Przyk³adowo, jeœli interesuje nas jakoœæ wizualizowanego kodu, mo¿emy pos³ugiwaæ siê informacj¹ o jakoœci / liczbie usterek danego wierzcho³ka. Autorzy w swoich przyk³adach u¿yli informacji o podejrzanych instrukcjach pochodz¹cych z narzêdzia Tarantula rozwijanego w ramach prac nad detekcj¹ usterek \cite{b:tarantulla}
 
 \paragraph{Nadanie si³ krawêdziom:}
 Dla u³atwienia interpretacji i lepszego powi¹zania kontekstowego wizualizowanych wierzcho³ków, krawêdzie powinny swoj¹ d³ugoœci¹ reprezentowaæ si³ê powi¹zania. Autorzy zastosowali w swoich przyk³adach informacje pozyskane przy dynamicznej analizie projektu.
@@ -137,7 +140,7 @@ Aby metoda pozwala³a jeszcze dok³adniej interpretowaæ wizualizacjê pod k¹tem kon
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{bib1.png}
-\caption{Projekt Gzip wizualizowany w postaci konstelacji podany jako przyk³ad autorów pracy \cite{bib_const}}
+\caption{Projekt Gzip wizualizowany w postaci konstelacji podany jako przyk³ad autorów pracy \cite{b:constellation}}
 \end{figure}
 
 \subsection{Badania potwierdzaj¹ce skutecznoœæ konstelacji}
@@ -150,7 +153,7 @@ Wizualizacja konstelacyjna jest metod¹, która dobrze nadaje siê wielu zastosowañ
 
 \section{Mapa termiczna}
 
-Praca autorstwa O. Benomar, H. Sahraoui, P. Poulin \cite{bib_heat} przedstawia kilka interesuj¹cych zastosowañ mapy termicznej w wizualizacji projektów. W swojej pracy autorzy opisuj¹ metodê wizualizacji kodu w postaci miast i budynków, a wykorzystana w tle mapa termiczna s³u¿y do oznaczania dynamiki projektu. Istotnym zamys³em autorów by³o dok³adne opisanie rozwi¹zañ graficznych u¿ytych przy integracji mapy z g³ówn¹ wizualizacj¹.
+Praca autorstwa O. Benomar, H. Sahraoui, P. Poulin \cite{b:heatmaps} przedstawia kilka interesuj¹cych zastosowañ mapy termicznej w wizualizacji projektów. W swojej pracy autorzy opisuj¹ metodê wizualizacji kodu w postaci miast i budynków, a wykorzystana w tle mapa termiczna s³u¿y do oznaczania dynamiki projektu. Istotnym zamys³em autorów by³o dok³adne opisanie rozwi¹zañ graficznych u¿ytych przy integracji mapy z g³ówn¹ wizualizacj¹.
 
 \subsection{Zastosowania}
 
@@ -173,7 +176,7 @@ Mapy termiczne s¹ dwuwymiarowymi obiektami wykorzystuj¹cymi metaforê ciep³a do r
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{bib2.png}
-\caption{Projekt JHotDraw wizualizowany w postaci miasta przy u¿yciu mapy termicznej w przyk³adzie z pracy \cite{bib_heat}}
+\caption{Projekt JHotDraw wizualizowany w postaci miasta przy u¿yciu mapy termicznej w przyk³adzie z pracy \cite{b:heatmaps}}
 \end{figure}
 
 \subsection{Wnioski i podsumowanie map termicznych}
@@ -182,60 +185,71 @@ Mapa termiczna mo¿e byæ dodatkowym elementem wizualizacji, który w dobry sposób 
 
 % ------------------------------------------------------------------------------
 % ROZDZIA£ MODEL
-\chapter{Model}\label{r:model}
+% ------------------------------------------------------------------------------
+\chapter{Model}\label{c:model}
 
 Aby przygotowaæ wizualizacjê, która zobrazuje kod projektu informatycznego uwzglêdniaj¹c jego jakoœæ i dane historyczne, nale¿y ustaliæ odpowiedni model reprezentuj¹cy program komputerowy. W tym rozdziale przedstawiê model, który przyj¹³em do reprezentacji oprogramowania w swojej pracy.
 
-\section{Oprogramowanie jako graf}
+\section{Oprogramowanie jako graf}\label{s:model-graph}
 
-W swojej pracy ograniczy³em siê do analizy kodu na poziomie pakietów. Przyjêty przeze mnie model analizowanego projektu ma strukturê nieskierowanego grafu, w którym wierzcho³ki reprezentuj¹ pakiety programu, a krawêdzie zale¿noœci miêdzy nimi.
+W swojej pracy ograniczy³em siê do analizy kodu na poziomie pakietów. Przyjêty przeze mnie model analizowanego projektu ma strukturê skierowanego grafu, w którym wierzcho³ki reprezentuj¹ pakiety programu, a krawêdzie zale¿noœci miêdzy nimi.
 
 \subsection{Wierzcho³ki}
 
-Ka¿dy wierzcho³ek grafu posiada swój typ i informacje na temat pakietu, który reprezentuje: nazwê, wartoœci wszystkich metryk i miar, oraz kolekcjê b³êdów. W modelu wyró¿niamy kilka rodzajów wierzcho³ków:
+Ka¿dy wierzcho³ek grafu posiada swój typ i nazwê pakietu, który reprezentuje. W zale¿noœci od typu, wierzcho³ek mo¿e posiadaæ te¿ inne atrybuty. W modelu wyró¿niamy kilka rodzajów wierzcho³ków:
 
 \begin{itemize}
-\item \textbf{Wierzcho³ki pakietowe} - reprezentuj¹ pakiety analizowanego projektu
+\item \textbf{Wierzcho³ki pakietowe} - reprezentuj¹ pakiety analizowanego projektu.
 	\begin{itemize}
-	\item \textbf{Wierzcho³ki pakietów przeanalizowanych} - s¹ to pakiety, które podlegaj¹ analizie w projekcie.
-	\item \textbf{Wierzcho³ki pakietów bibliotecznych} - s¹ to pakiety, które wchodz¹ w sk³ad projektu ale nie podlegaj¹ analizie. Przyk³adem mo¿e byæ pakiet \texttt{java.lang}, który jest u¿ywany w projekcie, ale definicja jego klas nie znajduje siê w kodzie Ÿród³owym projektu.
+	\item \textbf{Wierzcho³ki pakietów analizowanych} - s¹ to pakiety, dla których chcielibyœmy przeprowadziæ analizê jakoœci i wydobyæ dane historyczne. W rzeczywistoœci ten rodzaj wierzcho³ków reprezentuje fragmenty kodu stworzone w procesie realizacji danego projektu.
+	\item \textbf{Wierzcho³ki pakietów bibliotecznych} - s¹ to pakiety, które wchodz¹ w sk³ad projektu ale nie podlegaj¹ szczegó³owej analizie jakoœciowej i historycznej. Wierzcho³ki te mog¹ reprezentowaæ biblioteki zewnêtrzne, które zosta³y za³¹czone do analizowanego projektu, bez ingerencji w ich kod. Przyk³adem mo¿e byæ pakiet \texttt{java.lang}, który jest u¿ywany w projekcie, ale definicja jego klas nie znajduje siê w kodzie Ÿród³owym projektu.
 	\end{itemize}
 \item \textbf{Wierzcho³ki katalogowe} - s¹ to pakiety, które nie posiadaj¹ swoich klas, ale zawieraj¹ inne pakiety. Wierzcho³ki te mog¹ byæ rozumiane jako katalogi w drzewie katalogów projektu, gdy¿ reprezentuj¹ kolejne elementy œcie¿ki danego pakietu. Przyk³adowymi wierzcho³kami katalogowymi bêd¹ \texttt{org} oraz \texttt{org.apache}, jeœli w projekcie znajduje siê pakiet \texttt{org.apache.commons.io}.
 \end{itemize}
 
 \subsection{Krawêdzie}
 
-Ka¿da krawêdŸ grafu zna swój typ, si³ê po³¹czenia, oraz oba ³¹czone wierzcho³ki. Wyró¿niamy dwa rodzaje krawêdzi:
+Ka¿da krawêdŸ grafu posiada swój typ, oraz jest w stanie okreœliæ ³¹czone wierzcho³ki i si³ê powi¹zania miêdzy nimi. Wyró¿niamy dwa rodzaje krawêdzi:
 
 \begin{itemize}
-\item \textbf{Krawêdzie drzewa pakietów} - odzwierciedlaj¹ strukturê fizyczn¹ programu. Tego typu krawêdziami po³¹czone s¹ wierzcho³ki bêd¹ce w relacji “ojciec - syn” w drzewie pakietów. Przyk³adowo, pakiet \texttt{shimmer.service.impl} znajduje siê wewn¹trz pakietu \texttt{shimmer.service}, wiêc ich wierzcho³ki bêd¹ po³¹czone tak¹ krawêdzi¹. Równie¿ w tym przypadku sztuczny wierzcho³ek katalogowy \texttt{shimmer} po³¹czony bêdzie z wierzcho³kiem pakietowym \texttt{shimmer.service}.
-\item \textbf{Krawêdzie zale¿noœci miêdzy pakietami} - odzwierciedlaj¹ logiczne powi¹zania ³¹cz¹ce pakiety. Tego typu krawêdziami powi¹zane s¹ pakiety, których klasy korzystaj¹ z siebie nawzajem. Przyk³adowo, jeœli jakaœ klasa pakietu \texttt{shimmer.service} polega na innej klasie z pakietu \texttt{shimmer.service.impl}, pakiety po³¹czone bêd¹ tak¹ krawêdzi¹. Tego typu krawêdzie powinny równie¿ przechowywaæ wartoœæ mierz¹c¹ si³ê reprezentowanej zale¿noœci.
+\item \textbf{Krawêdzie drzewa pakietów} - odzwierciedlaj¹ strukturê fizyczn¹ programu. Tego typu krawêdziami po³¹czone s¹ wierzcho³ki bêd¹ce w relacji “ojciec - syn” w drzewie pakietów. Przyk³adowo, pakiet \texttt{shimmer.service.impl} znajduje siê wewn¹trz pakietu \texttt{shimmer.service}, wiêc ich wierzcho³ki bêd¹ po³¹czone tak¹ krawêdzi¹. Równie¿ w tym przypadku sztuczny wierzcho³ek katalogowy \texttt{shimmer} po³¹czony bêdzie z wierzcho³kiem pakietowym \texttt{shimmer.service}. Si³a powi¹zania dla takich krawêdzi jest sta³a.
+\item \textbf{Krawêdzie zale¿noœci miêdzy pakietami} - odzwierciedlaj¹ logiczne powi¹zania ³¹cz¹ce pakiety. Tego typu krawêdziami powi¹zane s¹ pakiety, których klasy korzystaj¹ z siebie nawzajem. Przyk³adowo, jeœli jakaœ klasa pakietu \texttt{shimmer.service} polega na innej klasie z pakietu \texttt{shimmer.service.impl}, pakiety po³¹czone bêd¹ tak¹ krawêdzi¹. Si³a takiego powi¹zania mo¿e byæ ró¿na, w zale¿noœci od liczby zale¿nych klas, dlatego krawêdzie tego typu posiadaæ bêd¹ ró¿ne wartoœci si³y oddzia³ywania.
 \end{itemize}
 
-\section{Metryki}
+\section{Potencjalne usterki}\label{s:model-bugs}
+
+Chc¹c uwzglêdniæ w wizualizacji podejrzane fragmenty oprogramowania, wprowadzamy do modelu pojêcie \textit{potencjalnej usterki}. Obiekty te wyra¿aj¹ wykryte zagro¿enie, które mo¿e prowadziæ do powstawania b³êdów w przysz³oœci. Wykryta usterka dotyczyæ mo¿e dowolnego fragmentu kodu - w zaproponowanym modelu ka¿dy wierzcho³ek pakietu analizowanego bêdzie grupowa³ potencjalne usterki wykryte w obrêbie danego pakietu.
+
+Ka¿da potencjalna usterka posiada szereg atrybutów charakteryzuj¹cych zagro¿enie:
+
+\begin{itemize}
+\item \textbf{Lokalizacja b³êdu} - pozwala ustaliæ, w jakim fragmencie kodu wystêpuje dana usterka. Ta informacja powinna jednoznacznie wskazywaæ pakiet, w którym wykryto usterkê, ale równie¿ pozwalaæ na dok³adniejsze zlokalizowanie problemu w kodzie programu.
+\item \textbf{Typ b³êdu} - okreœla na czym polega wykryta usterka. Na podstawie tej informacji jesteœmy w stanie znaleŸæ rozwi¹zanie dla wykrytego problemu.
+\item \textbf{Priorytet b³êdu} - kategoryzuje usterki ze wzglêdu na ich wa¿noœæ.
+\item \textbf{Pewnoœæ} - zaproponowane pojêcie usterki ma symbolizowaæ fragment podejrzany, dlatego istotn¹ informacj¹ jest miara przekonania o wyst¹pieniu danego problemu w przysz³oœci. 
+\end{itemize}
+
+
+\section{Metryki i miary jakoœciowe}\label{s:model-metrics}
+
+Aby móc analizowaæ projekt pod k¹tem jakoœciowym, rozwa¿amy szereg metryk oddaj¹cych charakter badanego kodu. W swojej pracy ograniczam siê do wybranych metryk projektowych na poziomie pakietowym \cite{b:metrics}. Wartoœci poszczególnych metryk w tym przypadku dotycz¹ konkretnych pakietów, a w opisywanym modelu s¹ atrybutami \textit{wierzcho³ków pakietów analizowanych}.
 
 \paragraph{Number of Classes and Interfaces / Class count (Cc)}~\\
-
 Liczba klas konkretnych, klas abstrakcyjnych, oraz interfejsów w pakiecie jest miar¹ rozszerzalnoœci pakietu.
 
 \paragraph{Concrete Classes}~\\
-
 Liczba klas konkretnych w pakiecie. Na podstawie tej metryki jesteœmy w stanie okreœliæ jak¹ czêœæ pakietu stanowi implementacja / kod wykonywany.
 
 \paragraph{Abstract Classes (Ac)}~\\
-
 Liczba klas abstrakcyjnych i interfejsów w pakiecie. Wartoœæ tej metryki pozwala nam stwierdziæ jak¹ czêœæ pakietu stanowi¹ abstrakcje projektowe.  
 
 \paragraph{Total Size (Ts)}~\\
-
 Rozmiar ca³kowity. Suma rozmiarów wszystkich klas z pakietu. Dziêki tej metryce, w odró¿nieniu od liczby klas, mo¿emy dok³adniej zobrazowaæ faktyczny rozmiar pakietu.
 
 \paragraph{Largest Class Size}~\\
-
 Rozmiar najwiêkszej klasy z pakietu. Ta metryka pozwala nam w ³atwy sposób wskazaæ pakiety, w których znajduj¹ siê klasy o zbyt du¿ej z³o¿onoœci - byæ mo¿e wymagaj¹ce refaktoryzacji.
 
 \paragraph{Average Size (As)}~\\
-
 Œredni rozmiar klas. Liczony jako œrednia arytmetyczna rozmiaru klas z dzieleniem ca³kowitym. Metryka pozwala na ogólne zobrazowanie rozmiaru pakietu ze wzglêdu na rozmiar klas, a nie iloœæ.
 
 \begin{equation}
@@ -243,16 +257,12 @@ As = Ts / Cc
 \end{equation}
 
 \paragraph{Afferent Couplings (Ca)}~\\
-
-Powi¹zania aferentne - liczba innych pakietów, które polegaj¹ na klasach z pakietu danego. Metryka wyra¿a odpowiedzialnoœæ (responsibility) danego pakietu. Analizator JDepend podaje t¹ wartoœæ w sposób niestandardowy - w literaturze czêœciej spotykan¹ miar¹ jest liczba klas z obcych pakietów, które polegaj¹ na klasach z pakietu danego. Modyfikacja, któr¹ wprowadzi³em do analizatora JDepend pozwala na pozyskanie dodatkowej informacji - ile klas z wybranego pakietu polega na klasach z pakietu danego. Dziêki tej modyfikacji Shimmering Constellations zna nie tylko liczbê powi¹zañ z innymi pakietami, ale te¿ ich si³ê.
+Powi¹zania aferentne - liczba innych pakietów, które polegaj¹ na klasach z pakietu danego. Metryka wyra¿a odpowiedzialnoœæ (responsibility) danego pakietu.
 
 \paragraph{Efferent Couplings (Ce)}~\\
-
-Powi¹zania eferentne - liczba innych
- pakietów, na których polegaj¹ klasy z pakietu danego. Metryka wyra¿a zale¿noœæ (dependency) danego pakietu. Podobnie, jak w przypadku Afferent Couplings, wartoœæ liczona jest przez analizator JDepend przy uwzglêdnieniu si³y zale¿noœci - liczby klas zale¿nych. W tym obszarze równie¿ konieczna by³a modyfikacja kodu biblioteki.
+Powi¹zania eferentne - liczba innych pakietów, na których polegaj¹ klasy z pakietu danego. Metryka wyra¿a zale¿noœæ (dependency) danego pakietu.
 
 \paragraph{Abstractness (A)}~\\
-
 Abstrakcyjnoœæ - stosunek liczby interfejsów i klas abstrakcyjnych do liczby wszystkich klas z danego pakietu. Metryka przyjmuje wartoœci z przedzia³u od $0$ do $1$, gdzie $0$ oznacza pakiet w pe³ni konkretny, a $1$ pakiet ca³kowicie abstrakcyjny.
 
 \begin{equation}
@@ -260,7 +270,6 @@ A = Ac / Cc
 \end{equation}
 
 \paragraph{Instability (I)}~\\
-
 Niestabilnoœæ - stosunek liczby powi¹zañ eferentnych do liczby wszystkich powi¹zañ pakietu. Metryka wyra¿a podatnoœæ pakietu na zmiany. Przyjmuje wartoœci z przedzia³u od $0$ do $1$, gdzie $0$ oznacza pakiet w pe³ni stabilny (nie zmienia siê w wyniku zmian innych pakietów), a $1$ oznacza pakiet ca³kowicie niestabilny (zale¿ny od pozosta³ych).
 
 \begin{equation}
@@ -268,12 +277,9 @@ I = Ce / (Ce + Ca)
 \end{equation}
 
 \paragraph{Distance from the Main Sequence (D)}~\\
-
-%TODO
-Odleg³oœæ od idealnej linii równania $A + I = 1$. Zgodnie z \cite{bib_metr} pakiety powinny byæ abstrakcyjne lub niestabilne. Pakiety osadzone na linii tego równania zachowuj¹ odpowiedni balans pomiêdzy abstrakcj¹ a stabilnoœci¹. Przyjmuje wartoœci z przedzia³u od $0$ do $1$, gdzie $0$ oznacza pakiet zgodny z g³ównym za³o¿eniem, a $1$ oznacza pakiet mo¿liwie najdalej oddalony od idealnego równania.
+Odleg³oœæ od idealnej linii równania $A + I = 1$. Zgodnie z za³o¿eniami dobrych praktyk projektowych opisanych w pracy \cite{b:metrics} pakiety powinny byæ abstrakcyjne lub niestabilne. Pakiety osadzone na linii tego równania zachowuj¹ odpowiedni balans pomiêdzy abstrakcj¹ a stabilnoœci¹. Przyjmuje wartoœci z przedzia³u od $0$ do $1$, gdzie $0$ oznacza pakiet zgodny z g³ównym za³o¿eniem, a $1$ oznacza pakiet mo¿liwie najdalej oddalony od idealnego równania.
 
 \paragraph{Abstract or Instable (AoI)}~\\
-
 Metryka wyra¿a balans pakietu pomiêdzy abstrakcj¹, a niestabilnoœci¹ - stwierdza, czy w danym pakiecie przewa¿a abstrakcyjnoœæ, czy niestabilnoœæ - zgodnie z za³o¿eniami o odleg³oœci od idealnej sekwencji. Ta miara pozwala podzieliæ pakiety ze wzglêdu na ich charakter. Przyjmuje wartoœci od $-1$ do $1$, gdzie $-1$ oznacza pakiet, w którym w pe³ni przewa¿a niestabilnoœæ, a $1$ oznacza pakiet zdominowany przez abstrakcjê.
 
 \begin{equation}
@@ -281,15 +287,16 @@ AoI = A - I
 \end{equation}
 
 \paragraph{Total Bugs}~\\
+Liczba usterek, które zosta³y wykryte wewn¹trz pakietu. Jest to metryka za pomoc¹ której w czytelny sposób mo¿na wizualizowaæ jakoœæ kodu.
 
-Liczba usterek, które zosta³y wykryte przez analizator Findbugs wewn¹trz pakietu. Jest to metryka za pomoc¹ której w czytelny sposób mo¿na wizualizowaæ jakoœæ kodu.
+\section{Statystyki historyczne}\label{s:model-history}
+
+Chc¹c badaæ projekt pod k¹tem zmian zachodz¹cych w jego kodzie Ÿród³owym, pos³ugujemy siê wybranymi statystykami historycznymi pakietów. Na podstawie tych danych mo¿emy wnioskowaæ na temat charakteru poszczególnych fragmentów kodu i ich roli w projekcie. Ponadto, pos³uguj¹c siê informacjami historycznymi jesteœmy w stanie przewidzieæ, które elementy bêd¹ pogleda³y czêstym zmianom w przysz³oœci \cite{b:historical-metrics}.
 
 \paragraph{Authors Count}~\\
-
 Liczba autorów, którzy wprowadzali zmiany do danego pakietu na podstawie historii z systemu kontroli wersji. Pakiety, nad którymi pracowa³a du¿a liczba autorów mog¹ zawieraæ g³ówn¹ funkcjonalnoœæ projektu.
 
 \paragraph{Total Commits}~\\
-
 Liczba wszystkich zmian w systemie kontroli wersji, które dotyczy³y danego pakietu. Metryka wskazuje na z³o¿onoœæ danego pakietu. Kod, który posiada wiele kontrybucji prawdopodobnie:
 
 \begin{itemize}
@@ -298,7 +305,6 @@ Liczba wszystkich zmian w systemie kontroli wersji, które dotyczy³y danego pakie
 \end{itemize}
 
 \paragraph{Last Commit}~\\
-
 Data ostatniej zmiany w systemie kontroli wersji. Dla u¿ytkownika mo¿e wskazywaæ hermetyczny charakter pakietu - kod, który od d³ugiego czasu nie by³ zmieniany prawdopodobnie:
 
 \begin{itemize}
@@ -307,14 +313,22 @@ Data ostatniej zmiany w systemie kontroli wersji. Dla u¿ytkownika mo¿e wskazywaæ
 \item jest kodem który trudno zmieniæ
 \end{itemize}
 
-\section{Usterki}
+\section{Droga do wizualizacji}\label{s:model-analysis}
 
-\section{Przebieg analizy}
+Zaproponowany w tym rozdziale model oprogramowania pozwala wyznaczyæ listê kroków koniecznych do wykonania wizualizacji wybranego projektu:
 
+\begin{enumerate}
+\item Rekonstrukcja grafu - odtworzenie struktury programu komputerowego.
+\item Przeszukiwanie usterek i uzupe³nienie modelu o zestaw wykrytych b³êdów w ka¿dym z wierzcho³ków.
+\item Wyliczenie wartoœci metryk i uzupe³nienie modelu o informacje jakoœciowe dla ka¿dego z wierzcho³ków.
+\item Analiza repozytorium projektu i uzupe³nienie modelu o informacje historyczne dla ka¿dego z wierzcho³ków.
+\item Przygotowanie modelu do wizualizacji - zmapowanie elementów modelu i ich atrybutów na konkretne obiekty graficzne wed³ug wybranej metody wizualizacji.
+\end{enumerate}
 
 % ------------------------------------------------------------------------------
 % ROZDZIA£ APLIKACJA
-\chapter{Narzêdzie Shimmering Constellations}\label{r:aplikacja}
+% ------------------------------------------------------------------------------
+\chapter{Narzêdzie Shimmering Constellations}\label{c:software}
 
 Wybrane elementy metod wizualizacji postanowi³em zaimplementowaæ w narzêdziu open-source, które w przystêpny sposób pozwoli³oby u¿ytkownikowi wizualizowaæ projekty informatyczne z uwzglêdnieniem analizy jakoœciowej i historycznej.
 
@@ -337,42 +351,33 @@ Wszystkie narzêdzia u¿yte w projekcie Shimmering Constellations s¹ stworzone w j
 
 \subsection{JDepend}
 
-%TODO
-\paragraph{TODO:}
-\textit{Zacytujê pracê na temat JDepend}
-
-Narzêdzie JDepend pozwala analizowaæ programy stworzone w jêzyku Java, na podstawie ich kodu skompilowanego. G³ównym zadaniem biblioteki jest przegl¹danie plików klas i zbieranie informacji dotycz¹cych metryk projektowych na poziomie pakietów. Metryki badane przez JDepend pomagaj¹ zbadaæ jakoœæ oprogramowania i wskazaæ ukryte w nim wady projektowe. Wyniki analizy mog¹ byæ prezentowane w czystej postaci tekstowej, struktury xml lub w interfejsie graficznym.
+Narzêdzie JDepend \cite{b:jdepend} pozwala analizowaæ programy stworzone w jêzyku Java, na podstawie ich kodu skompilowanego. G³ównym zadaniem biblioteki jest przegl¹danie plików klas i zbieranie informacji dotycz¹cych metryk projektowych na poziomie pakietów. Metryki badane przez JDepend pomagaj¹ zbadaæ jakoœæ oprogramowania i wskazaæ ukryte w nim wady projektowe. Wyniki analizy mog¹ byæ prezentowane w czystej postaci tekstowej, struktury xml lub w interfejsie graficznym.
 
 Narzêdzie nie dostarcza programistycznego API, wiêc aby móc w pe³ni wykorzystaæ mo¿liwoœci dostarczane przez JDepend, wydzieli³em kod odpowiedzialny za analizê Ÿróde³ i do³¹czy³em go do aplikacji Shimmering Constellations. Dziêki temu by³em w stanie programistycznie pozyskaæ wyniki analizy, bez koniecznoœci zbêdnej serializacji i deserializacji. Ponadto licencja, na której opublikowano JDepend pozwoli³a mi wprowadziæ zmiany w kodzie analizuj¹cym, aby dok³adniej zmierzyæ si³ê zale¿noœci miêdzy analizowanymi pakietami.
 
-Dziêki funkcjonalnoœci dostarczanej przez JDepend, Shimmering Constellations jest w stanie zbudowaæ model analizowanego programu w postaci grafu, oraz policzyæ wartoœci niektórych podstawowych metryk projektowych.
+Dziêki funkcjonalnoœci dostarczanej przez JDepend, Shimmering Constellations jest w stanie zbudowaæ model analizowanego programu w postaci grafu [dzia³ \ref{s:model-graph}], oraz policzyæ wartoœci niektórych podstawowych metryk projektowych [dzia³ \ref{s:model-metrics}].
 
 \subsection{Findbugs}
 
-%TODO
-\paragraph{TODO:}
-\textit{Zacytujê pracê na temat Findbugs}
-
-Findbugs jest programem przeprowadzaj¹cym statyczn¹ analizê kodu skompilowanego Javy w celu detekcji potencjalnych usterek. Dzia³anie narzêdzia opiera siê na koncepcji wzorców usterek (Bug Patterns), które czêsto prowadz¹ do powstawania b³êdów. Analizator przy pomocy zaawansowanych heurystyk przeszukuje kod projektu w poszukiwaniu wzorców usterek. G³ównym celem twórców biblioteki by³o stworzenie zestawu heurystyk opartych o nauczanie maszynowe, pozwalaj¹cych na wykrywanie potencjalnych usterek z niskim wspó³czynnikiem false-positive. Autorzy podkreœlaj¹, ¿e w praktyce szansa detekcji false-positive jest mniejsza ni¿ 50\%.
+Findbugs \cite{b:findbugs} jest programem przeprowadzaj¹cym statyczn¹ analizê kodu skompilowanego Javy w celu detekcji potencjalnych usterek. Dzia³anie narzêdzia opiera siê na koncepcji wzorców usterek (Bug Patterns), które czêsto prowadz¹ do powstawania b³êdów. Analizator przy pomocy zaawansowanych heurystyk przeszukuje kod projektu w poszukiwaniu wzorców usterek. G³ównym celem twórców biblioteki by³o stworzenie zestawu heurystyk opartych o nauczanie maszynowe, pozwalaj¹cych na wykrywanie potencjalnych usterek z niskim wspó³czynnikiem false-positive. Autorzy podkreœlaj¹, ¿e w praktyce szansa detekcji false-positive jest mniejsza ni¿ 50\%.
 
 Narzêdzie powsta³o na uniwersytecie Maryland w 2004 r. i jest stale rozwijane.
 
 Pakiet FindBugs za³¹czony zosta³ do projektu w postaci zale¿noœci dla narzêdzia Maven. Skompilowane klasy Finndbugs 3.0.1 wraz z kodem Ÿród³owym zosta³y pobrane automatycznie i do³¹czone do œrodowiska uruchomieniowego aplikacji.
 
-Wyniki analizy Findbugs pozwol¹ narzêdziu Shimmering Constellations wskazaæ potencjalne zagro¿enia wykryte w klasach analizowanego projektu.
+Wyniki analizy Findbugs pozwol¹ narzêdziu Shimmering Constellations wskazaæ potencjalne zagro¿enia wykryte w klasach analizowanego projektu [dzia³ \ref{s:model-bugs}].
 
 \subsection{JGit}
 
-JGit jest wydajn¹ implementacj¹ systemu kontroli wersji GIT dla jêzyka Java. Pozwala na pracê z repozytoriami GIT w œrodowisku programistycznym, ale nie udostêpnia gotowych metod pozyskuj¹cych metryki historyczne projektu. W zwi¹zku z tym proces wyliczenia odpowiednich miar musia³em zaimplementowaæ samodzielnie.
+JGit \cite{b:jgit} jest wydajn¹ implementacj¹ systemu kontroli wersji GIT dla jêzyka Java. Pozwala na pracê z repozytoriami GIT w œrodowisku programistycznym, ale nie udostêpnia gotowych metod pozyskuj¹cych metryki historyczne projektu. W zwi¹zku z tym proces wyliczenia odpowiednich miar musia³em zaimplementowaæ samodzielnie.
 
 Biblioteki JGit równie¿ zosta³y dodane do projektu jako zale¿noœæ projektowa programu Maven i nie by³y przeze mnie modyfikowane.
 
-Dziêki informacjom pozyskiwanym przez JGit, Shimmering Constellations potrafi wyliczyæ podstawowe metryki historyczne - wskazaæ ostatnio modyfikowane elementy projektu, czêsto zmieniane pakiety, oraz podaæ liczbê ich autorów.
+Dziêki informacjom pozyskiwanym przez JGit, Shimmering Constellations potrafi wyliczyæ podstawowe metryki historyczne [dzia³ \ref{s:model-history}] - wskazaæ ostatnio modyfikowane elementy projektu, czêsto zmieniane pakiety, oraz podaæ liczbê ich autorów.
 
+\section{Implementacja modelu}\label{s:software-implementation}
 
-\section{Implementacja modelu}\label{r:implementacja}
-
-Implementuj¹c opisany w rozdziale \ref{r:model} model grafu stara³em siê zadbaæ o zachowanie dobrych praktyk projektowych oraz wydajny dostêp do poszczególnych wierzcho³ków. Ze wzglêdu na krokowy charakter analizy w Shimmering Constellations (ka¿dy modu³ wykonuje swoj¹ analizê jeden po drugim), dostêp do poszczególnych wierzcho³ków oraz krawêdzi powinien odbywaæ siê w czasie sta³ym. 
+Implementuj¹c opisany w rozdziale \ref{c:model} model grafu stara³em siê zadbaæ o zachowanie dobrych praktyk projektowych oraz wydajny dostêp do poszczególnych wierzcho³ków. Ze wzglêdu na krokowy charakter analizy w Shimmering Constellations [dzia³ \ref{s:model-analysis}], dostêp do poszczególnych wierzcho³ków oraz krawêdzi powinien odbywaæ siê w czasie sta³ym. 
 
 Zaimplementowany graf posiada kolekcjê wierzcho³ków i krawêdzi oraz zbiór metod umo¿liwiaj¹cych wykonywanie podstawowych czynnoœci na swojej strukturze. Wierzcho³ki przechowywane s¹ w posortowanej hash-mapie (klasa \verb+LinkedHashMap+), gdzie kluczem jest pe³na nazwa pakietu identyfikuj¹ca wierzcho³ek. Kolekcja zbieraj¹ca krawêdzie jest posortowanym hash-zbiorem (klas \verb+LinkedHashSet+). Dziêki temu dla obu kolekcji mo¿liwa jest iteracja w ustalonej kolejnoœci, a czas wykonania kluczowych operacji jest optymalny:
 
@@ -385,15 +390,17 @@ Zaimplementowany graf posiada kolekcjê wierzcho³ków i krawêdzi oraz zbiór metod 
 
 Do konstruowania poszczególnych wierzcho³ków i krawêdzi wykorzysta³em wzorzec projektowy “fabryka”.
 
-Taki sposób implementacji modelu jest ³atwo rozszerzalny i pozwala na proste rozbudowanie funkcjonalnoœci Shimmering Constellations w przysz³oœci, np. zwiêkszenie granularnoœci przez dodanie wierzcho³ków klasowych do modelu.
+Taki sposób implementacji modelu jest ³atwo rozszerzalny i pozwala na proste rozbudowanie funkcjonalnoœci Shimmering Constellations w przysz³oœci, np. zwiêkszenie granularnoœci przez dodanie wierzcho³ków klasowych do modelu [dzia³ \ref{s:summary-future}].
 
-\section{Przebieg dzia³ania programu}\label{r:analiza}
+\section{Przebieg dzia³ania programu - przygotowanie wizualizacji}\label{s:software-analysis}
 
-Analiza projektu rozpoczyna siê w momencie, gdy u¿ytkownik zdefiniuje œcie¿kê prowadz¹c¹ do plików skompilowanych projektu i u¿yje przycisku potwierdzenia. Przed uruchomieniem wszystkich mechanizmów, u¿ytkownik mo¿e równie¿ podaæ adres zdalnego repozytorium git lub œcie¿kê do sklonowanego repozytorium na dysku. 
+Zebrane biblioteki i wybór implementacji modelu pozwalaj¹ na skuteczne przygotowanie danego projektu do wizualizacji [dzia³ \ref{s:model-analysis}]. Kroki potrzebne do wstêpnego przeanalizowania projektu przes Shimmering Constellations opisa³em w tej sekcji.
+
+Analiza projektu rozpoczyna siê w momencie, gdy u¿ytkownik zdefiniuje œcie¿kê prowadz¹c¹ do plików skompilowanych projektu i u¿yje przycisku potwierdzenia. Przed uruchomieniem wszystkich mechanizmów, u¿ytkownik mo¿e równie¿ podaæ adres zdalnego repozytorium Git lub œcie¿kê do sklonowanego repozytorium na dysku. 
 
 \subsection{Analiza JDepend - tworzenie struktury programu}\label{r:jdepend}
 
-Pierwszym krokiem analizy Shimmering Constellations jest uruchomienie analizatora JDepend na wskazanych plikach Ÿród³owych, b¹dŸ skompresowanych archiwach jar (analiza przez serwis JDepend mo¿e odbywaæ siê na obu rodzajach plików). Analizator JDepend bada klasy analizowanego projektu i wyniki swojego dzia³ania przedstawia w postaci posortowanej kolekcji danych dla poszczególnych pakietów. Obiekt przechowuj¹cy wyniki analizy dla konkretnego pakietu, posiada istotne cechy takie jak: nazwa pakietu, liczba klas konkretnych, liczba klas abstrakcyjnych, zbiór pakietów zale¿nych (afferent couplings oraz efferent couplings). %TODO - tutaj w jaki sposób JDepend liczy AC i EC
+Pierwszym krokiem analizy Shimmering Constellations jest uruchomienie analizatora JDepend na wskazanych plikach Ÿród³owych, b¹dŸ skompresowanych archiwach jar (analiza przez serwis JDepend mo¿e odbywaæ siê na obu rodzajach plików). Analizator JDepend bada klasy analizowanego projektu i wyniki swojego dzia³ania przedstawia w postaci posortowanej kolekcji danych dla poszczególnych pakietów. Obiekt przechowuj¹cy wyniki analizy dla konkretnego pakietu, posiada istotne cechy takie jak: nazwa pakietu, liczba klas konkretnych, liczba klas abstrakcyjnych, zbiór pakietów zale¿nych (afferent couplings oraz efferent couplings). 
 
 Otrzymuj¹c taki zestaw danych, Shimmering Constellations przegl¹da ka¿dy z wyników i buduje strukturê analizowanego programu:
 
@@ -403,14 +410,18 @@ Otrzymuj¹c taki zestaw danych, Shimmering Constellations przegl¹da ka¿dy z wynik
 	\begin{itemize}
 	\item Jeœli rodzic nie jest korzeniem drzewa i nie znajduje siê w grafie, oznacza to, ¿e nale¿y dodaæ do grafu wierzcho³ek katalogowy i po³¹czyæ go krawêdzi¹ pakietow¹, np. rodzicem pakietu \texttt{shimmer.service} jest \texttt{shimmer}, ale taki pakiet nie wystêpuje w projekcie, dlatego zostaje dodany jako katalog. Ten proces odbywa siê rekurencyjnie do momentu zbudowania pe³nej œcie¿ki.
 	\end{itemize}
-\item Dla ka¿dego wierzcho³ka dodaje do grafu krawêdzie zale¿noœci na podstawie zbioru pakietów zale¿nych. Modyfikacja wprowadzona przeze mnie do biblioteki JDepend pozwala okreœliæ, ile razy klasy zale¿nego pakietu importuj¹ klasy pakietu danego - ta informacja jest przechowywana w nowo utworzonej krawêdzi jako si³a zale¿noœci.
+\item Dla ka¿dego wierzcho³ka dodaje do grafu krawêdzie zale¿noœci na podstawie zbioru pakietów zale¿nych. Modyfikacja wprowadzona przeze mnie do biblioteki JDepend pozwala okreœliæ si³ê tych zale¿noœci.
 \end{itemize}
 
-Po przeprowadzeniu tego kroku analizy, Shimmering Constellations posiada odwzorowanie badanego projektu w postaci grafu oraz zna podstawowe cechy jego wierzcho³ków (rozmiar, liczba klas abstrakcyjnych, pakiety zale¿ne itp.) i krawêdzi (si³a zale¿noœci, rodzaj powi¹zania). Dziêki tym informacjom Shimmering Constellations bêdzie w stanie przeprowadziæ wizualizacjê projektu w postaci grafu lub konstelacji.
+\paragraph{Modyfikacja Afferent Couplings (Ca)} - Analizator JDepend podaje t¹ wartoœæ w sposób niestandardowy - w literaturze czêœciej spotykan¹ miar¹ jest liczba klas z obcych pakietów, które polegaj¹ na klasach z pakietu danego. Modyfikacja, któr¹ wprowadzi³em do analizatora JDepend pozwala na pozyskanie dodatkowej informacji - ile klas z wybranego pakietu polega na klasach z pakietu danego. Dziêki tej modyfikacji Shimmering Constellations zna nie tylko liczbê powi¹zañ z innymi pakietami, ale te¿ ich si³ê.
+
+\paragraph{Modyfikacja Efferent Couplings (Ce)}-  Podobnie, jak w przypadku Afferent Couplings, wartoœæ liczona jest przez analizator JDepend przy uwzglêdnieniu si³y zale¿noœci - liczby klas zale¿nych. W tym obszarze równie¿ konieczna by³a modyfikacja kodu biblioteki.
+
+\paragraph{} Po przeprowadzeniu tego kroku analizy, Shimmering Constellations posiada odwzorowanie badanego projektu w postaci grafu [dzia³ \ref{s:model-graph}] oraz zna podstawowe cechy jego wierzcho³ków (rozmiar, liczba klas abstrakcyjnych, pakiety zale¿ne itp.) i krawêdzi (si³a zale¿noœci, rodzaj powi¹zania). Dziêki tym informacjom Shimmering Constellations bêdzie w stanie przeprowadziæ wizualizacjê projektu w postaci grafu lub konstelacji.
 
 \subsection{Analiza Findbugs - dodanie informacji o b³êdach}
 
-Pierwsze próby u¿ycia biblioteki okaza³y siê bardzo niekorzystnie wp³ywaæ na czas wykonania g³ównej programu Shimmering Constellations i sk³oni³y mnie do szukania lepszego, bardziej wydajnego sposobu uruchamiania tego fragmentu analizy. Aby zwiêkszyæ wydajnoœæ narzêdzia, analiza wykonywana przez Findbugs uruchamiana jest w oddzielnym w¹tku, jako samodzielna instancja programu z odpowiednimi parametrami.
+Pierwsze próby u¿ycia biblioteki okaza³y siê bardzo niekorzystnie wp³ywaæ na czas wykonania g³ównej pêtli programu Shimmering Constellations i sk³oni³y mnie do szukania lepszego, bardziej wydajnego sposobu uruchamiania tego fragmentu analizy. Aby zwiêkszyæ wydajnoœæ narzêdzia, analiza wykonywana przez Findbugs uruchamiana jest w oddzielnym w¹tku, jako samodzielna instancja programu z odpowiednimi parametrami.
 
 Parametry przekazywane analizatorowi Findbugs ró¿ni¹ siê w zale¿noœci od ustawieñ symulacji Shimmering Constellations:
 
@@ -420,7 +431,6 @@ Parametry przekazywane analizatorowi Findbugs ró¿ni¹ siê w zale¿noœci od ustawie
 \item \texttt{nested:false} - ustawienie zapobiega poszukiwaniu zagnie¿d¿onych archiwów zip i jar wewn¹trz wejœciowego katalogu projektu - ten parametr nie ulega zmianom
 \item \texttt{xml} - tworzy plik wynikowy w postaci tekstu xml - ten parametr równie¿ pozostaje sta³y
 \end{itemize}
-
 
 Generowany przez Findbugs plik xml jest tworzony w katalogu tymczasowym, nastêpnie analizowany przez parser DOM. Report zawiera miêdzy innymi elementy reprezentuj¹ce wykryte usterki (element \texttt{BugInstance}) oraz statystyki konkretnych pakietów (\texttt{PackageStats}) i klas (\texttt{ClassStats}). Shimmering Constellations parsuj¹c raport tworzy obiekty b³êdów i dodaje je do odpowiednich pakietów z grafu. Ka¿dy b³¹d posiada pe³n¹ nazwê klasy, w której zosta³ wykryty i na jej podstawie odnajdywany jest pakiet w grafie projektu. Ponadto obiekt reprezentuj¹cy b³¹d posiada atrybuty nadane przez Findbugs:
 
@@ -443,25 +453,22 @@ Dodatkowe informacje, które Findbugs umieszcza w elementach statystyk pakietowyc
 
 Informacje, które nie s¹ zawarte w pliku wynikowym, to s³owna nazwa typu b³êdu i tekstowy opis usterki - jedyn¹ informacj¹ o typie b³êdu jest jego skrótowy identyfikator. Normaln¹ procedur¹ podczas korzystania z Findbugs jest u¿ywanie dostarczonego œrodowiska GUI, gdzie za³¹czone s¹ treœci opisów poszczególnych b³êdów, b¹dŸ pos³ugiwanie siê indeksem rozpoznawanych b³êdów, zamieszczonym na stronie projektu - wyszukuj¹c opisy wed³ug skrótowego identyfikatora. Aby poprawiæ jakoœæ i wygodê korzystania z Shimmering Constellations, przygotowa³em prosty parser aktualnego indeksu b³êdów i wczyta³em zawarte w nim dane do s³ownika. Dziêki temu znaj¹c identyfikator typu b³êdu, na etapie wizualizacji mo¿liwe jest wyœwietlenie pe³nego tekstowego raportu o b³êdach, ³¹cznie z tekstowymi opisami usterek.
 
-Analiza Findbugs nie jest niezbêdnym krokiem wymaganym do wizualizacji projektu, dlatego ze wzglêdu na czasoch³onnoœæ tej czynnoœci mo¿liwe jest jej pominiêcie na ¿yczenie u¿ytkownika. Wyniki pozyskiwane w tym kroku pozwalaj¹ narzêdziu Shimmering Constellations wskazaæ najbardziej podejrzane pakiety i przedstawiæ czytelny raport usterek dla ka¿dego z nich.
+Analiza Findbugs nie jest niezbêdnym krokiem wymaganym do wizualizacji projektu, dlatego ze wzglêdu na czasoch³onnoœæ tej czynnoœci mo¿liwe jest jej pominiêcie na ¿yczenie u¿ytkownika. Wyniki pozyskiwane w tym kroku pozwalaj¹ narzêdziu Shimmering Constellations wskazaæ najbardziej podejrzane pakiety i przedstawiæ czytelny raport usterek [dzia³ \ref{s:model-bugs}] dla ka¿dego z nich.
 
 \subsection{Analiza JGit - dodanie informacji historycznych projektu}
+%TODO tutaj by³y jakieœ w¹tpliwoœci co do s³owa POWINNO
 Kolejnym krokiem analizy jest wydobycie metryk historycznych z repozytorium projektu. Aby by³o to mo¿liwe, repozytorium badanego projektu powinno znaleŸæ siê na lokalnym dysku dostêpnym dla œrodowiska aplikacji Shimmering Constelletions (JGit nie pozwala na ³atwe pozyskanie wymaganych informacji pos³uguj¹c siê jedynie zdalnym repozytorium). W zwi¹zku z tym, jeœli u¿ytkownik poda³ adres internetowy repozytorium zdalnego, jest ono klonowane przez bibliotekê JGit. Czasoch³onnoœæ tej operacji sk³oni³a mnie do umo¿liwienia rêcznego sklonowania repozytorium zdalnego przed rozpoczêciem analizy i przekazania analizatorowi œcie¿ki do gotowego repozytorium lokalnego.
 
 Maj¹c dostêp do repozytorium lokalnego, analizator przegl¹da wszystkie pliki podlegaj¹ce systemowi kontroli wersji i stara siê znaleŸæ w grafie projektu odpowiadaj¹ce im pakiety. Dopasowanie odbywa siê na zasadzie analizy œcie¿ki i nazwy pliku w repozytorium. Przyk³adowo plik znajduj¹cy siê pod œcie¿k¹: \verb+src\main\java\shimmer\service\GraphService.java+  zostanie dopasowany do pakietu \texttt{shimmer.service}. Jeœli dla danego pliku dopasowanie istnieje, narzêdzie JGit przegl¹da kontrybucje zmieniaj¹ce dany plik (liczba kontrybucji jest ograniczona do 500 wstecz) i dla danego pakietu w grafie aktualizuje liczbê wszystkich kontrybucji, datê ostatniej zmiany oraz liczbê autorów.
 
 Analiza JGit nie jest obowi¹zkowym krokiem w procesie badania wybranego projektu, dlatego mo¿e zostaæ pominiêta na ¿yczenie u¿ytkownika. Informacje pozyskane w tym kroku wzbogacaj¹ wiedzê na temat historii zmian projektu i pozwalaj¹ na wygenerowanie mapy termicznej metryk historycznych w widoku konstelacji.
 
-%TODO
-\paragraph{TODO:}
-\textit{Tutaj potrzebujê konkretnego cytowania odnoœnie metryk projektowych / pakietowych.}
-
 \subsection{Wyliczenie wartoœci metryk}
-W tym kroku, na podstawie stworzonego grafu projektu, wyliczane s¹ wartoœci wszystkich metryk dostêpnych w programie, które wymagaj¹ dodatkowych kalkulacji. Niektóre metryki s¹ pozyskiwane bezpoœrednio w poprzednich krokach analizy i nie wymagaj¹ obliczeñ - szczegó³y przedstawiono w tabeli \ref{t_metryki}.
+W tym kroku, na podstawie stworzonego grafu projektu, wyliczane s¹ wartoœci wszystkich metryk dostêpnych w programie, które wymagaj¹ dodatkowych kalkulacji. Niektóre metryki s¹ pozyskiwane bezpoœrednio w poprzednich krokach analizy i nie wymagaj¹ obliczeñ - szczegó³y przedstawiono w tabeli \ref{t:metrics-source}.
 
 \begin{table}[t]
 \centering
-\label{t_metryki}
+\label{t:metrics-source}
 	\begin{tabular}{rl}
 	\hline 
 	Metryka & Sposób pozyskiwania \\
@@ -507,13 +514,13 @@ Obiekty powsta³e w wyniku serializacji (krawêdzie i wierzcho³ki w postaci JSON) 
 \section{Wizualizacja}\label{r:wizualizacja}
 \subsection{Podstawa wizualizacji - graf}
 
-Podstaw¹ do wizualizacji w Shimmering Constellation jest wizualizacja grafowa. Biblioteka, która odpowiada za wizualizowanie grafu to Vis.js \cite{bib_visjs}. Narzêdzie pozwala na dynamiczn¹ wizualizacjê grafu w oparciu o model dystrybucji cz¹steczek Barnes-Hut.
+Podstaw¹ do wizualizacji w Shimmering Constellation jest wizualizacja grafowa. Biblioteka, która odpowiada za wizualizowanie grafu to Vis.js \cite{b:visjs}. Narzêdzie pozwala na dynamiczn¹ wizualizacjê grafu w oparciu o model dystrybucji cz¹steczek Barnes-Hut.
 
 VisJs pobiera wynik analizy w postaci list wierzcho³ków i krawêdzi w formacie JSON i wyœwietla graf projektu z odpowiednimi parametrami. Prezentowana wizualizacja jest równowa¿ona w czasie rzeczywistym i pozwala u¿ytkownikowi na dowolne manipulowanie grafem - skalowanie, przesuwanie, przemieszczanie wierzcho³ków.
 
 \subsection{Wizualizacja zaawansowana - mapa termiczna}
 
-Dope³niaj¹cym elementem wizualizacji jest mapa termiczna, która wyœwietlana jest w tle wizualizowanego grafu. Generowaniem mapy termicznej zajmuje siê biblioteka heatmap.js \cite{bib_heatmapsjs}. Mapa termiczna oddaje temperaturê poszczególnych wierzcho³ków.
+Dope³niaj¹cym elementem wizualizacji jest mapa termiczna, która wyœwietlana jest w tle wizualizowanego grafu. Generowaniem mapy termicznej zajmuje siê biblioteka heatmap.js \cite{b:heatmapsmapsjs}. Mapa termiczna oddaje temperaturê poszczególnych wierzcho³ków.
 
 Ze wzglêdu na dynamiczny charakter prezentacji grafu, mapa termiczna jest odœwie¿ana z ustalon¹ czêstotliwoœci¹ za ka¿dym razem, gdy graf zmienia swoje po³o¿enie, jest równowa¿ony, lub skalowany. Dziêki temu mapa termiczna adaptuje zmiany, którym ulega graf i jest w stanie dostosowaæ siê do jego dynamicznego charakteru.
 
@@ -530,11 +537,11 @@ Narzêdzie Shimmering Constellations pozwala u¿ytkownikowi na samodzielny wybór s
 \item[D³ugoœæ krawêdzi (zale¿noœæ)] - pozwala w ³atwy sposób zobrazowaæ si³ê powi¹zania miêdzy poszczególnymi elementami. Wierzcho³ki znajduj¹ce siê blisko siebie w znormalizowanym grafie, s¹ od siebie silnie zale¿ne, a wierzcho³ki oddalone nie maj¹ mocnych powi¹zañ.
 \end{description}
 
-Sugerowane sposoby wizualizacji metryk przedstawiono w tabeli \ref{t_sposoby}
+Sugerowane sposoby wizualizacji metryk przedstawiono w tabeli \ref{t:metrics-visualization}
 
 \begin{table}[t]
 \centering
-\label{t_sposoby}
+\label{t:metrics-visualization}
 	\begin{tabular}{rl}
 	\hline 
 	Metryka & Sugerowany sposób obrazowania\\
@@ -726,19 +733,19 @@ Aby poznaæ opiniê u¿ytkowników na temat konstelacyjnej metody wizualizacji i por
 
 % ------------------------------------------------------------------------------
 % ROZDZIA£ PODSUOWANIE
-\chapter{Podsumowanie pracy}\label{r:podsumowanie}
+\chapter{Podsumowanie pracy}\label{c:summary}
 
 W pracy opisano narzêdzie do wizualizacji projektów informatycznych, którego kod udostêpniono na zasadach Open Source. Program Shimmering Constelletion ³¹czy w sobie techniki wizualizacji konstelacyjnej oraz grafowej ze zintegrowan¹ map¹ termiczn¹. Wizualizacja kodu w programie pozwala nie tylko w sposób czytelny zobrazowaæ dany projekt, ale uwzglêdnia te¿ zachodz¹ce w nim zmiany i umo¿liwia analizê jakoœci. Skutecznoœæ wykorzystanych metod w poszczególnych obszarach zastosowañ potwierdzi³y przeprowadzone badania preferencji u¿ytkowników.
 
-\section{Perspektywy dalszego rozwoju oprogramowania}
+\section{Perspektywy dalszego rozwoju oprogramowania}\label{s:summary-future}
 
-Oprogramowanie Shimmering Constellations powsta³o z myœl¹ o mo¿liwoœci przysz³ego rozbudowywania jego funkcjonalnoœci. Architektura i implementacja (patrz rozdzia³ \ref{r:architektura} oraz \ref{r:implementacja}) aplikacji by³y tworzone zgodnie ze sztuk¹ pragmatycznego programowania, aby umo¿liwiæ dalszy rozwój systemu i zapewniæ jego wysok¹ skalowalnoœæ. Obecnie przewidziano nastêpuj¹ce mo¿liwoœci rozwoju narzêdzia:
+Oprogramowanie Shimmering Constellations powsta³o z myœl¹ o mo¿liwoœci przysz³ego rozbudowywania jego funkcjonalnoœci. Architektura i implementacja [patrz rozdzia³ \ref{r:architektura} oraz \ref{s:software-implementation}] aplikacji by³y tworzone zgodnie ze sztuk¹ pragmatycznego programowania, aby umo¿liwiæ dalszy rozwój systemu i zapewniæ jego wysok¹ skalowalnoœæ. Obecnie przewidziano nastêpuj¹ce mo¿liwoœci rozwoju narzêdzia:
 
-\paragraph{Zwiêkszenie granularnoœci:} Korzystnym krokiem w rozwoju systemu by³oby zwiêkszenie granularnoœci wizualizacji. Obecnie kod obrazowany przez Shimmering Constellations przedstawiany jest na poziomie pakietów i na tym stopniu liczona jest wiêkszoœæ dostarczanych metryk. Rozbudowanie aplikacji o analizê na poziomie poszczególnych klas wymaga³oby jedynie niewielkich zmian w analizatorze JDepend (rozdzia³ \ref{r:jdepend}) i modelu projektu (rozdzia³ \ref{r:model}). Biblioteka wizualizacyjna visJs pozwala na automatyczn¹ obs³ugê klastrowania wierzcho³ków - dziêki temu wierzcho³ki reprezentuj¹ce klasy mog³yby ³¹czyæ siê w wierzcho³ki klastrowe reprezentuj¹ce poszczególne pakiety (stan obecny). Takie rozbudowanie zwiêkszy³oby dok³adnoœæ narzêdzie Shimmering Constellations.
+\paragraph{Zwiêkszenie granularnoœci:} Korzystnym krokiem w rozwoju systemu by³oby zwiêkszenie granularnoœci wizualizacji. Obecnie kod obrazowany przez Shimmering Constellations przedstawiany jest na poziomie pakietów i na tym stopniu liczona jest wiêkszoœæ dostarczanych metryk. Rozbudowanie aplikacji o analizê na poziomie poszczególnych klas wymaga³oby jedynie niewielkich zmian w analizatorze JDepend [rozdzia³ \ref{r:jdepend}] i modelu projektu [rozdzia³ \ref{c:model}]. Biblioteka wizualizacyjna visJs pozwala na automatyczn¹ obs³ugê klastrowania wierzcho³ków - dziêki temu wierzcho³ki reprezentuj¹ce klasy mog³yby ³¹czyæ siê w wierzcho³ki klastrowe reprezentuj¹ce poszczególne pakiety (stan obecny). Takie rozbudowanie zwiêkszy³oby dok³adnoœæ narzêdzie Shimmering Constellations.
 
-\paragraph{Uruchomienie aplikacji www:} Dobrym wykorzystaniem narzêdzia Shimmering Constellations mog³oby by byæ uruchomienie go w postaci us³ugi online na serwerach uczelni w celach naukowych. Uczestnicy kursu In¿ynieria Oprogramowania mogliby przy u¿yciu opisanego programu analizowaæ wybrane projekty informatyczne, a wyniki analiz zbierane w bazie danych pozwoli³yby badaæ studentom i pracownikom instytutu projekty Open Source. Taka modyfikacja, dziêki architekturze opartej na aplikacji www (patrz rozdzia³ \ref{r:architektura}), wymaga³aby jedynie integracji z wybran¹ baz¹ danych. 
+\paragraph{Uruchomienie aplikacji www:} Dobrym wykorzystaniem narzêdzia Shimmering Constellations mog³oby by byæ uruchomienie go w postaci us³ugi online na serwerach uczelni w celach naukowych. Uczestnicy kursu In¿ynieria Oprogramowania mogliby przy u¿yciu opisanego programu analizowaæ wybrane projekty informatyczne, a wyniki analiz zbierane w bazie danych pozwoli³yby badaæ studentom i pracownikom instytutu projekty Open Source. Taka modyfikacja, dziêki architekturze opartej na aplikacji www [patrz rozdzia³ \ref{r:architektura}], wymaga³aby jedynie integracji z wybran¹ baz¹ danych. 
 
-\paragraph{Dodanie nowych metryk i modu³ów:} Oczywistym rozszerzeniem dla aplikacji Shimmering Constellations jest implementacja nowych metryk i modu³ów analizuj¹cych kod projektu. Chc¹c wzbogaciæ program o mo¿liwoœæ wizualizacji dodatkowej metryki, nale¿y dodaæ odpowiedni analizator do g³ównego procesu programu (rozdzia³ \ref{r:analiza}), rozbudowaæ model o nowe w³aœciwoœci (rozdzia³ \ref{r:model}) i zadbaæ o odpowiednie obrazowanie nowej cechy (rozdzia³ \ref{r:wizualizacja}). 
+\paragraph{Dodanie nowych metryk i modu³ów:} Oczywistym rozszerzeniem dla aplikacji Shimmering Constellations jest implementacja nowych metryk i modu³ów analizuj¹cych kod projektu. Chc¹c wzbogaciæ program o mo¿liwoœæ wizualizacji dodatkowej metryki, nale¿y dodaæ odpowiedni analizator do g³ównego procesu programu [rozdzia³ \ref{s:software-analysis}], rozbudowaæ model o nowe w³aœciwoœci [rozdzia³ \ref{c:model}] i zadbaæ o odpowiednie obrazowanie nowej cechy [rozdzia³ \ref{r:wizualizacja}].
 
 
 % ------------------------------------------------------------------------------
@@ -768,24 +775,28 @@ Za³¹czona paczka zawiera kod programu Shimmering Constellations napisany w jêzyk
 \begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Bibliografia}
 
-\bibitem[Erd11]{bib_graph} Erdemir, U.; Tekin, U.; Buzluca, F., \textit{E-Quality: A graph based object oriented software quality visualization tool} Visualizing Software for Understanding and Analysis (VISSOFT), 2011 6th IEEE International Workshop on , vol., no., pp.1,8, 29-30 Sept. 2011
+\bibitem[1]{b:graph} Erdemir, U.; Tekin, U.; Buzluca, F., \textit{E-Quality: A graph based object oriented software quality visualization tool} Visualizing Software for Understanding and Analysis (VISSOFT), 2011 6th IEEE International Workshop on , vol., no., pp.1,8, 29-30 Sept. 2011
 
-\bibitem[Deng11]{bib_const} Fang Deng; DiGiuseppe, N.; Jones, J.A., \textit{Constellation visualization: Augmenting program dependence with dynamic information}, Visualizing Software for Understanding and Analysis (VISSOFT), 2011 6th IEEE International Workshop on , vol., no., pp.1,8, 29-30 Sept. 2011
+\bibitem[2]{b:constellation} Fang Deng; DiGiuseppe, N.; Jones, J.A., \textit{Constellation visualization: Augmenting program dependence with dynamic information}, Visualizing Software for Understanding and Analysis (VISSOFT), 2011 6th IEEE International Workshop on , vol., no., pp.1,8, 29-30 Sept. 2011
 
-\bibitem[Jon02]{bib_taran} J. A. Jones, M. J. Harrold, and J. Stasko., \textit{Visualization of test information to assist fault localization}, Proceedings of the International
+\bibitem[3]{b:tarantulla} J. A. Jones, M. J. Harrold, and J. Stasko., \textit{Visualization of test information to assist fault localization}, Proceedings of the International
 Conference on Software Engineering, ICSE ’02, pages 467–477, New York, NY, USA, 2002. ACM.
 
-\bibitem[Ben13]{bib_heat} Benomar, O.; Sahraoui, H.; Poulin, P., \textit{Visualizing software dynamicities with heat maps}, Software Visualization (VISSOFT), 2013 First IEEE Working Conference on , vol., no., pp.1,10, 27-28 Sept. 2013
+\bibitem[4]{b:heatmaps} Benomar, O.; Sahraoui, H.; Poulin, P., \textit{Visualizing software dynamicities with heat maps}, Software Visualization (VISSOFT), 2013 First IEEE Working Conference on , vol., no., pp.1,10, 27-28 Sept. 2013
 
-\bibitem[???1]{bib_metr} Tutaj muszê podaæ pracê zwi¹zan¹ z metrykami
+\bibitem[5]{b:metrics} Martin, Robert C. \textit{Design principles and design patterns}, Object Mentor, 2000: 1-34. 
 
-\bibitem[???2]{bib_jdepend} Tutaj muszê podaæ pracê o JDepend
+\bibitem[6]{b:historical-metrics} Mahmoud O. Elish; Mojeeb Al-Rahman Al-Khiaty \textit{A suite of metrics for quantifying historical changes to predict future change-prone classes in object-oriented software}, Journal of Software: Evolution and Process, Volume 25, Issue 5, pages 407–437, May 2013
 
-\bibitem[???3]{bib_findbugs} Tutaj muszê podaæ pracê o FindBugs
+\bibitem[7]{b:jdepend} Mike Clark \textit{JDepend}, 1999-2009 Clarkware Consulting, Inc. \url{http://clarkware.com/software/JDepend.html}
 
-\bibitem[Jon10]{bib_visjs} J. Jong; A. Mulder, \textit{Vis.js}, Almende B.V. 2010 - 2015, \url{http://visjs.org/} 
+\bibitem[8]{b:findbugs} David Hovemeyer; William Pugh. 2004. \textit{Finding bugs is easy}, SIGPLAN Not. 39, 12 (December 2004), 92-106
 
-\bibitem[Wie14]{bib_heatmapsjs} P. Wied, \textit{heatmap.js}, 2014 - 2015, \url{http://www.patrick-wied.at/static/heatmapjs/}
+\bibitem[9]{b:jgit} \textit{JGit}, The Eclipse Foundation, 2015 \url{http://www.eclipse.org/jgit/}
+
+\bibitem[9]{b:visjs} J. Jong; A. Mulder, \textit{Vis.js}, Almende B.V. 2010 - 2015, \url{http://visjs.org/} 
+
+\bibitem[10]{b:heatmapsmapsjs} P. Wied, \textit{heatmap.js}, 2014 - 2015, \url{http://www.patrick-wied.at/static/heatmapjs/}
 
 \end{thebibliography}
 
