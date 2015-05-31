@@ -13,6 +13,7 @@
 \usepackage{polski}
 \usepackage[cp1250]{inputenc}
 \usepackage{hyperref}
+\usepackage{enumitem}
 
 \author{Filip Daca}
 \nralbumu{305199}
@@ -68,46 +69,41 @@ W rozdziale \ref{c:motivation} omówiê trzy wybrane metody wizualizacji i przedst
 % ------------------------------------------------------------------------------
 \chapter{Motywacja}\label{c:motivation}
 
-% TODO
-\paragraph{TODO:}
-\textit{W tym rozdziale opiszê motywacjê stoj¹c¹ za powstaniem tej pracy. G³ówn¹ motywacj¹ jest chêæ po³¹czenia trzech aspektów wizualizacji w jednym narzêdziu: obraz struktury programu, jakoœæ kodu, zmiany w projekcie. Mo¿liwe, ¿e zrezygnujê z tego rozdzia³u?}
+Wizualizacja oprogramowania jest obszern¹ ga³êzi¹ in¿ynierii, która porusza koncepcje, techniki, metody i narzêdzia wspomagaj¹ce in¿ynieriê oprogramowania przez wizualn¹ prezentacjê wybranych treœci i zagadnieñ. Tematami podejmowanymi przy rozwa¿aniu tego typu wizualizacji s¹ czêsto projekty i systemy informatyczne, ich budowa, struktura, dzia³anie oraz ewolucja. Popularn¹ konferencj¹, która specjalizuje siê w metodach wizualizacji oprogramowania, jest organizowana przez Instytut In¿ynierów i Elektroników (and. IEEE - \textit{Institute of Electrical and Electronics Engineers}) konferencja VISSOFT - \textit{Visualizing Software for Understanding and Analysis} \cite{b:vissoft}. Wœród publikacji dotycz¹cych metod wizualizacji, zaprezentowanych na tej konferencji, skupi³em siê na pracach poruszaj¹cych nastêpuj¹ce aspekty:
 
-Jako Ÿród³o prac dotycz¹cych wspó³czesnych metod wizualizacji kodu przyj¹³em konferencjê naukow¹ Visualizing Software for Understanding and Analysis -  VISSOFT 2011.
-
-Przegl¹daj¹c stosowane metody wizualizacji kodu stara³em siê zwracaæ uwagê na trzy aspekty:
-
-\begin{enumerate}
+\begin{enumerate}[label=(\alph*)]
 \item Opis metody obrazowania kodu projektu - w jaki sposób wizualizowane jest oprogramowanie? 
 \item Mo¿liwoœæ wizualizacji jakoœci kodu - czy opisywana metoda pozwala na obrazowania miar jakoœci? 
 \item Uwzglêdnienie analizy historycznej kodu - czy wizualizacja uwzglêdnia i obrazuje zmiany w projekcie?
 \end{enumerate}
 
-W pracach opublikowanych na konferencji VISSOFT nie znalaz³em ¿adnego artyku³u, który uwzglêdnia³ wszystkie trzy z wy¿ej wymienionych aspektów, jednak uda³o mi siê znaleŸæ kilka prac, które w ciekawy sposób poruszaj¹ czêœæ z nich, a pomys³y z tych prac zebrane w jedn¹ ca³oœæ mog³yby z³o¿yæ siê na przydatne narzêdzie wspieraj¹ce sztukê in¿ynierii oprogramowania. Wybrane prace opiszê w kolejnych dzia³ach.
+¯adna z rozpatrywanych publikacji nie pokrywa³a siê w pe³ni z wszystkimi trzema aspektami, ale kilka prac w ciekawy sposób porusza³o czêœæ z nich. W tym rozdziale opiszê trzy wybrane artyku³y, które w interesuj¹cy sposób uwzglêdniaj¹ czêœæ z wy¿ej wymienionych aspektów, a pomys³y z tych prac zebrane w jedn¹ ca³oœæ mog¹ z³o¿yæ siê na przydatne narzêdzie wspieraj¹ce sztukê in¿ynierii oprogramowania.
 
 \section{Wizualizacja grafowa}\label{s:motivation-graph}
 
-W swojej pracy \cite{b:graph} U. Erdemir, U. Tekin i F. Buzluca proponuj¹ standardow¹ metodê wizualizacji kodu w postaci grafu. Stworzone przez nich narzêdzie wydobywa metryki jakoœciowe z kodu Ÿród³owego analizowanego oprogramowania i 
-
-%TODO
-\paragraph{TODO:}
-\textit{Tutaj opiszê dok³adniej abstrakt omawianej pracy.}
+W swojej pracy \cite{b:graph} U. Erdemir, U. Tekin i F. Buzluca proponuj¹ standardow¹ metodê wizualizacji kodu w postaci grafu. Autorzy skupiaj¹ siê na paradygmacie obiektowym i wizualizacji projektu na poziomie klas. Stworzone przez nich narzêdzie wydobywa metryki jakoœciowe z kodu Ÿród³owego analizowanego oprogramowania i przedstawia je w opartym na grafie interaktywnym œrodowisku. Proponowane podejœcie pomaga twórcom oprogramowania oceniæ jakoœæ kodu przez zastosowanie kategoryzacji atrybutów jakoœciowych i intuicyjne techniki wizualizacji.
 
 \subsection{Wykorzystane techniki}
 
-%TODO
-\paragraph{TODO:}
-\textit{Tutaj wypunktujê i opiszê stosowane przez autorów techniki, np. manipulacja kszta³tem wierzcho³ka w grafie.}
+Autorzy w swoim narzêdziu wizualizuj¹ kod w postaci grafu, w którym wierzcho³ki reprezentuj¹ klasy, a krawêdzie oznaczaj¹ zale¿noœci miêdzy klasami, np.: dziedziczenie, implementacjê, widocznoœæ. Aby uskuteczniæ analizê jakoœci oprogramowania, autorzy klasyfikuj¹ wartoœci wybranych metryk na kategorie: \textit{niska}, \textit{umiarkowanie niska}, \textit{umiarkowanie wysoka} i \textit{wysoka}. Nastêpnie wizualizuj¹ te informacje za pomoc¹ nastêpuj¹cych technik:
 
-\paragraph{TODO:}
-\textit{Umieszczê ilustracjê z pracy autorów.}
+\begin{itemize}
+\item{Rozmiar wierzcho³ków} - zmieniaj¹c rozmiar wierzcho³ka obrazowany jest faktyczny rozmiar reprezentowanej klasy - niewielkie wierzcho³ki oznaczaj¹ klasy z niewielk¹ iloœci¹ metod, pól i instrukcji.
+\item{Kolor wierzcho³ków} - przez manipulacjê kolorem wierzcho³ka, autorzy oddaj¹ z³o¿onoœæ danej klasy. Wierzcho³ki czerwone to klasy o du¿ej z³o¿onoœci, a wierzcho³ki niebieskie to klasy nieskomplikowane.
+\item{Kszta³t wierzcho³ków} - modyfikuj¹c kszta³t wierzcho³ka oznaczany jest stopieñ zwi¹zania danej klasy. Wierzcho³ki w kszta³cie gwiazdy s¹ silnie zwi¹zane z innymi klasami, a wierzcho³ki o kszta³tach ³agodniejszych symbolizuj¹ klasy samodzielnie, lub o niskim powi¹zaniu.
+\item{Kolor krawêdzi} - nadaj¹c odpowiedni kolor dla krawêdzi w grafie oznaczono rodzaj powi¹zania symbolizowanego przez dan¹ krawêdŸ. Przyk³adowo, kolor zielony oznacza implementacjê, a b³êkitny widocznoœæ.
+\item{Gruboœæ krawêdzi} - przez modyfikacjê gruboœci krawêdzi autorzy oznaczaj¹ si³ê zale¿noœci reprezentowan¹ przez dan¹ krawêdŸ. Przyk³adowo, jeœli krawêdŸ oznacza wywo³ywanie metod z jednej klasy przez drug¹, gruboœæ krawêdzi bêdzie odwzorowywaæ iloœæ takich wywo³añ. 
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{bib3.png}
+\caption{Projekt PDE wizualizowany w postaci grafu podany jako przyk³ad autorów pracy \cite{b:graph}}
+\end{figure}
 
 \subsection{Podsumowanie grafu}
 
-Metoda zaproponowana przez autorów jest prosta w interpretacji i zrozumia³a dla u¿ytkownika. Za pomoc¹ grafu mo¿na w ³atwy sposób wizualizowaæ poszczególne cechy projektu nanosz¹c kolory na wybrane wierzcho³ki / krawêdzie. Autorzy potwierdzili eksperymentalnie, ¿e zastosowana przez nich metoda mo¿e byæ u¿yta do detekcji niedoskona³oœci projektowych i fragmentów kwalifikuj¹cych siê do refaktoryzacji.
-
-\paragraph{TODO:}
-\textit{Wspomnê ¿e praca nie porusza wszystkich trzech interesuj¹cych mnie aspektów - brak analizy zmian projektu}
-% Przyk³ady zaprezentowane przez autorów by³yby bardziej czytelne, gdyby wyraŸnie zaznaczyæ wierzcho³ki grafu.
+Metoda zaproponowana przez autorów jest prosta w interpretacji i zrozumia³a dla u¿ytkownika. Za pomoc¹ grafu mo¿na w ³atwy sposób wizualizowaæ poszczególne cechy projektu nanosz¹c kolory na wybrane wierzcho³ki / krawêdzie. Autorzy potwierdzili eksperymentalnie, ¿e zastosowana przez nich metoda mo¿e byæ u¿yta do detekcji niedoskona³oœci projektowych i fragmentów kwalifikuj¹cych siê do refaktoryzacji. Opisana praca porusza wspomniane przeze mnie aspekty (a) oraz (b).
 
 \section{Wizualizacja konstelacyjna}\label{s:motivation-constellation}
 
@@ -144,7 +140,7 @@ Autorzy pracy przeprowadzili badania, które potwierdzi³y skutecznoœæ metody kons
 
 \subsection{Wnioski i podsumowanie konstelacji}
 
-Wizualizacja konstelacyjna jest metod¹, która dobrze nadaje siê wielu zastosowañ in¿ynierii oprogramowania i mo¿na j¹ przeprowadziæ uzupe³niaj¹c graf wizualizowanego projektu o odpowiednie metadane. Skutecznoœæ metody potwierdzono badaniami, w których wykazano, ¿e programiœci potrzebuj¹ mniej czasu na identyfikacjê usterek w kodzie, kiedy pos³uguj¹ siê konstelacj¹, w porównaniu do mapy dokumentu.
+Wizualizacja konstelacyjna jest metod¹, która dobrze nadaje siê wielu zastosowañ in¿ynierii oprogramowania i mo¿na j¹ przeprowadziæ uzupe³niaj¹c graf wizualizowanego projektu o odpowiednie metadane. Skutecznoœæ metody potwierdzono badaniami, w których wykazano, ¿e programiœci potrzebuj¹ mniej czasu na identyfikacjê usterek w kodzie, kiedy pos³uguj¹ siê konstelacj¹, w porównaniu do mapy dokumentu. Opisana praca porusza wspomniane przeze mnie aspekty (a) oraz (b).
 
 \section{Mapa termiczna}\label{s:motivation-heatmap}
 
@@ -176,7 +172,7 @@ Mapy termiczne s¹ dwuwymiarowymi obiektami wykorzystuj¹cymi metaforê ciep³a do r
 
 \subsection{Wnioski i podsumowanie map termicznych}
 
-Mapa termiczna mo¿e byæ dodatkowym elementem wizualizacji, który w dobry sposób oddaje dynamikê projektu. Rozmyty charakter obrazowania termicznego, szczególnie wykorzystany w tle konkretnej wizualizacji, rozszerza otoczenie pojedynczych elementów i przyczynia siê do powstawania obszarów o konkretnych w³aœciwoœciach. Przyk³adowo - obszary o wiêkszej temperaturze mog¹ obrazowaæ skupiska kodu czêsto modyfikowanego.
+Mapa termiczna mo¿e byæ dodatkowym elementem wizualizacji, który w dobry sposób oddaje dynamikê projektu. Rozmyty charakter obrazowania termicznego, szczególnie wykorzystany w tle konkretnej wizualizacji, rozszerza otoczenie pojedynczych elementów i przyczynia siê do powstawania obszarów o konkretnych w³aœciwoœciach. Przyk³adowo - obszary o wiêkszej temperaturze mog¹ obrazowaæ skupiska kodu czêsto modyfikowanego. Opisana praca porusza wspomniane przeze mnie aspekty (a) oraz (c).
 
 % ------------------------------------------------------------------------------
 % ROZDZIA£ MODEL
@@ -783,28 +779,30 @@ Za³¹czona paczka zawiera kod programu Shimmering Constellations napisany w jêzyk
 \begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Bibliografia}
 
-\bibitem[1]{b:graph} Erdemir, U.; Tekin, U.; Buzluca, F., \textit{E-Quality: A graph based object oriented software quality visualization tool} Visualizing Software for Understanding and Analysis (VISSOFT), 2011 6th IEEE International Workshop on , vol., no., pp.1,8, 29-30 Sept. 2011
+\bibitem{b:vissoft} \url{http://vissoft.dcc.uchile.cl/}
 
-\bibitem[2]{b:constellation} Fang Deng; DiGiuseppe, N.; Jones, J.A., \textit{Constellation visualization: Augmenting program dependence with dynamic information}, Visualizing Software for Understanding and Analysis (VISSOFT), 2011 6th IEEE International Workshop on , vol., no., pp.1,8, 29-30 Sept. 2011
+\bibitem{b:graph} Erdemir, U.; Tekin, U.; Buzluca, F., \textit{E-Quality: A graph based object oriented software quality visualization tool} Visualizing Software for Understanding and Analysis (VISSOFT), 2011 6th IEEE International Workshop on , vol., no., pp.1,8, 29-30 Sept. 2011
 
-\bibitem[3]{b:tarantulla} J. A. Jones, M. J. Harrold, and J. Stasko., \textit{Visualization of test information to assist fault localization}, Proceedings of the International
+\bibitem{b:constellation} Fang Deng; DiGiuseppe, N.; Jones, J.A., \textit{Constellation visualization: Augmenting program dependence with dynamic information}, Visualizing Software for Understanding and Analysis (VISSOFT), 2011 6th IEEE International Workshop on , vol., no., pp.1,8, 29-30 Sept. 2011
+
+\bibitem{b:tarantulla} J. A. Jones, M. J. Harrold, and J. Stasko., \textit{Visualization of test information to assist fault localization}, Proceedings of the International
 Conference on Software Engineering, ICSE ’02, pages 467–477, New York, NY, USA, 2002. ACM.
 
-\bibitem[4]{b:heatmaps} Benomar, O.; Sahraoui, H.; Poulin, P., \textit{Visualizing software dynamicities with heat maps}, Software Visualization (VISSOFT), 2013 First IEEE Working Conference on , vol., no., pp.1,10, 27-28 Sept. 2013
+\bibitem{b:heatmaps} Benomar, O.; Sahraoui, H.; Poulin, P., \textit{Visualizing software dynamicities with heat maps}, Software Visualization (VISSOFT), 2013 First IEEE Working Conference on , vol., no., pp.1,10, 27-28 Sept. 2013
 
-\bibitem[5]{b:metrics} Martin, Robert C. \textit{Design principles and design patterns}, Object Mentor, 2000: 1-34. 
+\bibitem{b:metrics} Martin, Robert C. \textit{Design principles and design patterns}, Object Mentor, 2000: 1-34. 
 
-\bibitem[6]{b:historical-metrics} Mahmoud O. Elish; Mojeeb Al-Rahman Al-Khiaty \textit{A suite of metrics for quantifying historical changes to predict future change-prone classes in object-oriented software}, Journal of Software: Evolution and Process, Volume 25, Issue 5, pages 407–437, May 2013
+\bibitem{b:historical-metrics} Mahmoud O. Elish; Mojeeb Al-Rahman Al-Khiaty \textit{A suite of metrics for quantifying historical changes to predict future change-prone classes in object-oriented software}, Journal of Software: Evolution and Process, Volume 25, Issue 5, pages 407–437, May 2013
 
-\bibitem[7]{b:jdepend} Mike Clark \textit{JDepend}, 1999-2009 Clarkware Consulting, Inc. \url{http://clarkware.com/software/JDepend.html}
+\bibitem{b:jdepend} Mike Clark \textit{JDepend}, 1999-2009 Clarkware Consulting, Inc. \url{http://clarkware.com/software/JDepend.html}
 
-\bibitem[8]{b:findbugs} David Hovemeyer; William Pugh. 2004. \textit{Finding bugs is easy}, SIGPLAN Not. 39, 12 (December 2004), 92-106
+\bibitem{b:findbugs} David Hovemeyer; William Pugh. 2004. \textit{Finding bugs is easy}, SIGPLAN Not. 39, 12 (December 2004), 92-106
 
-\bibitem[9]{b:jgit} \textit{JGit}, The Eclipse Foundation, 2015 \url{http://www.eclipse.org/jgit/}
+\bibitem{b:jgit} \textit{JGit}, The Eclipse Foundation, 2015 \url{http://www.eclipse.org/jgit/}
 
-\bibitem[9]{b:visjs} J. Jong; A. Mulder, \textit{Vis.js}, Almende B.V. 2010 - 2015, \url{http://visjs.org/} 
+\bibitem{b:visjs} J. Jong; A. Mulder, \textit{Vis.js}, Almende B.V. 2010 - 2015, \url{http://visjs.org/} 
 
-\bibitem[10]{b:heatmapsmapsjs} P. Wied, \textit{heatmap.js}, 2014 - 2015, \url{http://www.patrick-wied.at/static/heatmapjs/}
+\bibitem{b:heatmapsmapsjs} P. Wied, \textit{heatmap.js}, 2014 - 2015, \url{http://www.patrick-wied.at/static/heatmapjs/}
 
 \end{thebibliography}
 
