@@ -183,7 +183,7 @@ Aby przygotowaæ wizualizacjê, która zobrazuje kod projektu informatycznego uwzgl
 
 \section{Oprogramowanie jako graf}\label{s:model-graph}
 
-W swojej pracy ograniczy³em siê do analizy kodu na poziomie pakietów. Przyjêty przeze mnie model analizowanego projektu ma strukturê skierowanego grafu, w którym wierzcho³ki reprezentuj¹ pakiety programu, a krawêdzie zale¿noœci miêdzy nimi.
+W swojej pracy ograniczy³em siê do analizy kodu na poziomie pakietów. Przyjêty przeze mnie model analizowanego projektu ma strukturê skierowanego grafu, w którym wierzcho³ki reprezentuj¹ pakiety programu, a krawêdzie zale¿noœci miêdzy nimi. Przyjêty model ilustruje rysunek \ref{i:model} oraz \ref{i:model-more}
 
 \subsection{Wierzcho³ki}
 
@@ -206,6 +206,20 @@ Ka¿da krawêdŸ grafu posiada swój typ, oraz jest w stanie okreœliæ ³¹czone wierzc
 \item \textbf{Krawêdzie drzewa pakietów} - odzwierciedlaj¹ strukturê fizyczn¹ programu. Tego typu krawêdziami po³¹czone s¹ wierzcho³ki bêd¹ce w relacji “ojciec - syn” w drzewie pakietów. Przyk³adowo, pakiet \texttt{shimmer.service.impl} znajduje siê wewn¹trz pakietu \texttt{shimmer.service}, wiêc ich wierzcho³ki bêd¹ po³¹czone tak¹ krawêdzi¹. Równie¿ w tym przypadku sztuczny wierzcho³ek katalogowy \texttt{shimmer} po³¹czony bêdzie z wierzcho³kiem pakietowym \texttt{shimmer.service}. Si³a powi¹zania dla takich krawêdzi jest sta³a.
 \item \textbf{Krawêdzie zale¿noœci miêdzy pakietami} - odzwierciedlaj¹ logiczne powi¹zania ³¹cz¹ce pakiety. Tego typu krawêdziami powi¹zane s¹ pakiety, których klasy korzystaj¹ z siebie nawzajem. Przyk³adowo, jeœli jakaœ klasa pakietu \texttt{shimmer.service} polega na innej klasie z pakietu \texttt{shimmer.service.impl}, pakiety po³¹czone bêd¹ tak¹ krawêdzi¹. Si³a takiego powi¹zania mo¿e byæ ró¿na, w zale¿noœci od liczby zale¿nych klas, dlatego krawêdzie tego typu posiadaæ bêd¹ ró¿ne wartoœci si³y oddzia³ywania.
 \end{itemize}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.6\textwidth]{model1.png}
+\caption{Fragment grafu projektu Hibernate - na przyk³adzie widoczne s¹ krawêdzie drzewa pakietów, zielone wierzcho³ki pakietowe, szare wierzcho³ki biblioteczne oraz niebieskie wierzcho³ki katalogowe. Dla zwiêkszenia czytelnoœci krawêdzie zale¿noœci zosta³y ukryte. Szczegó³owe zbli¿enie przedstawiono na rysunku \ref{i:model-more}}
+\label{i:model}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.6\textwidth]{model2.png}
+\caption{Zbli¿enie fragmentu grafu z rysunku \ref{i:model}. Na zbli¿eniu widaæ etykiety pakietów reprezentowanych przez poszczególne wierzcho³ki.}
+\label{i:model-more}
+\end{figure}
 
 \section{Potencjalne usterki}\label{s:model-bugs}
 
