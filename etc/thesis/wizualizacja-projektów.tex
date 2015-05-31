@@ -41,7 +41,7 @@ Human-centered computing $\rightarrow$ Visualization $\rightarrow$ Visualization
 \maketitle
 
 \begin{abstract}
-Mo¿liwoœæ przejrzystej wizualizacji repozytorium du¿ego projektu informatycznego jest kluczowa przy analizie jego dotychczasowego rozwoju. Aby uskuteczniæ proces analizy, wizualizacja, oprócz obrazowania kodu, powinna uwzglêdniaæ metryki lub miary oceniaj¹ce elementy badanego systemu. Mo¿liwoœæ ujêcia takiej wizualizacji w ramach systemu kontroli wersji danego projektu pozwala skutecznie œledziæ rozwój oprogramowania i w szczególnoœci przewidywaæ niepo¿¹dane usterki. W pracy przedstawione s¹ ró¿ne metody wizualizacji kodu ze szczególnym naciskiem na wizualizacjê repozytorium i analizê jakoœci. Wybrane elementy zosta³y zaimplementowane w narzêdziu do analizy i wizualizacji kodu, które udostêpniono na zasadach Open Source.
+Mo¿liwoœæ przejrzystej wizualizacji du¿ego projektu informatycznego jest kluczowa przy analizie jego dotychczasowego rozwoju. Aby uskuteczniæ proces analizy, wizualizacja, oprócz obrazowania kodu, powinna uwzglêdniaæ metryki lub miary oceniaj¹ce elementy badanego systemu. Mo¿liwoœæ ujêcia takiej wizualizacji w ramach systemu kontroli wersji danego projektu pozwala skutecznie œledziæ rozwój oprogramowania i w szczególnoœci przewidywaæ niepo¿¹dane usterki. W pracy przedstawione s¹ ró¿ne metody wizualizacji kodu ze szczególnym naciskiem na wizualizacjê repozytorium i analizê jakoœci. Wybrane elementy zosta³y zaimplementowane w narzêdziu do analizy i wizualizacji kodu, które udostêpniono na zasadach Open Source.
 \end{abstract}
 
 \tableofcontents
@@ -59,37 +59,32 @@ Mo¿liwoœæ przejrzystej wizualizacji repozytorium du¿ego projektu informatycznego
 \chapter*{Wprowadzenie}
 \addcontentsline{toc}{chapter}{Wprowadzenie}
 
-% TODO
-\paragraph{TODO:}
-\textit{Tutaj opiszê krótko kontekst pracy i g³ówne zainteresowanie. W kolejnych akapitach opiszê zawartoœæ poszczególnych rozdzia³ów oraz dodatku.}
+In¿ynieria oprogramowania jest szerok¹ dziedzin¹ obejmuj¹c¹ zagadnienia dotycz¹ce wytwarzania i zarz¹dzania oprogramowaniem. Analiza powstaj¹cego oprogramowania stanowi ga³¹Ÿ in¿ynierii, która ma du¿e znaczenie przy wytwarzaniu oprogramowania wysokiej jakoœci: niezawodnego, odpornego na usterki, rozszerzalnego. Jedn¹ z metod wspomagaj¹cych analizê oprogramowania jest wizualizacja - dziedzina zajmuj¹ca siê obrazowaniem oprogramowania. Istnieje wiele metod wizualizacji oprogramowania. Niektóre z metod mog¹ skutecznie wspomagaæ analizê jakoœci danego programu i umo¿liwiaæ wnioskowanie przysz³ych zmian zachodz¹cych w projekcie na podstawie jego historii. W swojej pracy opiszê trzy tego typu metody wizualizacji, które zaimplementowa³em w narzêdziu open-source wspomagaj¹cym analizê oprogramowania.
+
+W rozdziale \ref{c:motivation} omówiê trzy wybrane metody wizualizacji i przedstawiê swoj¹ motywacjê do stworzenia oprogramowania. Rozdzia³ \ref{c:model} opisuje przyjêty przeze mnie model oprogramowania, który pozwala na realizacjê wybranych metod wizualizacji. W rozdziale \ref{c:software} przedstawiê architekrutê, budowê, dzia³anie i funkcjonalnoœæ stworzonego narzêdzia. Aby zweryfikowaæ wykorzystane w moim narzêdziu metody, pos³u¿ê siê przyk³adami oraz badaniem, które opiszê w rozdziale \ref{c:research}. Podsumowanie i perspektywy dalszego rozwoju narzêdzia zbiorê w rozdziale \ref{c:summary}.
 
 % ------------------------------------------------------------------------------
 % ROZDZIA£ MOTYWACJA
 % ------------------------------------------------------------------------------
-\chapter{Motywacja}\label{r:motywacja}
+\chapter{Motywacja}\label{c:motivation}
 
 % TODO
 \paragraph{TODO:}
 \textit{W tym rozdziale opiszê motywacjê stoj¹c¹ za powstaniem tej pracy. G³ówn¹ motywacj¹ jest chêæ po³¹czenia trzech aspektów wizualizacji w jednym narzêdziu: obraz struktury programu, jakoœæ kodu, zmiany w projekcie. Mo¿liwe, ¿e zrezygnujê z tego rozdzia³u?}
 
-% ------------------------------------------------------------------------------
-% ROZDZIA£ METODY
-% ------------------------------------------------------------------------------
-\chapter{Stosowane metody wizualizacji}\label{r:metody}
-
 Jako Ÿród³o prac dotycz¹cych wspó³czesnych metod wizualizacji kodu przyj¹³em konferencjê naukow¹ Visualizing Software for Understanding and Analysis -  VISSOFT 2011.
 
-Przegl¹daj¹c stosowane metody wizualizacji kodu stara³em siê zwracaæ uwagê na trzy interesuj¹ce dla mnie aspekty:
+Przegl¹daj¹c stosowane metody wizualizacji kodu stara³em siê zwracaæ uwagê na trzy aspekty:
 
-\begin{itemize}
+\begin{enumerate}
 \item Opis metody obrazowania kodu projektu - w jaki sposób wizualizowane jest oprogramowanie? 
 \item Mo¿liwoœæ wizualizacji jakoœci kodu - czy opisywana metoda pozwala na obrazowania miar jakoœci? 
 \item Uwzglêdnienie analizy historycznej kodu - czy wizualizacja uwzglêdnia i obrazuje zmiany w projekcie?
-\end{itemize}
+\end{enumerate}
 
-W pracach opublikowanych na konferencji VISSOFT nie znalaz³em ¿adnego artyku³u, który uwzglêdnia³ wszystkie trzy z wy¿ej wymienionych aspektów, jednak uda³o mi siê znaleŸæ kilka prac, które w ciekawy sposób poruszaj¹ czêœæ z nich, a pomys³y z tych prac zebrane w jedn¹ ca³oœæ mog³yby z³o¿yæ siê na przydatne narzêdzie wspieraj¹ce sztukê in¿ynierii oprogramowania.
+W pracach opublikowanych na konferencji VISSOFT nie znalaz³em ¿adnego artyku³u, który uwzglêdnia³ wszystkie trzy z wy¿ej wymienionych aspektów, jednak uda³o mi siê znaleŸæ kilka prac, które w ciekawy sposób poruszaj¹ czêœæ z nich, a pomys³y z tych prac zebrane w jedn¹ ca³oœæ mog³yby z³o¿yæ siê na przydatne narzêdzie wspieraj¹ce sztukê in¿ynierii oprogramowania. Wybrane prace opiszê w kolejnych dzia³ach.
 
-\section{Graf}\label{s:motivation-graph}
+\section{Wizualizacja grafowa}\label{s:motivation-graph}
 
 W swojej pracy \cite{b:graph} U. Erdemir, U. Tekin i F. Buzluca proponuj¹ standardow¹ metodê wizualizacji kodu w postaci grafu. Stworzone przez nich narzêdzie wydobywa metryki jakoœciowe z kodu Ÿród³owego analizowanego oprogramowania i 
 
@@ -114,13 +109,13 @@ Metoda zaproponowana przez autorów jest prosta w interpretacji i zrozumia³a dla 
 \textit{Wspomnê ¿e praca nie porusza wszystkich trzech interesuj¹cych mnie aspektów - brak analizy zmian projektu}
 % Przyk³ady zaprezentowane przez autorów by³yby bardziej czytelne, gdyby wyraŸnie zaznaczyæ wierzcho³ki grafu.
 
-\section{Konstelacja}\label{s:motivation-constellation}
+\section{Wizualizacja konstelacyjna}\label{s:motivation-constellation}
 
-Ciekaw¹ metod¹ zaproponowan¹ przez F. Deng, N. DiGgiuseppe i J. A. Jones \cite{b:constellation} jest konstelacja. Ten sposób wizualizacji zosta³ opracowany w celu ³atwego wykrywania konkretnych fragmentów kodu oraz wizualnej separacji elementów nieinteresuj¹cych od istotnych (przyk³adowo klas wadliwych od prawid³owych).
+Ciekaw¹ metod¹ zaproponowan¹ przez F. Deng, N. DiGgiuseppe i J. A. Jones \cite{b:constellation} jest konstelacja. Ten sposób wizualizacji zosta³ opracowany w celu ³atwego wykrywania konkretnych fragmentów kodu oraz wizualnej separacji elementów nieinteresuj¹cych od istotnych (przyk³adowo klas wadliwych od prawid³owych). Wizualizacja konstelacyjna wygl¹dem przypomina gwieŸdziste niebo, na którym gwiazdy reprezentuj¹ poszczególne elementy kodu, a zale¿noœci miêdzy nimi s¹ obrazowane przez manipulacjê odleg³oœci¹. 
 
 \subsection{Zasada budowy wizualizacji konstelacyjnej}
 
-Wizualizacja konstelacyjna opiera siê w du¿ej mierze na wizualizacji grafowej. W swojej pracy autorzy opisuj¹ kroki potrzebne do przetworzenia grafu zale¿noœci (o dowolnej granularnoœci) w konstelacjê. S¹ to kolejno:
+Wizualizacja konstelacyjna opiera siê w du¿ej mierze na modyfikacji wizualizacji grafowej i wzbogaceniu jej o dodatkowe efekty. W swojej pracy autorzy opisuj¹ kroki potrzebne do przetworzenia grafu zale¿noœci (o dowolnej granularnoœci) w konstelacjê. S¹ to kolejno:
 
 \paragraph{Ukrycie krawêdzi:}
 Dla lepszej skalowalnoœci uk³adu i interpretacji u¿ytkownika, w grafie zale¿noœci projektu nale¿y zrezygnowaæ z wizualizacji krawêdzi.
@@ -196,7 +191,7 @@ W swojej pracy ograniczy³em siê do analizy kodu na poziomie pakietów. Przyjêty p
 
 \subsection{Wierzcho³ki}
 
-Ka¿dy wierzcho³ek grafu posiada swój typ i nazwê pakietu, który reprezentuje. W zale¿noœci od typu, wierzcho³ek mo¿e posiadaæ te¿ inne atrybuty. W modelu wyró¿niamy kilka rodzajów wierzcho³ków:
+Ka¿dy wierzcho³ek grafu posiada swój typ i nazwê pakietu, który reprezentuje. W zale¿noœci od typu, wierzcho³ek mo¿e posiadaæ te¿ inne atrybuty. W modelu wyró¿niamy nastêpuj¹ce typy wierzcho³ków:
 
 \begin{itemize}
 \item \textbf{Wierzcho³ki pakietowe} - reprezentuj¹ pakiety analizowanego projektu.
@@ -704,7 +699,8 @@ Aby skróciæ czas oczekiwania na wyniki obliczeñ, u¿ytkownik mo¿e zdecydowaæ o po
 
 % ------------------------------------------------------------------------------
 % ROZDZIA£ BADANIA
-\chapter{Badanie, wyniki oraz wnioski}\label{r:badanie}
+% ------------------------------------------------------------------------------
+\chapter{Badanie, wyniki oraz wnioski}\label{c:research}
 Aby wykazaæ dzia³anie stworzonego oprogramowania, rozs¹dnym krokiem jest prezentacja jego przyk³adowego u¿ycia, lub zebranie opinii u¿ytkowników.
 
 W tym rozdziale przedstawiono przyk³adowe zastosowanie programu Shimmering Constellations do analizy popularnych projektów. Ponadto, w celu weryfikacji nowych metod wizualizacyjnych przeprowadzono ankietê wœród studentów kierunku Informatyka. Ostatecznie zebrano wnioski p³yn¹ce z przyk³adów wizualizacji i przeprowadzonego badania.
@@ -743,6 +739,7 @@ Aby poznaæ opiniê u¿ytkowników na temat konstelacyjnej metody wizualizacji i por
 
 % ------------------------------------------------------------------------------
 % ROZDZIA£ PODSUOWANIE
+% ------------------------------------------------------------------------------
 \chapter{Podsumowanie pracy}\label{c:summary}
 
 W pracy opisano narzêdzie do wizualizacji projektów informatycznych, którego kod udostêpniono na zasadach Open Source. Program Shimmering Constelletion ³¹czy w sobie techniki wizualizacji konstelacyjnej oraz grafowej ze zintegrowan¹ map¹ termiczn¹. Wizualizacja kodu w programie pozwala nie tylko w sposób czytelny zobrazowaæ dany projekt, ale uwzglêdnia te¿ zachodz¹ce w nim zmiany i umo¿liwia analizê jakoœci. Skutecznoœæ wykorzystanych metod w poszczególnych obszarach zastosowañ potwierdzi³y przeprowadzone badania preferencji u¿ytkowników.
@@ -760,6 +757,7 @@ Oprogramowanie Shimmering Constellations powsta³o z myœl¹ o mo¿liwoœci przysz³eg
 
 % ------------------------------------------------------------------------------
 % DODATEK
+% ------------------------------------------------------------------------------
 
 \appendix
 
