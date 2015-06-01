@@ -77,7 +77,7 @@ Wizualizacja oprogramowania jest obszern¹ ga³êzi¹ in¿ynierii, która porusza konc
 \item Uwzglêdnienie analizy historycznej kodu - czy wizualizacja uwzglêdnia i obrazuje zmiany w projekcie?
 \end{enumerate}
 
-¯adna z rozpatrywanych publikacji nie pokrywa³a siê w pe³ni z wszystkimi trzema aspektami, ale kilka prac w ciekawy sposób porusza³o czêœæ z nich. W tym rozdziale opiszê trzy wybrane artyku³y, które w interesuj¹cy sposób uwzglêdniaj¹ czêœæ z wy¿ej wymienionych aspektów, a pomys³y z tych prac zebrane w jedn¹ ca³oœæ mog¹ z³o¿yæ siê na przydatne narzêdzie wspieraj¹ce sztukê in¿ynierii oprogramowania.
+¯adna z rozpatrywanych publikacji nie pokrywa³a siê w pe³ni z wszystkimi trzema zagadnieniami, ale kilka prac w ciekawy sposób porusza³o czêœæ z nich. W tym rozdziale opiszê trzy wybrane artyku³y, które w interesuj¹cy sposób uwzglêdniaj¹ czêœæ z wy¿ej wymienionych aspektów, a pomys³y z tych prac zebrane w jedn¹ ca³oœæ mog¹ z³o¿yæ siê na przydatne narzêdzie wspieraj¹ce sztukê in¿ynierii oprogramowania.
 
 \section{Wizualizacja grafowa}\label{s:motivation-graph}
 
@@ -414,7 +414,13 @@ Taki sposób implementacji modelu jest ³atwo rozszerzalny i pozwala na proste roz
 
 \section{Przebieg dzia³ania programu - przygotowanie wizualizacji}\label{s:software-analysis}
 
-Zebrane biblioteki i wybór implementacji modelu pozwalaj¹ na skuteczne przygotowanie danego projektu do wizualizacji [dzia³ \ref{s:model-analysis}]. Kroki potrzebne do wstêpnego przeanalizowania projektu przes Shimmering Constellations opisa³em w tej sekcji.
+Zebrane biblioteki i wybór implementacji modelu pozwalaj¹ na skuteczne przygotowanie danego projektu do wizualizacji [dzia³ \ref{s:model-analysis}]. Kroki potrzebne do wstêpnego przeanalizowania projektu przez Shimmering Constellations opisa³em w tej sekcji.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{architecture.png}
+\caption{Schemat dzia³ania programu Shimmering Constellations}
+\end{figure}
 
 Analiza projektu rozpoczyna siê w momencie, gdy u¿ytkownik zdefiniuje œcie¿kê prowadz¹c¹ do plików skompilowanych projektu i u¿yje przycisku potwierdzenia. Przed uruchomieniem wszystkich mechanizmów, u¿ytkownik mo¿e równie¿ podaæ adres zdalnego repozytorium Git lub œcie¿kê do sklonowanego repozytorium na dysku. 
 
@@ -717,9 +723,23 @@ W tym rozdziale przedstawiono przyk³adowe zastosowanie programu Shimmering Const
 
 \section{Przyk³ady wizualizacji}
 
-%TODO
-\paragraph{TODO:}
-\textit{Umieszczê 3 przyk³adowe wizualizacje znanych projektów z krótkimi opisami}
+\paragraph{Hibernate 4.3.8} - ilustracja \ref{i:research-hibernate} przedstawia wizualizacjê projektu Hibernate ORM w postaci konstelacji. Rozmiar wierzcho³ków oznacza liczbê klas w danym pakiecie, kolor wierzcho³ków obrazuje metrykê \textit{Distance From Main Sequence}, a temperatura wierzcho³ków wskazuje ostatni¹ aktywnoœæ. Widok konstelacji wyraŸnie oddziela g³ówne elementy projektu (skupione w œrodku ilustracji) od obiektów pobocznych - szare pakiety biblioteczne pojawiaj¹ siê g³ównie na obrze¿ach konstelacji. Z wizualizacji wywnioskowaæ mo¿emy, ¿e w ostatnich dniach prace w projekcie skupione by³y wokó³ okreœlonego zbioru modu³ów oznaczonego niebiesk¹ poœwiat¹ wysokiej temperatury. Wszystkie ostatnio modyfikowane fragmenty znajduj¹ siê w podga³êzi pakietu \texttt{org.hibernate.metamodel}. Ponadto program tylko kilka elementów podejrzanych o nieodpowiednie rozwi¹zania projektowe - wyraŸne skupisko czerwonych wierzcho³ków o du¿ym odchyleniu od idealnego zrównowa¿enia abstrakcji i stabilnoœci pojawia siê w okolicy pakietów \texttt{org.hibernate.internal}.
+
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth]{example1.png}
+\caption{Projekt Hibernate 4.3.8 w wizualizacji Shimmering Constellations}
+\label{i:research-hibernate}
+\end{figure}
+
+\paragraph{jGit 3.7.1} - ilustracja \ref{i:research-jgit} pokazuje wizualizacjê projektu jGit w postaci konstelacji. Rozmiar wierzcho³ków oznacza liczbê klas w pakiecie, kolor wierzcho³ków oznacza liczbê wykrytych usterek (kalibracja ustawiona jest na ma³¹ tolerancjê b³êdów), a temperatura symbolizuje liczbê dokonywanych zmian w pakiecie (kalibracja ustawiona jest na wysoki próg aktywacji liczby zmian). W wizualizacji mo¿emy zaobserwowaæ du¿e zró¿nicowanie kodu projektu - jGit posiada pakiety zarówno bardzo du¿e (powy¿ej 220 klas) oraz bardzo ma³e. Wiêkszoœæ z najobszerniejszych pakietów posiada wykryte potencjalne usterki. Mapa termiczna w postaci niebieskiej poœwiaty sygnalizuje, ¿e w wiêkszoœci przypadków fragmenty, w których wykryto zagro¿enia s¹ jednoczeœnie elementami najczêœciej modyfikowanymi przez autorów.
+
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth]{example2.png}
+\caption{Projekt jGit 3.7.1 w wizualizacji Shimmering Constellations}
+\label{i:research-jgit}
+\end{figure}
 
 \section{Ankieta}
 
@@ -774,13 +794,8 @@ Oprogramowanie Shimmering Constellations powsta³o z myœl¹ o mo¿liwoœci przysz³eg
 \chapter{Co nale¿y jeszcze zrobiæ w pracy}
 \begin{itemize}
 \item Uzupe³niæ brakuj¹ce fragmenty (TODO) - niektóre brakuj¹ce sekcje i cytowania.
-\item Ustaliæ w jaki sposób odnieœæ siê do opisu niektórych bibliotek. Przyk³adowo, jeœli VisJs nie posiada ¿adnej publikacji naukowej, to czy powinien znaleŸæ siê w bibliografii? Mo¿e dobrym krokiem jest podanie adresu URL do dokumentacji biblioteki? Czy taki adres bêdzie w bibliografii?
-\item Ujednoliciæ sposób nazywania niektórych rzeczy. Przyk³adowo': vis.js, VisJS, visJs
-\item Ustaliæ sposób nazywania niektórych wyrazów z jêzyka angielskiego lub jakoœ sformatowaæ te wyst¹pienia. Przyk³adowo: framework, nazwy metryk.
-\item Poprawiæ formatowanie tekstu w rozdziale o przebiegu analizy - u¿yæ funkcji pogrubienia tekstu i kursywy dla niektórych elementów.
-\item Ustaliæ prawid³ow¹ klasyfikacjê tematyczn¹ pracy.
-\item Przemyœleæ lepsze s³owa kluczowe.
 \item Zmieniæ tytu³ / abstrakt tak, aby bardziej podkreœla³ rolê stworzonego oprogramowania w mojej pracy?
+\item Poprawiæ rozmieszczenie ilustracji tak, aby tekst pracy lepiej siê komponowa³ i nie zawiera³ przesadnych odstêpów.
 \item Usun¹æ ten dodatek.
 \end{itemize}
 
@@ -793,7 +808,7 @@ Za³¹czona paczka zawiera kod programu Shimmering Constellations napisany w jêzyk
 \begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Bibliografia}
 
-\bibitem{b:vissoft} \url{http://vissoft.dcc.uchile.cl/}
+\bibitem{b:vissoft} Institute of Electrical and Electronics Engineers, \textit{International Workshop on Visualizing Software for Understanding and Analysis (VISSOFT)} \url{http://vissoft.dcc.uchile.cl/}
 
 \bibitem{b:graph} Erdemir, U.; Tekin, U.; Buzluca, F., \textit{E-Quality: A graph based object oriented software quality visualization tool} Visualizing Software for Understanding and Analysis (VISSOFT), 2011 6th IEEE International Workshop on , vol., no., pp.1,8, 29-30 Sept. 2011
 
