@@ -1,6 +1,7 @@
 package shimmer.web.controller;
 
 import java.io.Serializable;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -218,7 +219,10 @@ public class SimulationController implements Serializable {
 	}
 	
 	public synchronized int getLoadingProgress() {
-		setLoadindProgress(loadingProgress + 1); 
+		Random rand = new Random();
+		if (rand.nextInt(4) == 0 && loadingProgress < 99) {
+			setLoadindProgress(loadingProgress + 1); 
+		}
 		return loadingProgress;
 	}
 	
