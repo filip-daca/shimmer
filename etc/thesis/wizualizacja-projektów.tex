@@ -356,7 +356,7 @@ W tym rozdziale opiszê budowê oraz dzia³anie stworzonej przeze mnie aplikacji Sh
 \section{Architektura aplikacji}\label{r:architektura}
 \subsection{Zr¹b i technologia}
 
-Technologia, któr¹ uzna³em za odpowiedni¹ dla mojej aplikacji to Java EE. Argumenty, które przyczyni³y siê do podjêcia tej decyzji to dostêpnoœæ szerokiej gamy bibliotek analizy kodu Ÿród³owego, rozbudowane narzêdzia wizualizacyjne dzia³aj¹ce w œrodowisku przegl¹darki internetowej (vis.js), oraz uniwersalnoœæ i skalowalnoœæ architektury. Stworzone przeze mnie narzêdzie ma charakter aplikacji webowej opartej na frameworku Spring, wykorzystuj¹cej biblioteki JSF PrimeFaces. Œrodowiskiem uruchomieniowym aplikacji jest serwer JBoss 7, ale nie jest to wymogiem koniecznym - przy niewielkim nak³adzie pracy mo¿liwe jest uruchomienie Shimmering Constellations na dowolnym œrodowisku aplikacji webowych Java. Przy u¿yciu narzêdzia automatyzuj¹cego kompilacjê i zarz¹dzanie bibliotekami Maven, mo¿liwe jest proste dodawanie zewnêtrznych bibliotek do projektu.
+Technologia, któr¹ uzna³em za odpowiedni¹ dla mojej aplikacji to Java EE. Argumenty, które przyczyni³y siê do podjêcia tej decyzji to dostêpnoœæ szerokiej gamy bibliotek analizy kodu Ÿród³owego, rozbudowane narzêdzia wizualizacyjne dzia³aj¹ce w œrodowisku przegl¹darki internetowej (Vis.js), oraz uniwersalnoœæ i skalowalnoœæ architektury. Stworzone przeze mnie narzêdzie ma charakter aplikacji webowej opartej na frameworku Spring, wykorzystuj¹cej biblioteki JSF PrimeFaces. Œrodowiskiem uruchomieniowym aplikacji jest serwer JBoss 7, ale nie jest to wymogiem koniecznym - przy niewielkim nak³adzie pracy mo¿liwe jest uruchomienie Shimmering Constellations na dowolnym œrodowisku aplikacji webowych Java. Przy u¿yciu narzêdzia automatyzuj¹cego kompilacjê i zarz¹dzanie bibliotekami Maven, mo¿liwe jest proste dodawanie zewnêtrznych bibliotek do projektu.
 
 Ponadto aplikacjê mo¿na w prosty sposób zintegrowaæ z dowoln¹ baz¹ danych w celu katalogowania wyników analiz.
 
@@ -540,9 +540,9 @@ Obiekty powsta³e w wyniku serializacji (krawêdzie i wierzcho³ki w postaci JSON) 
 \section{Realizacja wizualizacji}\label{s:software-visualization}
 \subsection{Vis.js - graf}
 
-Podstaw¹ do wizualizacji w Shimmering Constellation jest wizualizacja grafowa. Biblioteka, która odpowiada za wizualizowanie grafu to Vis.js \cite{b:visjs}. Narzêdzie pozwala na dynamiczn¹ wizualizacjê grafu w oparciu o model dystrybucji cz¹steczek Barnes-Hut \cite{b:barnes-hut}.
+Podstaw¹ do wizualizacji w Shimmering Constellations jest wizualizacja grafowa. Biblioteka, która odpowiada za wizualizowanie grafu to Vis.js \cite{b:visjs}. Narzêdzie pozwala na dynamiczn¹ wizualizacjê grafu w oparciu o model dystrybucji cz¹steczek Barnes-Hut \cite{b:barnes-hut}.
 
-VisJs pobiera wynik analizy w postaci list wierzcho³ków i krawêdzi w formacie JSON i wyœwietla graf projektu z odpowiednimi parametrami. Prezentowana wizualizacja jest równowa¿ona w czasie rzeczywistym i pozwala u¿ytkownikowi na manipulowanie grafem - skalowanie, przesuwanie, przemieszczanie wierzcho³ków.
+Vis.js pobiera wynik analizy w postaci list wierzcho³ków i krawêdzi w formacie JSON i wyœwietla graf projektu z odpowiednimi parametrami. Prezentowana wizualizacja jest równowa¿ona w czasie rzeczywistym i pozwala u¿ytkownikowi na manipulowanie grafem - skalowanie, przesuwanie, przemieszczanie wierzcho³ków.
 
 \subsection{Heatmaps.js - mapa termiczna}
 
@@ -591,13 +591,13 @@ W tej czêœci przedstawiam zestawienie kluczowych funkcjonalnoœci dostarczanych p
 
 Shimmering Constellations udostêpnia dwie metody wizualizacji projektów: graf oraz konstelacja.
 
-Wizualizacja grafowa jest podstawow¹ metod¹ pozwalaj¹c¹ w jawny sposób przedstawiæ powi¹zania pomiêdzy pakietami lub kompletne drzewo zagnie¿d¿enia pakietów. Przyjêty model oprogramowania, oparty na grafie skierowanym, jest w sposób bezpoœredni odwzorowywany w wizualizacji.
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{img1.png}
 \caption{Projekt jUnit wizualizowany w postaci grafu}
 \end{figure}
+
+Wizualizacja grafowa jest podstawow¹ metod¹ pozwalaj¹c¹ w jawny sposób przedstawiæ powi¹zania pomiêdzy pakietami lub kompletne drzewo zagnie¿d¿enia pakietów. Przyjêty model oprogramowania, oparty na grafie skierowanym, jest w sposób bezpoœredni odwzorowywany w wizualizacji.
 
 Wizualizacja konstelacyjna opiera siê na grafie projektu, jednak krawêdzie s¹ niewidoczne, a zale¿noœci miêdzy pakietami s¹ obrazowane przez odleg³oœci miêdzy wierzcho³kami. W tym widoku szczególne zastosowanie odnajduje mapa termiczna, która wzbogaca si³ê jego wyrazu o dodatkowy parametr - temperaturê wierzcho³ków.
 
@@ -607,13 +607,15 @@ Wizualizacja konstelacyjna opiera siê na grafie projektu, jednak krawêdzie s¹ ni
 \caption{Projekt jUnit wizualizowany w postaci konstelacji}
 \end{figure}
 
-Metodê wizualizacji mo¿na zmieniæ w trakcie dzia³ania programu, bez koniecznoœci analizowania projektu na nowo.
+
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{img3.png}
 \caption{Panel zmiany metody wizualizacji}
 \end{figure}
+
+Metodê wizualizacji mo¿na zmieniæ w trakcie dzia³ania programu, bez koniecznoœci analizowania projektu na nowo.
 
 \subsection{Czytelny raport potencjalnych usterek}
 
@@ -741,7 +743,7 @@ W tym rozdziale przedstawiam przyk³adowe zastosowanie programu Shimmering Conste
 
 \section{Ankieta}
 
-Aby poznaæ opiniê u¿ytkowników na temat konstelacyjnej metody wizualizacji i porównaæ j¹ z popularn¹ wizualizacj¹ grafow¹, przeprowadzono ankietê wœród studentów Uniwersytetu Warszawskiego. W badaniu wziê³a udzia³ grupa 100 uczestników kursu In¿ynieria Oprogramowania, której zaprezentowano oprogramowanie Shimmering Constellations. W konfiguracji testowej, oprogramowanie umo¿liwia³o wyœwietlenie projektu jUnit za pomoc¹ grafu oraz konstelacji. Nastêpnie, po obejrzeniu obu wizualizacji, uczestnicy udzielali odpowiedzi na nastêpuj¹ce pytania:
+Aby poznaæ opiniê u¿ytkowników na temat konstelacyjnej metody wizualizacji i porównaæ j¹ z popularn¹ wizualizacj¹ grafow¹, przeprowadzi³em ankietê wœród studentów Uniwersytetu Warszawskiego. W badaniu wziê³a udzia³ grupa 82 uczestników kursu In¿ynieria Oprogramowania, której zaprezentowano narzêdzie Shimmering Constellations. W konfiguracji testowej, narzêdzie umo¿liwia³o wyœwietlenie projektu jUnit za pomoc¹ grafu oraz konstelacji. Po obejrzeniu obu wizualizacji, uczestnicy udzielali odpowiedzi na nastêpuj¹ce pytania:
 
 \begin{enumerate}
 \item Któr¹ metodê wizualizacji preferujesz?
@@ -753,30 +755,33 @@ Aby poznaæ opiniê u¿ytkowników na temat konstelacyjnej metody wizualizacji i por
 \item Bêd¹c na miejscu in¿yniera pracuj¹cego nad projektem (np. cz³onek zespo³u programistów, który refaktoryzuje kod), któr¹ z metod wybra³byœ do codziennej pracy?
 \end{enumerate}
 
- Dobór pytañ testowych mia³ w zamyœle wykrycie wyraŸnych ró¿nic w charakterze i zastosowaniach metody konstelacyjnej i klasycznej grafowej.
+ Dobór pytañ testowych mia³ w zamyœle wykrycie wyraŸnych ró¿nic w charakterze i zastosowaniach metody konstelacyjnej i klasycznej grafowej. Wyniki badania przedstawiono na wykresie \ref{i:research-results}.
 
-%TODO
-\paragraph{TODO:}
-\textit{Umieszczê wyniki ankiety w tabeli lub na wykresie}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{results.png}
+\caption{Wykres przedstawia wyniki przeprowadzonego badania preferencji u¿ytkowników. Na wykresie oznaczono liczbê odpowiedzi na poszczególne pytania.}
+\label{i:research-results}
+\end{figure}
 
 \section{Wnioski}
 
-%TODO
-\paragraph{TODO:}
-\textit{Krótko podsumujê wnioski wyci¹gniête z ankiety}
+Przeprowadzone badanie wykaza³o, ¿e studenci we wszystkich przypadkach chêtniej wybierali metodê grafow¹. Podejœcie grafowe jest klasyczne i jego wiêksza popularnoœæ jest zgodna z oczekiwaniami, ale wœród odpowiedzi na niektóre pytania zaobserwowaæ mo¿na zainteresowanie metod¹ konstelacyjn¹. Metoda konstelacyjna zosta³a szczególnie doceniona w pytaniach dotycz¹cych estetyki, podejmowania decyzji przez zarz¹d projektu oraz wykrywania podejrzanych elementów (w tych pytaniach konstelacja by³a preferowana przez ok. 23\% - 42\% ankietowanych).
+
+Aby poprawiæ jakoœæ metody konstelacyjnej, mo¿liwe s¹ dalsze badania nad oczekiwaniami u¿ytkowników w stosunku do konstelacji (i innych - alternatywnych do grafu - metod wizualizacji). W szczególnoœci dobrym podejœciem by³oby przeprowadzenie badania na wiêkszej liczbie zró¿nicowanych projektów (w przeprowadzonym przeze mnie badaniu uczestnicy obserwowali wizualizacjê tylko jednego projektu o niewielkich rozmiarach) i innej grupie u¿ytkowników (studenci 2-go roku nie posiadaj¹ du¿ego doœwiadczenia projektowego).
 
 % ------------------------------------------------------------------------------
 % ROZDZIA£ PODSUOWANIE
 % ------------------------------------------------------------------------------
 \chapter{Podsumowanie pracy}\label{c:summary}
 
-W pracy opisano narzêdzie do wizualizacji projektów informatycznych, którego kod udostêpniono na zasadach Open Source. Program Shimmering Constellation ³¹czy w sobie techniki wizualizacji konstelacyjnej oraz grafowej ze zintegrowan¹ map¹ termiczn¹. Wizualizacja kodu pozwala nie tylko w sposób czytelny zobrazowaæ z³o¿onoœæ danego projektu, ale uwzglêdnia te¿ zachodz¹ce w nim zmiany i umo¿liwia analizê jakoœci. Ocena skutecznoœci wykorzystanych metod w poszczególnych obszarach zastosowañ zosta³a zweryfikowana badaniem preferencji u¿ytkowników.
+W pracy opisano narzêdzie do wizualizacji projektów informatycznych, którego kod udostêpniono na zasadach Open Source \cite{b:shimmer}. Program Shimmering Constellations ³¹czy w sobie techniki wizualizacji konstelacyjnej oraz grafowej ze zintegrowan¹ map¹ termiczn¹. Wizualizacja kodu pozwala nie tylko w sposób czytelny zobrazowaæ z³o¿onoœæ danego projektu, ale uwzglêdnia te¿ zachodz¹ce w nim zmiany i umo¿liwia analizê jakoœci. Skutecznoœæ wykorzystanych metod w poszczególnych obszarach zastosowañ zosta³a zweryfikowana badaniem preferencji u¿ytkowników.
 
 \section{Perspektywy dalszego rozwoju oprogramowania}\label{s:summary-future}
 
 Oprogramowanie Shimmering Constellations powsta³o z myœl¹ o mo¿liwoœci przysz³ego rozbudowywania jego funkcjonalnoœci. Architektura i implementacja [sekcja \ref{r:architektura} oraz \ref{s:software-implementation}] aplikacji by³y tworzone zgodnie ze sztuk¹ pragmatycznego programowania, aby umo¿liwiæ dalszy rozwój systemu i zapewniæ jego wysok¹ skalowalnoœæ. Obecnie przewidziano nastêpuj¹ce mo¿liwoœci rozwoju narzêdzia:
 
-\paragraph{Zwiêkszenie granularnoœci:} Korzystnym krokiem w rozwoju systemu by³oby zwiêkszenie granularnoœci wizualizacji. Obecnie kod obrazowany przez Shimmering Constellations przedstawiany jest na poziomie pakietów i na tym poziomie liczona jest wiêkszoœæ dostarczanych metryk. Rozbudowanie aplikacji o analizê na poziomie poszczególnych klas wymaga³oby jedynie niewielkich zmian w analizatorze JDepend [sekcja \ref{r:jdepend}] i modelu projektu [rozdzia³ \ref{c:model}]. Biblioteka wizualizacyjna visJs pozwala na automatyczn¹ obs³ugê klastrowania wierzcho³ków - dziêki temu wierzcho³ki reprezentuj¹ce klasy mog³yby ³¹czyæ siê w wierzcho³ki klastrowe reprezentuj¹ce poszczególne pakiety (stan obecny). Takie rozbudowanie zwiêkszy³oby dok³adnoœæ narzêdzie Shimmering Constellations.
+\paragraph{Zwiêkszenie granularnoœci:} Korzystnym krokiem w rozwoju systemu by³oby zwiêkszenie granularnoœci wizualizacji. Obecnie kod obrazowany przez Shimmering Constellations przedstawiany jest na poziomie pakietów i na tym poziomie liczona jest wiêkszoœæ dostarczanych metryk. Rozbudowanie aplikacji o analizê na poziomie poszczególnych klas wymaga³oby jedynie niewielkich zmian w analizatorze JDepend [sekcja \ref{r:jdepend}] i modelu projektu [rozdzia³ \ref{c:model}]. Biblioteka wizualizacyjna Vis.js pozwala na automatyczn¹ obs³ugê klastrowania wierzcho³ków - dziêki temu wierzcho³ki reprezentuj¹ce klasy mog³yby ³¹czyæ siê w wierzcho³ki klastrowe reprezentuj¹ce poszczególne pakiety (stan obecny). Takie rozbudowanie zwiêkszy³oby dok³adnoœæ narzêdzie Shimmering Constellations.
 
 \paragraph{Uruchomienie aplikacji www:} Dobrym wykorzystaniem narzêdzia Shimmering Constellations mog³oby by byæ uruchomienie go w postaci us³ugi online, miêdzy innymi w celach naukowych. Uczestnicy kursu In¿ynieria Oprogramowania mogliby przy u¿yciu opisanego programu analizowaæ wybrane projekty informatyczne, a wyniki analiz zbierane w bazie danych pozwoli³yby badaæ studentom i pracownikom instytutu projekty Open Source. Taka modyfikacja, dziêki architekturze opartej na aplikacji www [sekcja \ref{r:architektura}], wymaga³aby jedynie integracji z wybran¹ baz¹ danych. 
 
@@ -789,19 +794,11 @@ Oprogramowanie Shimmering Constellations powsta³o z myœl¹ o mo¿liwoœci przysz³eg
 
 \appendix
 
-\chapter{Co nale¿y jeszcze zrobiæ w pracy}
-\begin{itemize}
-\item Uzupe³niæ brakuj¹ce fragmenty (TODO) - niektóre brakuj¹ce sekcje i cytowania.
-\item Zmieniæ tytu³ / abstrakt tak, aby bardziej podkreœla³ rolê stworzonego oprogramowania w mojej pracy?
-\item Poprawiæ rozmieszczenie ilustracji tak, aby tekst pracy lepiej siê komponowa³ i nie zawiera³ przesadnych odstêpów.
-\item Usun¹æ ten dodatek.
-\end{itemize}
-
 \chapter{Oprogramowanie Shimmering Constellations}
 
 Oprogramowanie opisane w pracy znajduje siê na za³¹czonej p³ycie CD, pod adresem: \url{http://students.mimuw.edu.pl/~fd305199/shimmer/shimmer.zip} oraz w publicznym repozytorium: \url{https://github.com/filip-daca/shimmer}
 
-Za³¹czona paczka zawiera kod programu Shimmering Constellations napisany w jêzyku Java. W katalogu \verb+src\+ znajduje siê kod klas programu. W katalogu \verb+etc\thesis+ umieszczono kod Ÿród³owy tego dokumentu. Plik \verb+pom.xml+ zawiera zewstaw konfiguracji dla narzêdzie Maven, które mo¿e skompilowaæ program Shimmering Constellations. Skompilowany program znajdzie siê w katalogu \verb+target\+ i mo¿e zostaæ uruchomiony w œrodowisku uruchomieniowym Jboss 7.1.1.
+Za³¹czona paczka zawiera kod programu Shimmering Constellations napisany w jêzyku Java. W katalogu \verb+src\+ znajduje siê kod klas programu. W katalogu \verb+etc\thesis+ umieszczono kod Ÿród³owy tego dokumentu. Plik \verb+pom.xml+ zawiera zestaw konfiguracji dla narzêdzia Maven, które mo¿e skompilowaæ program Shimmering Constellations. Skompilowany program znajdzie siê w katalogu \verb+target\+ i mo¿e zostaæ uruchomiony w œrodowisku uruchomieniowym Jboss 7.1.1.
 
 \begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Bibliografia}
